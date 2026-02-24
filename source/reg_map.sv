@@ -1,5 +1,3 @@
-`include "bus_protocol_if.vh"
-
 module reg_map (
     bus_protocol_if.peripheral_vital bpif,
     input logic CLK,
