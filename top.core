@@ -1,0 +1,134 @@
+CAPI=2:
+name: socet:aft:USI:0.1.0
+
+filesets:
+    rtl:
+        depend:
+            - "socet:bus-components:bus_protocol_if"
+        files:
+            - source/top.sv
+            - source/reg_map.sv
+        file_type: systemVerilogSource
+
+    tb:
+        files:
+            - testbench/top_tb.sv
+        file_type: systemVerilogSource
+
+    tb_reg_map:
+        files:
+            - testbench/reg_map_tb.sv
+        file_type: systemVerilogSource
+
+    lint_files:
+        files:
+            - source/top.sv
+            - source/reg_map.sv
+            - testbench/top_tb.sv
+        file_type: systemVerilogSource
+
+
+targets:
+    default: &default
+        filesets:
+            - rtl
+        toplevel: top
+    
+    sim:
+        <<: *default
+        description: Simulate w/TB
+        default_tool: verilator
+        filesets_append:
+            - "!tool_verilator? (tb)"
+            - "tool_verilator? (tb)"
+        toplevel: 
+            - "tool_verilator? (top_tb)"
+            - "!tool_verilator? (top_tb)"
+        tools:
+            xcelium:
+                xrun_options:
+                    - +xmtimescale+1ns/100ps
+            modelsim:
+                vsim_options:
+                    - -vopt
+                    - -voptargs='+acc'
+                    - -t ps
+            vcs:
+                vcs_options:
+                    - -assert svaext
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --trace
+                    - --trace-fst
+                    - --trace-structs
+    
+    sim_reg_map:
+        <<: *default
+        description: Simulate w/TB
+        default_tool: verilator
+        filesets_append:
+            - "!tool_verilator? (tb_reg_map)"
+            - "tool_verilator? (tb_reg_map)"
+        toplevel: 
+            - "tool_verilator? (reg_map_tb)"
+            - "!tool_verilator? (reg_map_tb)"
+        tools:
+            xcelium:
+                xrun_options:
+                    - +xmtimescale+1ns/100ps
+            modelsim:
+                vsim_options:
+                    - -vopt
+                    - -voptargs='+acc'
+                    - -t ps
+            vcs:
+                vcs_options:
+                    - -assert svaext
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --trace
+                    - --trace-fst
+                    - --trace-structs
+
+    fpga:
+        <<: *default
+        description: Synthesize for FPGA
+        default_tool: quartus
+        toplevel:
+            - top
+        parameters:
+            - SYNTHESIS=true
+        tools:
+            quartus:
+                family: Cyclone IV E
+                device: EP4CE115F29C7 
+                
+
+    lint:
+        filesets:
+            - lint_files
+        description: Linting
+        default_tool: verilator
+        toplevel: top_tb
+        tools:
+            verilator:
+                verilator_options: ['--lint-only']
+            veriblelint:
+                verible_lint_args: ['--autofix=inplace-interactive', '--rules_config_search']
+
+    format:
+        filesets:
+            - lint_files
+        description: Formatting
+        default_tool: veribleformat
+        toplevel: top_tb
+        tools:
+            veribleformat:
+                verible_format_args: ['--indentation_spaces=4', '--inplace']
+
+parameters:
+    SYNTHESIS:
+        datatype: bool
+        paramtype: vlogdefine
