@@ -1,13 +1,5 @@
 `timescale 1ns/1ps
 
-typedef enum logic [2:0] { 
-  IDLE = 3'd0,
-  START_BIT = 3'd1,
-  DATA_BITS = 3'd2,
-  PARITY_BIT = 3'd3,
-  STOP_BIT = 3'd4
-} shift_out_state_t;
-
 module datapath (
   input logic clk,
   input logic n_rst,
@@ -27,6 +19,14 @@ module datapath (
   output logic serial_out,
   output logic [7:0] data_in
 );
+
+typedef enum logic [2:0] { 
+  IDLE = 3'd0,
+  START_BIT = 3'd1,
+  DATA_BITS = 3'd2,
+  PARITY_BIT = 3'd3,
+  STOP_BIT = 3'd4
+} shift_out_state_t;
 
 // Shift register state machine for RX and TX
   shift_out_state_t state, next_state;
