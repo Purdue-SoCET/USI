@@ -30,6 +30,7 @@ filesets:
         files:
             - source/top.sv
             - source/reg_map.sv
+            - source/data_buffer.sv
             - testbench/top_tb.sv
         file_type: systemVerilogSource
 
