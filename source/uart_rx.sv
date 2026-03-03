@@ -1,14 +1,14 @@
 module uart_rx_fsm_8n1 #(
   parameter int DATA_BITS = 8
 ) (
-  input  logic                 clk,
-  input  logic                 rst_n,
+  input logic clk,
+  input logic rst_n,
 
   // UART line input
-  input  logic                 rx_line,
+  input logic rx_line,
 
   // Timing pulses
-  input  logic                 baud_tick,      // 1-cycle pulse each bit time
+  input logic                baud_tick,      // 1-cycle pulse each bit time
   input  logic                 half_bit_tick,  // 1-cycle pulse at half bit time (for start alignment)
 
   // Control/status (per diagram)

@@ -1,13 +1,3 @@
-// USI FSM based on your diagram:
-// States: IDLE -> DISPATCH -> {UART_ENGINE | I2C_ENGINE | SPI_ENGINE} -> RETURN_IDLE -> IDLE
-// IDLE -> DISPATCH when: enable && (tx_req || rx_activity)
-// ENGINE -> RETURN_IDLE when: <engine>_done || <engine>_err
-//
-// Mode encoding (from diagram):
-//   UART = 2'b00
-//   I2C  = 2'b01
-//   SPI  = 2'b10
-
 module usi_fsm (
   input logic clk,
   input logic n_rst,        // active-low reset per diagram label
@@ -50,9 +40,6 @@ module usi_fsm (
     end
   end
 
-  // ----------------------------
-  // Next-state logic
-  // ----------------------------
   always_comb begin
     next_state = state;
     case (state)
@@ -89,9 +76,6 @@ module usi_fsm (
     endcase
   end
 
-  // ----------------------------
-  // Output logic (Moore-style: outputs depend only on state)
-  // ----------------------------
   always_comb begin
     // defaults (safe)
     usi_busy    = 1'b0;
