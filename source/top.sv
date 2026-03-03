@@ -55,7 +55,7 @@ module usi_fsm (
   // ----------------------------
   always_comb begin
     next_state = state;
-    unique case (state)
+    case (state)
       IDLE: begin
         if (enable && (tx_req || rx_activity)) begin
           next_state = S_DISPATCH;
@@ -64,7 +64,7 @@ module usi_fsm (
 
       DISPATCH: begin
         // Branch based on mode
-        unique case (mode)
+        case (mode)
           2'b00: next_state = UART_ENGINE; // UART
           2'b01: next_state = I2C_ENGINE;  // I2C
           2'b10: next_state = SPI_ENGINE;  // SPI
@@ -102,7 +102,7 @@ module usi_fsm (
     i2c_en      = 1'b0;
     spi_en      = 1'b0;
 
-    unique case (state)
+    case (state)
       IDLE: begin
         // diagram: usi_busy=0, engines_off=1
         usi_busy    = 1'b0;
