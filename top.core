@@ -8,6 +8,7 @@ filesets:
         files:
             - source/top.sv
             - source/reg_map.sv
+            - source/data_buffer.sv
         file_type: systemVerilogSource
 
     tb:
@@ -18,6 +19,11 @@ filesets:
     tb_reg_map:
         files:
             - testbench/reg_map_tb.sv
+        file_type: systemVerilogSource
+
+    tb_data_buffer:
+        files:
+            - testbench/data_buffer_tb.sv
         file_type: systemVerilogSource
 
     lint_files:
@@ -73,6 +79,35 @@ targets:
         toplevel: 
             - "tool_verilator? (reg_map_tb)"
             - "!tool_verilator? (reg_map_tb)"
+        tools:
+            xcelium:
+                xrun_options:
+                    - +xmtimescale+1ns/100ps
+            modelsim:
+                vsim_options:
+                    - -vopt
+                    - -voptargs='+acc'
+                    - -t ps
+            vcs:
+                vcs_options:
+                    - -assert svaext
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --trace
+                    - --trace-fst
+                    - --trace-structs
+
+    sim_data_buffer:
+        <<: *default
+        description: Simulate w/TB
+        default_tool: verilator
+        filesets_append:
+            - "!tool_verilator? (tb_data_buffer)"
+            - "tool_verilator? (tb_data_buffer)"
+        toplevel: 
+            - "tool_verilator? (data_buffer_tb)"
+            - "!tool_verilator? (data_buffer_tb)"
         tools:
             xcelium:
                 xrun_options:
