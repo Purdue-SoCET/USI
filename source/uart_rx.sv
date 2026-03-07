@@ -3,21 +3,17 @@ module uart_rx_fsm_8n1 #(
 ) (
   input logic clk,
   input logic rst_n,
-
-  // UART line input
   input logic rx_line,
-
-  // Timing pulses
-  input logic                baud_tick,      // 1-cycle pulse each bit time
-  input  logic                 half_bit_tick,  // 1-cycle pulse at half bit time (for start alignment)
+  input logic baud_tick,      // 1-cycle pulse each bit time
+  input logic half_bit_tick,  // 1-cycle pulse at half bit time (for start alignment)
 
   // Control/status (per diagram)
-  output logic                 uart_en,
-  output logic                 done,
-  output logic                 err,
+  output logic uart_en,
+  output logic done,
+  output logic err,
 
-  output logic                 baud_wait,
-  output logic                 half_bit_timer_en,
+  output logic baud_wait,
+  output logic half_bit_timer_en,
   output logic                 sample_rx_en,
 
   // Data sink (e.g., FIFO push)
