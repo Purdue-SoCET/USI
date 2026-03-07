@@ -5,20 +5,17 @@ module uart_rx_fsm_8n1 #(
   input logic rst_n,
   input logic rx_line,
   input logic baud_tick,      // 1-cycle pulse each bit time
-  input logic half_bit_tick,  // 1-cycle pulse at half bit time (for start alignment)
-
-  // Control/status (per diagram)
+  input logic half_bit_tick,  // 1-cycle pulse at half bit time
   output logic uart_en,
   output logic done,
   output logic err,
-
   output logic baud_wait,
   output logic half_bit_timer_en,
-  output logic                 sample_rx_en,
+  output logic sample_rx_en,
 
-  // Data sink (e.g., FIFO push)
+  // Data sink
   output logic [DATA_BITS-1:0] rx_byte_out,
-  output logic                 push_rx_fifo
+  output logic push_rx_fifo
 );
 
   typedef enum logic [2:0] {
@@ -34,9 +31,9 @@ module uart_rx_fsm_8n1 #(
   state_t state, state_n;
 
   logic [DATA_BITS-1:0] rx_sr;
-  logic [$clog2(DATA_BITS+1)-1:0] bit_cnt;
-
-  // internal strobes
+  // using int instead of $clog2-based vector width
+  int bit_cnt;
+  // internal controls
   logic bit_cnt_clr, bit_cnt_inc;
   logic shift_rx_en;
 
@@ -45,34 +42,37 @@ module uart_rx_fsm_8n1 #(
   // -------------------------
   always_comb begin
     state_n = state;
-
-    unique case (state)
+    case (state)
       UART_RX_IDLE: begin
-        if (!rx_line) state_n = UART_RX_START_ALIGN;
+        if (!rx_line)
+          state_n = UART_RX_START_ALIGN;
       end
 
       UART_RX_START_ALIGN: begin
-        if (half_bit_tick) state_n = UART_RX_START_CHECK;
+        if (half_bit_tick)
+          state_n = UART_RX_START_CHECK;
       end
 
       UART_RX_START_CHECK: begin
-        // sample at the middle of the start bit
-        if (!rx_line) state_n = UART_RX_DATA;   // valid start
-        else          state_n = UART_RX_IDLE;   // false start
+        // sample in middle of start bit
+        if (!rx_line)
+          state_n = UART_RX_DATA;   // valid start bit
+        else
+          state_n = UART_RX_IDLE;   // false start
       end
 
       UART_RX_DATA: begin
-        // shift on baud_tick; after 8 bits -> STOP
-        if (baud_tick && (bit_cnt == DATA_BITS[$bits(bit_cnt)-1:0])) begin
+        // after receiving DATA_BITS bits, move to STOP
+        if (baud_tick && (bit_cnt == DATA_BITS-1))
           state_n = UART_RX_STOP;
-        end
       end
 
       UART_RX_STOP: begin
-        // check stop bit on baud_tick
         if (baud_tick) begin
-          if (rx_line) state_n = UART_RX_PUSH; // stop bit = 1 OK
-          else         state_n = UART_RX_ERROR;
+          if (rx_line)
+            state_n = UART_RX_PUSH;   // valid stop bit
+          else
+            state_n = UART_RX_ERROR;  // framing error
         end
       end
 
@@ -84,52 +84,47 @@ module uart_rx_fsm_8n1 #(
         state_n = UART_RX_IDLE;
       end
 
-      default: state_n = UART_RX_IDLE;
+      default: begin
+        state_n = UART_RX_IDLE;
+      end
     endcase
   end
 
   // -------------------------
-  // Output/control decode
+  // Output / control decode
   // -------------------------
   always_comb begin
     // defaults
     uart_en           = 1'b1;
-
     done              = 1'b0;
     err               = 1'b0;
-
     baud_wait         = 1'b0;
     half_bit_timer_en = 1'b0;
     sample_rx_en      = 1'b0;
-
     push_rx_fifo      = 1'b0;
 
     bit_cnt_clr       = 1'b0;
     bit_cnt_inc       = 1'b0;
     shift_rx_en       = 1'b0;
 
-    unique case (state)
+    case (state)
       UART_RX_IDLE: begin
-        // done=0, err=0, monitor rx_line (implicit)
+        // idle: wait for start bit
       end
 
       UART_RX_START_ALIGN: begin
-        // half_bit_timer_en=1, bit_cnt_clr=1
         half_bit_timer_en = 1'b1;
         bit_cnt_clr       = 1'b1;
       end
 
       UART_RX_START_CHECK: begin
-        // sample_rx_en=1 (start validation sample)
         sample_rx_en = 1'b1;
       end
 
       UART_RX_DATA: begin
-        // sample_rx_en=1, shift_rx_en=1, bit_cnt_inc=1, baud_wait=1
         sample_rx_en = 1'b1;
         baud_wait    = 1'b1;
 
-        // only advance/shift on baud_tick so bits remain stable between ticks
         if (baud_tick) begin
           shift_rx_en = 1'b1;
           bit_cnt_inc = 1'b1;
@@ -137,23 +132,22 @@ module uart_rx_fsm_8n1 #(
       end
 
       UART_RX_STOP: begin
-        // sample_rx_en=1, baud_wait=1
         sample_rx_en = 1'b1;
         baud_wait    = 1'b1;
       end
 
       UART_RX_PUSH: begin
-        // push_rx_fifo=1, done=1
         push_rx_fifo = 1'b1;
         done         = 1'b1;
       end
 
       UART_RX_ERROR: begin
-        // err=1
         err = 1'b1;
       end
 
-      default: ;
+      default: begin
+        // keep defaults
+      end
     endcase
   end
 
@@ -164,23 +158,21 @@ module uart_rx_fsm_8n1 #(
     if (!rst_n) begin
       state   <= UART_RX_IDLE;
       rx_sr   <= '0;
-      bit_cnt <= '0;
-    end else begin
+      bit_cnt <= 0;
+    end
+    else begin
       state <= state_n;
 
-      if (bit_cnt_clr) begin
-        bit_cnt <= '0;
-      end else if (bit_cnt_inc) begin
-        bit_cnt <= bit_cnt + 1'b1;
-      end
+      if (bit_cnt_clr)
+        bit_cnt <= 0;
+      else if (bit_cnt_inc)
+        bit_cnt <= bit_cnt + 1;
 
-      // Shift in data bits LSB-first:
-      // First sampled bit becomes rx_sr[0], next -> rx_sr[1], ... like UART framing.
-      if (shift_rx_en) begin
-        rx_sr <= {rx_line, rx_sr[DATA_BITS-1:1]}; // shift right, new bit into MSB?
-        // If you want first bit into bit0 (common), use this instead:
-        // rx_sr <= {rx_sr[DATA_BITS-2:0], rx_line}; // shift left, new bit into LSB position progression
-      end
+      // UART data arrives LSB first.
+      // This shift makes the first received bit end up in rx_sr[0]
+      // after DATA_BITS total shifts.
+      if (shift_rx_en)
+        rx_sr <= {rx_line, rx_sr[DATA_BITS-1:1]};
     end
   end
 
