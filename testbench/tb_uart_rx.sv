@@ -37,6 +37,11 @@ module tb_uart_rx_fsm_8n1;
     .push_rx_fifo(push_rx_fifo)
   );
 
+  initial begin
+    $dumpfile("wave_rx.vcd");
+    $dumpvars(0, tb_uart_rx_fsm_8n1);
+end
+
   // clock
   initial begin
     clk = 1'b0;

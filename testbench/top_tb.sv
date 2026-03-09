@@ -1,7 +1,6 @@
 `timescale 1ns/1ps
 
 module tb_top;
-
   logic clk;
   logic n_rst;
   logic enable;
@@ -20,7 +19,6 @@ module tb_top;
   logic uart_en;
   logic i2c_en;
   logic spi_en;
-
   // DUT
   top dut (
     .clk(clk),

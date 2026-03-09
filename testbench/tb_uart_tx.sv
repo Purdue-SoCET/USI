@@ -1,22 +1,20 @@
 `timescale 1ns/1ps
 
-module tb_uart_tx_fsm_8n1;
-
+module tb_uart_tx_fsm_8n1(
   parameter int DATA_BITS = 8;
-
-  logic clk;
-  logic rst_n;
-  logic tx_req;
-  logic [DATA_BITS-1:0] tx_data_in;
-  logic baud_tick;
-
-  logic pop_tx_fifo;
-  logic baud_en;
-  logic baud_wait;
-  logic tx_out;
-  logic uart_en;
-  logic done;
-
+) (
+  input logic clk,
+  input logic rst_n,
+  input logic tx_req,
+  input logic [DATA_BITS-1:0] tx_data_in,
+  input logic baud_tick,
+  output logic pop_tx_fifo,
+  output logic baud_en,
+  output logic baud_wait,
+  output logic tx_out,
+  output logic uart_en,
+  output logic done
+);
   // DUT
   uart_tx_fsm_8n1 #(
     .DATA_BITS(DATA_BITS)
@@ -36,9 +34,14 @@ module tb_uart_tx_fsm_8n1;
 
   // clock
   initial begin
+    $dumpfile("wave_tx.vcd");
+    $dumpvars(0, tb_uart_tx_fsm_8n1);
+end
+  initial begin
     clk = 1'b0;
     forever #5 clk = ~clk;
   end
+  
 
   // optional monitor
   initial begin
