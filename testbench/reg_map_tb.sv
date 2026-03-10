@@ -11,6 +11,9 @@ module reg_map_tb;
     logic [31:0] error_reg;
     logic [31:0] buffer_read;
 
+    logic push;
+    logic pop;
+
     bus_protocol_if bpif();
 
     int pass_count = 0;
@@ -26,7 +29,9 @@ module reg_map_tb;
         .configuration(configuration),
         .tx_data(tx_data),
         .error_reg(error_reg),
-        .buffer_read(buffer_read)
+        .buffer_read(buffer_read),
+        .push(push),
+        .pop(pop)
     );
 
     always #5 CLK = ~CLK;
@@ -93,6 +98,7 @@ module reg_map_tb;
         bpif.ren = 0;
         bpif.strobe = 4'hF;
         ctrl_unit_error = 0;
+        buffer_read = 32'hCAFEBABE;
 
         reset();
 
@@ -110,6 +116,9 @@ module reg_map_tb;
 
         read(32'h4, rdata);
         check("clkdiv read", 32'h12345678, rdata);
+
+        read(32'h10, rdata);
+        check("buffer_read path", 32'hCAFEBABE, rdata);
 
         write(32'h4, 32'hFFFF0000, 4'b0011);
 
