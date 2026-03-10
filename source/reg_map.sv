@@ -8,7 +8,7 @@ module reg_map (
     output logic [31:0] clkdiv,
     output logic [31:0] parameters,
     output logic [31:0] tx_data,
-    output logic [31:0] error_reg,
+    output logic [31:0] error_reg
 );
 
     logic [1:0] n_mode_sel;
