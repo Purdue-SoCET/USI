@@ -6,7 +6,7 @@ module reg_map_tb;
 
     logic [1:0] mode_sel;
     logic [31:0] clkdiv;
-    logic [31:0] parameters;
+    logic [31:0] configuration;
     logic [31:0] tx_data;
     logic [31:0] error_reg;
     logic [31:0] buffer_read;
@@ -23,7 +23,7 @@ module reg_map_tb;
         .ctrl_unit_error(ctrl_unit_error),
         .mode_sel(mode_sel),
         .clkdiv(clkdiv),
-        .parameters(parameters),
+        .configuration(configuration),
         .tx_data(tx_data),
         .error_reg(error_reg),
         .buffer_read(buffer_read)
@@ -63,7 +63,7 @@ module reg_map_tb;
             bpif.wen  = 0;
 
             @(negedge CLK);
-            data = bpif.rdata; 
+            data = bpif.rdata;
 
             bpif.ren = 0;
         end
@@ -96,14 +96,14 @@ module reg_map_tb;
 
         reset();
 
-        write(32'h0, 32'h2, 4'b0001);
+        write(32'h0, 32'h2, 4'b1111);
         check("mode_sel write", 32'd2, {30'b0, mode_sel});
 
         write(32'h4, 32'h12345678, 4'b1111);
         check("clkdiv write", 32'h12345678, clkdiv);
 
         write(32'h8, 32'hAAAAAAAA, 4'b1111);
-        check("parameters write", 32'hAAAAAAAA, parameters);
+        check("configuration write", 32'hAAAAAAAA, configuration);
 
         write(32'hC, 32'hBBBBBBBB, 4'b1111);
         check("tx_data write", 32'hBBBBBBBB, tx_data);
@@ -112,8 +112,18 @@ module reg_map_tb;
         check("clkdiv read", 32'h12345678, rdata);
 
         write(32'h4, 32'hFFFF0000, 4'b0011);
+
+        if(bpif.error) begin
+            $display("PASS: strobe error detected");
+            pass_count++;
+        end
+        else begin
+            $display("FAIL: strobe error not detected");
+            fail_count++;
+        end
+
         read(32'h4, rdata);
-        check("strobe partial write", 32'h12340000, rdata);
+        check("register unchanged after bad strobe", 32'h12345678, rdata);
 
         write(32'h20, 32'hDEADBEEF, 4'b1111);
 
@@ -126,9 +136,8 @@ module reg_map_tb;
 
         ctrl_unit_error = 1;
         @(negedge CLK);
-        @(negedge CLK); 
+        @(negedge CLK);
         ctrl_unit_error = 0;
-
 
         read(32'h14, rdata);
         check("error_reg cleared", 0, rdata);
