@@ -5,7 +5,7 @@ module USI(
 
     logic [1:0]  mode_sel;
     logic [31:0] clkdiv;
-    logic [31:0] parameters;
+    logic [31:0] configuration;
     logic [31:0] tx_data;
     logic [31:0] error_reg;
 
@@ -20,7 +20,7 @@ module USI(
         .buffer_read(buffer_read),
         .mode_sel(mode_sel),
         .clkdiv(clkdiv),
-        .parameters(parameters),
+        .configuration(configuration),
         .tx_data(tx_data),
         .error_reg(error_reg)
     );
