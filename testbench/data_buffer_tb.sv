@@ -128,7 +128,7 @@ module data_buffer_tb;
             $display("PASS: reset occupancy correct");
 
         $display("==================================================");
-        $display("TEST 2: Non-UART mode RX load path (mode != 01)");
+        $display("TEST 2: Non-I2C mode RX load path (mode != 10)");
         $display("==================================================");
         mode_sel = 2'b00;
 
@@ -144,7 +144,7 @@ module data_buffer_tb;
             $display("PASS: RX load occupancy correct");
 
         $display("==================================================");
-        $display("TEST 3: Non-UART mode pop 32-bit word from RX side");
+        $display("TEST 3: Non-I2C mode pop 32-bit word from RX side");
         $display("==================================================");
         pulse_pop_capture(pop_word);
         $display("buffer_read = 0x%08h", pop_word);
@@ -161,7 +161,7 @@ module data_buffer_tb;
             $display("PASS: RX pop occupancy correct");
 
         $display("==================================================");
-        $display("TEST 4: Non-UART mode TX push path");
+        $display("TEST 4: Non-I2C mode TX push path");
         $display("==================================================");
         pulse_push(32'hA1B2C3D4);
 
@@ -172,7 +172,7 @@ module data_buffer_tb;
             $display("PASS: TX push changed occupancy");
 
         $display("==================================================");
-        $display("TEST 5: Non-UART mode send bytes from TX side");
+        $display("TEST 5: Non-I2C mode send bytes from TX side");
         $display("==================================================");
         pulse_send_capture(send_byte);
         $display("data_out after send = 0x%02h", send_byte);
@@ -189,7 +189,7 @@ module data_buffer_tb;
             $display("PASS: TX send occupancy correct");
 
         $display("==================================================");
-        $display("TEST 6: Non-UART RX/TX split behavior");
+        $display("TEST 6: Non-I2C RX/TX split behavior");
         $display("==================================================");
 
         pulse_clear();
@@ -264,55 +264,55 @@ module data_buffer_tb;
             $display("PASS: RX and TX partitions stayed independent");
 
         $display("==================================================");
-        $display("TEST 7: UART mode shared buffer behavior (mode == 01)");
+        $display("TEST 7: I2C mode shared buffer behavior (mode == 10)");
         $display("==================================================");
         pulse_clear();
         @(posedge CLK);
 
         if (buffer_occupancy !== 8'd0)
-            $error("Clear before UART test failed: got %0d expected 0", buffer_occupancy);
+            $error("Clear before I2C test failed: got %0d expected 0", buffer_occupancy);
 
-        mode_sel = 2'b01;
+        mode_sel = 2'b10;
 
         pulse_load(8'h55);
         pulse_load(8'h66);
         pulse_push(32'h11223344);
 
         @(posedge CLK);
-        $display("UART mode occupancy after load/load/push = %0d", buffer_occupancy);
+        $display("I2C mode occupancy after load/load/push = %0d", buffer_occupancy);
 
         if (buffer_occupancy !== 8'd6)
-            $error("UART mixed occupancy wrong: got %0d expected 6", buffer_occupancy);
+            $error("I2C mixed occupancy wrong: got %0d expected 6", buffer_occupancy);
         else
-            $display("PASS: UART mixed occupancy correct");
+            $display("PASS: I2C mixed occupancy correct");
 
         pulse_send_capture(send_byte);
-        $display("UART mode data_out after send = 0x%02h", send_byte);
+        $display("I2C mode data_out after send = 0x%02h", send_byte);
 
         if (send_byte !== 8'h55)
-            $error("UART send wrong first byte: got 0x%02h expected 0x55", send_byte);
+            $error("I2C send wrong first byte: got 0x%02h expected 0x55", send_byte);
         else
-            $display("PASS: UART send first byte correct");
+            $display("PASS: I2C send first byte correct");
 
         @(posedge CLK);
         if (buffer_occupancy !== 8'd5)
-            $error("UART send occupancy wrong: got %0d expected 5", buffer_occupancy);
+            $error("I2C send occupancy wrong: got %0d expected 5", buffer_occupancy);
         else
-            $display("PASS: UART send occupancy correct");
+            $display("PASS: I2C send occupancy correct");
 
         pulse_pop_capture(pop_word);
-        $display("UART mode buffer_read after pop = 0x%08h", pop_word);
+        $display("I2C mode buffer_read after pop = 0x%08h", pop_word);
 
         if (pop_word !== 32'h22334466)
-            $error("UART pop wrong: got 0x%08h expected 0x22334466", pop_word);
+            $error("I2C pop wrong: got 0x%08h expected 0x22334466", pop_word);
         else
-            $display("PASS: UART pop data correct");
+            $display("PASS: I2C pop data correct");
 
         @(posedge CLK);
         if (buffer_occupancy !== 8'd1)
-            $error("UART pop occupancy wrong: got %0d expected 1", buffer_occupancy);
+            $error("I2C pop occupancy wrong: got %0d expected 1", buffer_occupancy);
         else
-            $display("PASS: UART pop occupancy correct");
+            $display("PASS: I2C pop occupancy correct");
 
         $display("==================================================");
         $display("TEST 8: Clear");
@@ -326,7 +326,7 @@ module data_buffer_tb;
             $display("PASS: clear reset occupancy");
 
         $display("==================================================");
-        $display("TEST 9: Fill RX region near limit in non-UART mode");
+        $display("TEST 9: Fill RX region near limit in non-I2C mode");
         $display("==================================================");
         mode_sel = 2'b00;
 
@@ -342,7 +342,7 @@ module data_buffer_tb;
             $display("PASS: RX partition limit respected");
 
         $display("==================================================");
-        $display("TEST 10: Fill TX region near limit in non-UART mode");
+        $display("TEST 10: Fill TX region near limit in non-I2C mode");
         $display("==================================================");
         pulse_clear();
         @(posedge CLK);
