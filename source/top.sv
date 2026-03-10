@@ -1,6 +1,11 @@
 module top(
     input logic CLK, nRST,
-    bus_protocol_if.peripheral_vital bpif
+    bus_protocol_if.peripheral_vital bpif,
+    input logic load,
+    input logic send,
+    input logic [7:0] data_in,
+    output logic [7:0] data_out,
+    output logic [7:0] buffer_occupancy
 );
 
     logic [1:0]  mode_sel;
@@ -14,11 +19,7 @@ module top(
     logic push;
     logic pop;
 
-    logic load;
-    logic send;
-    logic [7:0] data_in;
-    logic [7:0] data_out;
-    logic [7:0] buffer_occupancy;
+    assign ctrl_unit_error = 1'b0;
 
     reg_map REG_MAP (
         .bpif(bpif),
@@ -36,19 +37,18 @@ module top(
     );
 
     data_buffer DATA_BUFFER (
-        .CLK(CLK),
-        .nRST(nRST),
-        .mode_sel(mode_sel),
-        .data_in(data_in),
-        .buffer_write(tx_data),
-        .push(push),
-        .pop(pop),
-        .clear(1'b0),
-        .load(load),
-        .send(send),
-        .data_out(data_out),
-        .buffer_read(buffer_read),
-        .buffer_occupancy(buffer_occupancy)
-    );
-
+      .CLK(CLK),
+      .nRST(nRST),
+      .mode_sel(mode_sel),
+      .data_in(data_in),
+      .buffer_write(bpif.wdata),
+      .push(push),
+      .pop(pop),
+      .clear(1'b0),
+      .load(load),
+      .send(send),
+      .data_out(data_out),
+      .buffer_read(buffer_read),
+      .buffer_occupancy(buffer_occupancy)
+  );
 endmodule
