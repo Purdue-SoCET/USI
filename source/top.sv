@@ -1,14 +1,4 @@
-// USI FSM based on your diagram:
-// States: IDLE -> DISPATCH -> {UART_ENGINE | I2C_ENGINE | SPI_ENGINE} -> RETURN_IDLE -> IDLE
-// IDLE -> DISPATCH when: enable && (tx_req || rx_activity)
-// ENGINE -> RETURN_IDLE when: <engine>_done || <engine>_err
-//
-// Mode encoding (from diagram):
-//   UART = 2'b00
-//   I2C  = 2'b01
-//   SPI  = 2'b10
-
-module usi_fsm (
+module top (
   input logic clk,
   input logic n_rst,        // active-low reset per diagram label
   input logic enable,
@@ -42,33 +32,28 @@ module usi_fsm (
   // ----------------------------
   // State register
   // ----------------------------
-  always_ff @(posedge clk, negedge !n_rst) begin
+  always_ff @(posedge clk or negedge n_rst) begin
     if (!n_rst) begin
-      state <= S_IDLE;
+      state <= IDLE;
     end else begin
       state <= next_state;
     end
   end
 
-  // ----------------------------
-  // Next-state logic
-  // ----------------------------
   always_comb begin
     next_state = state;
-    unique case (state)
+    case (state)
       IDLE: begin
         if (enable && (tx_req || rx_activity)) begin
-          next_state = S_DISPATCH;
+          next_state = DISPATCH;
         end
       end
-
       DISPATCH: begin
-        // Branch based on mode
-        unique case (mode)
-          2'b00: next_state = UART_ENGINE; // UART
-          2'b01: next_state = I2C_ENGINE;  // I2C
-          2'b10: next_state = SPI_ENGINE;  // SPI
-          default: next_state = RETURN_IDLE; // invalid mode -> safe exit
+        case (mode)
+          2'b00: next_state = UART_ENGINE;
+          2'b01: next_state = I2C_ENGINE;
+          2'b10: next_state = SPI_ENGINE;
+          default: next_state = RETURN_IDLE;
         endcase
       end
       UART_ENGINE: begin
@@ -89,20 +74,15 @@ module usi_fsm (
     endcase
   end
 
-  // ----------------------------
-  // Output logic (Moore-style: outputs depend only on state)
-  // ----------------------------
   always_comb begin
-    // defaults (safe)
     usi_busy    = 1'b0;
     engines_off = 1'b1;
     latch_mode  = 1'b0;
-
     uart_en     = 1'b0;
     i2c_en      = 1'b0;
     spi_en      = 1'b0;
 
-    unique case (state)
+    case (state)
       IDLE: begin
         // diagram: usi_busy=0, engines_off=1
         usi_busy    = 1'b0;
@@ -144,6 +124,12 @@ module usi_fsm (
       end
       default: begin
         // keep safe defaults
+        usi_busy    = 1'b0;
+        engines_off = 1'b1;
+        latch_mode  = 1'b0;
+        uart_en     = 1'b0;
+        i2c_en      = 1'b0;
+        spi_en      = 1'b0;
       end
     endcase
   end
