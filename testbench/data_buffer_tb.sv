@@ -114,6 +114,8 @@ module data_buffer_tb;
     endtask
 
     initial begin
+        $dumpfile("waveform.fst");
+        $dumpvars(0, data_buffer_tb);
         CLK = 1'b0;
         reset_dut();
 

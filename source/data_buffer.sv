@@ -25,7 +25,7 @@ module data_buffer (
     always_ff @(posedge CLK or negedge nRST) begin
         if(~nRST) begin
             for (int i = 0; i < 256; i++) begin
-                mem[i] = 8'h00;
+                mem[i] <= 8'h00;
             end
         end
         else begin
