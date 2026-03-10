@@ -78,7 +78,7 @@ module data_buffer (
             end
         end
 
-        if(mode_sel != 2'b01) begin
+        if(mode_sel != 2'b10) begin
             if(load) begin                          // rx_data
                 if(occupancy1 < 8'd128) begin 
                     n_mem[write_ptr_1] = data_in;
