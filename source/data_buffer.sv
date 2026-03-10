@@ -10,12 +10,12 @@ module data_buffer (
     input logic load,
     input logic send,
     output logic [7:0] data_out,
-    output logic [31:0] buffer_write,
+    output logic [31:0] buffer_read,
     output logic [7:0] buffer_occupancy
 );
 
-    logic [7:0] [255:0] mem;
-    logic [7:0] [255:0] n_mem;
+    logic [7:0] mem [255:0];
+    logic [7:0] n_mem [255:0];
     logic [7:0] write_ptr_1, write_ptr_2, read_ptr_1, read_ptr_2;
     logic [7:0] n_write_ptr_1, n_write_ptr_2, n_read_ptr_1, n_read_ptr_2;
     logic [7:0] n_buffer_occupancy;
@@ -62,7 +62,8 @@ module data_buffer (
         n_mem = mem;
         n_occupancy1 = occupancy1;
         n_occupancy2 = occupancy2;
-        n_buffer_occupancy = occupancy1 + occupancy2;
+        data_out = '0;
+        buffer_read = '0;
 
         if(clear) begin
             n_write_ptr_1 = '0;
@@ -81,8 +82,8 @@ module data_buffer (
             if(load) begin                          // rx_data
                 if(occupancy1 < 8'd128) begin 
                     n_mem[write_ptr_1] = data_in;
-                    n_write_ptr_1++;
-                    n_occupancy1++;
+                    n_write_ptr_1 = n_write_ptr_1 + 8'd1;
+                    n_occupancy1 = n_occupancy1 + 8'd1;
                 end
             end
             else if(pop) begin
@@ -91,13 +92,13 @@ module data_buffer (
                     buffer_read[15:8] = mem[read_ptr_1 + 8'd1];
                     buffer_read[23:16] = mem[read_ptr_1 + 8'd2];
                     buffer_read[31:24] = mem[read_ptr_1 + 8'd3];
-                    n_read_ptr_1 = n_read_ptr_1 - 8'd4;
+                    n_read_ptr_1 = n_read_ptr_1 + 8'd4;
                     n_occupancy1 = n_occupancy1 - 8'd4;
                 end
             end
             
             if(push) begin                            // tx_data
-                if(occupancy2 <= 8'd252) begin
+                if(occupancy2 <= 8'd124) begin
                     n_mem[write_ptr_2] = buffer_write[7:0];
                     n_mem[write_ptr_2 + 8'd1] = buffer_write[15:8];
                     n_mem[write_ptr_2 + 8'd2] = buffer_write[23:16];
@@ -107,10 +108,10 @@ module data_buffer (
                 end
             end
             else if(send) begin
-                if(occupancy2 > 8'd128) begin
+                if(occupancy2 > '0) begin
                     data_out = mem[read_ptr_2];
-                    n_read_ptr_2--;
-                    n_occupancy2--;
+                    n_read_ptr_2 = n_read_ptr_2 + 8'd1;
+                    n_occupancy2 = n_occupancy2 - 8'd1;
                 end
             end 
         end
@@ -119,8 +120,8 @@ module data_buffer (
             if(load) begin                          // incoming
                 if(occupancy1 < 8'd128) begin 
                     n_mem[write_ptr_1] = data_in;
-                    n_write_ptr_1++;
-                    n_occupancy1++;
+                    n_write_ptr_1 = n_write_ptr_1 + 8'd1;
+                    n_occupancy1 = n_occupancy1 + 8'd1;
                 end
             end
             else if(push) begin
@@ -137,8 +138,8 @@ module data_buffer (
             if(send) begin                          // outgoing
                 if(occupancy1 > '0) begin
                     data_out = mem[read_ptr_1];
-                    n_read_ptr_1--;
-                    n_occupancy1--;
+                    n_read_ptr_1 = n_read_ptr_1 + 8'd1;
+                    n_occupancy1 = n_occupancy1 - 8'd1;
                 end
             end 
             else if(pop) begin
@@ -147,11 +148,12 @@ module data_buffer (
                     buffer_read[15:8] = mem[read_ptr_1 + 8'd1];
                     buffer_read[23:16] = mem[read_ptr_1 + 8'd2];
                     buffer_read[31:24] = mem[read_ptr_1 + 8'd3];
-                    n_read_ptr_1 = n_read_ptr_1 - 8'd4;
+                    n_read_ptr_1 = n_read_ptr_1 + 8'd4;
                     n_occupancy1 = n_occupancy1 - 8'd4;
                 end
             end
         end
+        n_buffer_occupancy = n_occupancy1 + n_occupancy2;
     end
 
 
