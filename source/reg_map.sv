@@ -8,7 +8,9 @@ module reg_map (
     output logic [31:0] clkdiv,
     output logic [31:0] configuration,
     output logic [31:0] tx_data,
-    output logic [31:0] error_reg
+    output logic [31:0] error_reg,
+    output logic push,
+    output logic pop
 );
 
     logic [1:0] n_mode_sel;
@@ -37,15 +39,14 @@ module reg_map (
                 error_reg <= n_error_reg;
         end
     end
-    
 
     always_comb begin
         strobe_error = bpif.wen && (bpif.strobe != 4'b1111);
-        n_mode_sel   = mode_sel;
-        n_clkdiv     = clkdiv;
+        n_mode_sel = mode_sel;
+        n_clkdiv = clkdiv;
         n_configuration = configuration;
-        n_tx_data    = tx_data;
-        n_error_reg  = error_reg;
+        n_tx_data = tx_data;
+        n_error_reg = error_reg;
 
         if (bus_error)
             n_error_reg[0] = 1'b1;
@@ -109,6 +110,11 @@ module reg_map (
                 default: bus_error = 1'b1;
             endcase
         end
+    end
+
+    always_comb begin
+        push = bpif.wen && !strobe_error && bpif.addr == 32'hC;
+        pop  = bpif.ren && bpif.addr == 32'h10;
     end
 
 endmodule
