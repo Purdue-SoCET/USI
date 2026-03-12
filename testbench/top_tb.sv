@@ -1,268 +1,204 @@
+module top_tb;
 
-`timescale 1ns/1ps
+    logic CLK;
+    logic nRST;
 
-module tb_usi_fsm;
+    logic load;
+    logic send;
+    logic [7:0] data_in;
+    logic [7:0] data_out;
+    logic [7:0] buffer_occupancy;
 
-  // clock/reset
-  logic clk;
-  logic n_rst;
+    bus_protocol_if bpif();
 
-  // inputs
-  logic enable;
-  logic tx_req;
-  logic rx_activity;
-  logic [1:0] mode;
+    top DUT (
+        .CLK(CLK),
+        .nRST(nRST),
+        .bpif(bpif),
+        .load(load),
+        .send(send),
+        .data_in(data_in),
+        .data_out(data_out),
+        .buffer_occupancy(buffer_occupancy)
+    );
 
-  logic uart_done, uart_err;
-  logic i2c_done,  i2c_err;
-  logic spi_done,  spi_err;
+    initial CLK = 1'b0;
+    always #5 CLK = ~CLK;
 
-  // outputs
-  logic usi_busy;
-  logic engines_off;
-  logic latch_mode;
-  logic uart_en;
-  logic i2c_en;
-  logic spi_en;
+    int pass = 0;
+    int fail = 0;
 
-  // DUT
-  usi_fsm dut (
-    .clk(clk),
-    .n_rst(n_rst),
-    .enable(enable),
-    .tx_req(tx_req),
-    .rx_activity(rx_activity),
-    .mode(mode),
-    .uart_done(uart_done),
-    .uart_err(uart_err),
-    .i2c_done(i2c_done),
-    .i2c_err(i2c_err),
-    .spi_done(spi_done),
-    .spi_err(spi_err),
-    .usi_busy(usi_busy),
-    .engines_off(engines_off),
-    .latch_mode(latch_mode),
-    .uart_en(uart_en),
-    .i2c_en(i2c_en),
-    .spi_en(spi_en)
-  );
+    logic [31:0] rdata;
+    logic [7:0] b0, b1, b2, b3;
 
-  // -------------------------
-  // Clock gen: 100 MHz
-  // -------------------------
-  initial clk = 1'b0;
-  always #5 clk = ~clk;
+    task reset_dut;
+    begin
+        nRST = 1'b0;
+        bpif.wen = 1'b0;
+        bpif.ren = 1'b0;
+        bpif.addr = 32'h0;
+        bpif.wdata = 32'h0;
+        bpif.strobe = 4'hF;
+        load = 1'b0;
+        send = 1'b0;
+        data_in = 8'h00;
 
-  // -------------------------
-  // Helpers
-  // -------------------------
-  task automatic clear_engine_flags();
-    uart_done = 0; uart_err = 0;
-    i2c_done  = 0; i2c_err  = 0;
-    spi_done  = 0; spi_err  = 0;
-  endtask
-
-  task automatic idle_inputs();
-    enable      = 0;
-    tx_req      = 0;
-    rx_activity = 0;
-    mode        = 2'b00;
-    clear_engine_flags();
-  endtask
-
-  task automatic apply_reset();
-    n_rst = 0;
-    repeat (3) @(posedge clk);
-    n_rst = 1;
-    @(posedge clk);
-  endtask
-
-  // Start a transaction (one-cycle request pulse)
-  task automatic start_req(input logic use_tx_req, input logic [1:0] m);
-    mode = m;
-    @(negedge clk);
-    if (use_tx_req) begin
-      tx_req = 1;
-      rx_activity = 0;
-    end else begin
-      tx_req = 0;
-      rx_activity = 1;
+        repeat (2) @(posedge CLK);
+        nRST = 1'b1;
+        @(posedge CLK);
     end
-    enable = 1;
-    @(posedge clk);
-    @(negedge clk);
-    tx_req = 0;
-    rx_activity = 0;
-  endtask
+    endtask
 
-  // Pulse an engine done/err for one cycle
-  task automatic pulse_uart_done();
-    @(negedge clk); uart_done = 1;
-    @(posedge clk);
-    @(negedge clk); uart_done = 0;
-  endtask
+    task write(input logic [31:0] addr, input logic [31:0] data, input logic [3:0] strb);
+    begin
+        @(negedge CLK);
+        bpif.addr   = addr;
+        bpif.wdata  = data;
+        bpif.strobe = strb;
+        bpif.wen    = 1'b1;
+        bpif.ren    = 1'b0;
 
-  task automatic pulse_uart_err();
-    @(negedge clk); uart_err = 1;
-    @(posedge clk);
-    @(negedge clk); uart_err = 0;
-  endtask
-
-  task automatic pulse_i2c_done();
-    @(negedge clk); i2c_done = 1;
-    @(posedge clk);
-    @(negedge clk); i2c_done = 0;
-  endtask
-
-  task automatic pulse_i2c_err();
-    @(negedge clk); i2c_err = 1;
-    @(posedge clk);
-    @(negedge clk); i2c_err = 0;
-  endtask
-
-  task automatic pulse_spi_done();
-    @(negedge clk); spi_done = 1;
-    @(posedge clk);
-    @(negedge clk); spi_done = 0;
-  endtask
-
-  task automatic pulse_spi_err();
-    @(negedge clk); spi_err = 1;
-    @(posedge clk);
-    @(negedge clk); spi_err = 0;
-  endtask
-
-  // Wait until engine enable goes high (with timeout)
-  task automatic wait_for_engine(
-    input string name,
-    input int unsigned max_cycles,
-    input logic expect_uart,
-    input logic expect_i2c,
-    input logic expect_spi
-  );
-    int unsigned k;
-    for (k = 0; k < max_cycles; k++) begin
-      @(posedge clk);
-      if ((uart_en === expect_uart) &&
-          (i2c_en  === expect_i2c)  &&
-          (spi_en  === expect_spi)  &&
-          (usi_busy === 1'b1)) begin
-        $display("[%0t] Entered %s (uart_en=%0b i2c_en=%0b spi_en=%0b busy=%0b)",
-                 $time, name, uart_en, i2c_en, spi_en, usi_busy);
-        return;
-      end
+        @(posedge CLK);
+        @(negedge CLK);
+        bpif.wen    = 1'b0;
+        bpif.addr   = 32'h0;
+        bpif.wdata  = 32'h0;
+        bpif.strobe = 4'hF;
     end
-    $fatal(1, "[%0t] TIMEOUT waiting for %s", $time, name);
-  endtask
+    endtask
 
-  // Wait for return to idle (busy=0 and engines_off=1)
-  task automatic wait_for_idle(input int unsigned max_cycles);
-    int unsigned k;
-    for (k = 0; k < max_cycles; k++) begin
-      @(posedge clk);
-      if (usi_busy === 1'b0 && engines_off === 1'b1 &&
-          uart_en === 1'b0 && i2c_en === 1'b0 && spi_en === 1'b0) begin
-        $display("[%0t] Returned to IDLE", $time);
-        return;
-      end
+    task read(input logic [31:0] addr, output logic [31:0] data);
+    begin
+        @(negedge CLK);
+        bpif.addr = addr;
+        bpif.ren  = 1'b1;
+        bpif.wen  = 1'b0;
+
+        #1;
+        data = bpif.rdata;
+
+        @(posedge CLK);
+        @(negedge CLK);
+        bpif.ren  = 1'b0;
+        bpif.addr = 32'h0;
     end
-    $fatal(1, "[%0t] TIMEOUT waiting for IDLE", $time);
-  endtask
+    endtask
 
-  // Simple sanity assertion each cycle
-  always @(posedge clk) begin
-    if (n_rst) begin
-      // At most one engine enabled at a time
-      if ((uart_en + i2c_en + spi_en) > 1) begin
-        $fatal(1, "[%0t] ERROR: multiple engines enabled!", $time);
-      end
+    task load_byte(input logic [7:0] din);
+    begin
+        @(negedge CLK);
+        data_in = din;
+        load    = 1'b1;
 
-      // If engines_off is asserted, no engine should be enabled
-      if (engines_off && (uart_en || i2c_en || spi_en)) begin
-        $fatal(1, "[%0t] ERROR: engines_off=1 while engine enabled!", $time);
-      end
-
-      // In DISPATCH, latch_mode should be high (your FSM does that)
-      // Not perfect to detect DISPATCH without peeking state, but we can at least
-      // check that latch_mode never asserts while an engine is enabled:
-      if (latch_mode && (uart_en || i2c_en || spi_en)) begin
-        $fatal(1, "[%0t] ERROR: latch_mode asserted while engine enabled!", $time);
-      end
+        @(posedge CLK);
+        @(negedge CLK);
+        load    = 1'b0;
+        data_in = 8'h00;
     end
-  end
+    endtask
 
-  // -------------------------
-  // Main stimulus
-  // -------------------------
-  initial begin
-    idle_inputs();
-    apply_reset();
+    task send_byte(output logic [7:0] dout);
+    begin
+        @(negedge CLK);
+        send = 1'b1;
 
-    // After reset, should be idle-ish
-    if (!(usi_busy == 0 && engines_off == 1)) begin
-      $fatal(1, "[%0t] Not idle after reset (busy=%0b off=%0b)", $time, usi_busy, engines_off);
+        #1;
+        dout = data_out;
+
+        @(posedge CLK);
+        @(negedge CLK);
+        send = 1'b0;
     end
+    endtask
 
-    // 1) UART transaction (tx_req)
-    $display("\n--- TEST 1: UART tx_req -> uart_done ---");
-    start_req(/*use_tx_req=*/1, /*mode=*/2'b00);
-
-    // Expected: IDLE -> DISPATCH (busy=1 latch_mode=1) -> UART_ENGINE (uart_en=1)
-    // We don't peek state; just wait to see uart_en become 1.
-    wait_for_engine("UART_ENGINE", 10, 1, 0, 0);
-
-    // finish
-    pulse_uart_done();
-    wait_for_idle(10);
-
-    // 2) I2C transaction (rx_activity) ends in err
-    $display("\n--- TEST 2: I2C rx_activity -> i2c_err ---");
-    start_req(/*use_tx_req=*/0, /*mode=*/2'b01);
-    wait_for_engine("I2C_ENGINE", 10, 0, 1, 0);
-
-    pulse_i2c_err();
-    wait_for_idle(10);
-
-    // 3) SPI transaction (tx_req) ends in done
-    $display("\n--- TEST 3: SPI tx_req -> spi_done ---");
-    start_req(/*use_tx_req=*/1, /*mode=*/2'b10);
-    wait_for_engine("SPI_ENGINE", 10, 0, 0, 1);
-
-    pulse_spi_done();
-    wait_for_idle(10);
-
-    // 4) Invalid mode should safely exit back to idle
-    $display("\n--- TEST 4: Invalid mode -> RETURN_IDLE -> IDLE ---");
-    start_req(/*use_tx_req=*/1, /*mode=*/2'b11);
-
-    // In your FSM: DISPATCH sees invalid mode and goes RETURN_IDLE then IDLE.
-    // So it should NEVER enable any engine.
-    repeat (5) @(posedge clk);
-    if (uart_en || i2c_en || spi_en) begin
-      $fatal(1, "[%0t] ERROR: engine enabled on invalid mode!", $time);
+    task check(input string name, input logic [31:0] expected, input logic [31:0] actual);
+    begin
+        if (expected === actual) begin
+            $display("PASS: %s exp=%h act=%h", name, expected, actual);
+            pass++;
+        end
+        else begin
+            $display("FAIL: %s exp=%h act=%h", name, expected, actual);
+            fail++;
+        end
     end
-    wait_for_idle(10);
+    endtask
 
-    // 5) enable low should ignore requests
-    $display("\n--- TEST 5: enable=0 blocks dispatch ---");
-    mode = 2'b00;
-    @(negedge clk);
-    enable = 0;
-    tx_req = 1;
-    @(posedge clk);
-    @(negedge clk);
-    tx_req = 0;
+    initial begin
+        $dumpfile("waveform.fst");
+        $dumpvars(0, top_tb);
+        reset_dut();
 
-    repeat (5) @(posedge clk);
-    if (usi_busy) begin
-      $fatal(1, "[%0t] ERROR: usi_busy asserted even though enable=0!", $time);
+        write(32'h0, 32'h2, 4'hF);
+        read(32'h0, rdata);
+        check("mode_sel", 32'h00000002, rdata);
+
+        write(32'h4, 32'h12345678, 4'hF);
+        read(32'h4, rdata);
+        check("clkdiv", 32'h12345678, rdata);
+
+        write(32'h8, 32'hAAAAAAAA, 4'hF);
+        read(32'h8, rdata);
+        check("configuration", 32'hAAAAAAAA, rdata);
+
+        load_byte(8'h11);
+        load_byte(8'h22);
+        load_byte(8'h33);
+        load_byte(8'h44);
+
+        read(32'h10, rdata);
+        check("RX pop", 32'h44332211, rdata);
+
+        write(32'hC, 32'hAABBCCDD, 4'hF);
+
+        send_byte(b0);
+        send_byte(b1);
+        send_byte(b2);
+        send_byte(b3);
+
+        check("TX byte0", 32'h000000DD, {24'h0, b0});
+        check("TX byte1", 32'h000000CC, {24'h0, b1});
+        check("TX byte2", 32'h000000BB, {24'h0, b2});
+        check("TX byte3", 32'h000000AA, {24'h0, b3});
+
+        load_byte(8'h55);
+        load_byte(8'h66);
+        @(posedge CLK);
+        check("buffer occupancy", 32'h00000002, {24'h0, buffer_occupancy});
+
+        write(32'h20, 32'hDEADBEEF, 4'hF);
+        if (bpif.error) begin
+            $display("PASS: bus error detected");
+            pass++;
+        end
+        else begin
+            $display("FAIL: bus error not detected");
+            fail++;
+        end
+
+        write(32'h4, 32'hFFFFFFFF, 4'b0011);
+        if (bpif.error) begin
+            $display("PASS: strobe error detected");
+            pass++;
+        end
+        else begin
+            $display("FAIL: strobe error not detected");
+            fail++;
+        end
+
+        $display("----------------------------------");
+        $display("TEST COMPLETE");
+        $display("PASS = %0d", pass);
+        $display("FAIL = %0d", fail);
+        $display("----------------------------------");
+
+        if (fail == 0)
+            $display("ALL TESTS PASSED");
+        else
+            $display("SOME TESTS FAILED");
+
+        #20;
+        $finish;
     end
-    if (!(engines_off && !uart_en && !i2c_en && !spi_en)) begin
-      $fatal(1, "[%0t] ERROR: outputs not idle with enable=0", $time);
-    end
-
-    $display("\nALL TESTS PASSED ✅");
-    $finish;
-  end
 
 endmodule
