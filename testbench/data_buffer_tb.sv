@@ -1,21 +1,20 @@
 module data_buffer_tb;
 
-    logic        CLK;
-    logic        nRST;
-    logic [1:0]  mode_sel;
-    logic [7:0]  data_in;
+    logic CLK;
+    logic nRST;
+    logic [1:0] mode_sel;
+    logic [7:0] data_in;
     logic [31:0] buffer_write;
-    logic        push;
-    logic        pop;
-    logic        clear;
-    logic        load;
-    logic        send;
-    logic [7:0]  data_out;
+    logic push;
+    logic pop;
+    logic clear;
+    logic load;
+    logic send;
+    logic [7:0] data_out;
     logic [31:0] buffer_read;
-    logic [7:0]  buffer_occupancy;
-
+    logic [7:0] buffer_occupancy;
     logic [31:0] pop_word;
-    logic [7:0]  send_byte;
+    logic [7:0] send_byte;
 
     data_buffer dut (
         .CLK(CLK),
@@ -35,19 +34,19 @@ module data_buffer_tb;
 
     always #5 CLK = ~CLK;
 
-    task automatic reset_dut;
+    task reset_dut;
     begin
-        nRST         = 1'b0;
-        mode_sel     = 2'b00;
-        data_in      = 8'h00;
-        buffer_write = 32'h00000000;
-        push         = 1'b0;
-        pop          = 1'b0;
-        clear        = 1'b0;
-        load         = 1'b0;
-        send         = 1'b0;
-        pop_word     = 32'h00000000;
-        send_byte    = 8'h00;
+        nRST = 1'b0;
+        mode_sel = 2'b0;
+        data_in = 8'h0;
+        buffer_write = 32'h0;
+        push = 1'b0;
+        pop = 1'b0;
+        clear = 1'b0;
+        load = 1'b0;
+        send = 1'b0;
+        pop_word = 32'h0;
+        send_byte = 8'h0;
 
         repeat (2) @(posedge CLK);
         nRST = 1'b1;
@@ -55,19 +54,19 @@ module data_buffer_tb;
     end
     endtask
 
-    task automatic pulse_load(input logic [7:0] din);
+    task pulse_load(input logic [7:0] din);
     begin
         @(negedge CLK);
         data_in = din;
-        load    = 1'b1;
+        load = 1'b1;
         @(posedge CLK);
         @(negedge CLK);
-        load    = 1'b0;
-        data_in = 8'h00;
+        load = 1'b0;
+        data_in = 8'h0;
     end
     endtask
 
-    task automatic pulse_push(input logic [31:0] din);
+    task pulse_push(input logic [31:0] din);
     begin
         @(negedge CLK);
         buffer_write = din;
@@ -75,11 +74,11 @@ module data_buffer_tb;
         @(posedge CLK);
         @(negedge CLK);
         push = 1'b0;
-        buffer_write = 32'h00000000;
+        buffer_write = 32'h0;
     end
     endtask
 
-    task automatic pulse_clear;
+    task pulse_clear;
     begin
         @(negedge CLK);
         clear = 1'b1;
@@ -89,7 +88,7 @@ module data_buffer_tb;
     end
     endtask
 
-    task automatic pulse_pop_capture(output logic [31:0] dout);
+    task pulse_pop_capture(output logic [31:0] dout);
     begin
         @(negedge CLK);
         pop = 1'b1;
@@ -101,7 +100,7 @@ module data_buffer_tb;
     end
     endtask
 
-    task automatic pulse_send_capture(output logic [7:0] dout);
+    task pulse_send_capture(output logic [7:0] dout);
     begin
         @(negedge CLK);
         send = 1'b1;
@@ -195,12 +194,10 @@ module data_buffer_tb;
         pulse_clear();
         @(posedge CLK);
 
-        mode_sel = 2'b00;
+        mode_sel = 2'b0;
 
-        // Fill TX side with 1 word
         pulse_push(32'h11223344);
         
-        // Fill RX side with 4 bytes
         pulse_load(8'hAA);
         pulse_load(8'hBB);
         pulse_load(8'hCC);
@@ -214,7 +211,6 @@ module data_buffer_tb;
         else
             $display("PASS: combined occupancy correct after RX/TX fill");
 
-        // Pop from RX side and make sure we only get RX data
         pulse_pop_capture(pop_word);
         $display("RX pop during split test = 0x%08h", pop_word);
 
@@ -229,7 +225,6 @@ module data_buffer_tb;
         else
             $display("PASS: occupancy correct after RX pop");
 
-        // Send from TX side and make sure TX data is still intact
         pulse_send_capture(send_byte);
         $display("TX send during split test = 0x%02h", send_byte);
 
@@ -244,7 +239,6 @@ module data_buffer_tb;
         else
             $display("PASS: occupancy correct after TX send");
 
-        // Send remaining TX bytes to prove RX pop didn't disturb TX partition
         pulse_send_capture(send_byte);
         if (send_byte !== 8'h33)
             $error("Split test TX second send wrong: got 0x%02h expected 0x33", send_byte);
