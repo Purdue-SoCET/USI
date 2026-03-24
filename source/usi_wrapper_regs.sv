@@ -74,13 +74,13 @@ module usi_wrapper_regs (
   // ------------------------------------------------------------
   // Register map storage
   // ------------------------------------------------------------
-  logic [1:0]  mode_reg;         // Reg 1
+  logic [1:0] mode_reg;         // Reg 1
   logic [31:0] clkdiv_reg;       // Reg 2
   logic [31:0] param_reg;        // Reg 3
-  logic [7:0]  write_data_reg;   // Reg 4
-  logic [6:0]  addr_reg;         // Reg 5
+  logic [7:0] write_data_reg;   // Reg 4
+  logic [6:0] addr_reg;         // Reg 5
   logic [31:0] error_reg;        // Reg 6
-  logic [7:0]  read_data_reg;    // Reg 7
+  logic [7:0] read_data_reg;    // Reg 7
 
   logic start_cmd;
   logic rx_activity;

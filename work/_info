@@ -3,26 +3,19 @@ K4
 z2
 Z0 !s99 nomlopt
 R0
-R0
-<<<<<<< HEAD
-R0
-R0
-=======
->>>>>>> 30a04555965cfb7c8a57236a28b0dcacbc21b54b
-!s11f vlog 2021.4 2021.10, Oct 13 2021
+!s11f MIXED_VERSIONS
 13
 !s112 1.1
 !i10d 8192
 !i10e 25
 !i10f 100
 cModel Technology
-<<<<<<< HEAD
 Z1 d/home/asicfab/a/umeshs/USI-1
 T_opt
-!s110 1772927890
-V`F]_QEQ7DUUZ19O_fWBaL3
-Z2 04 6 4 work tb_top fast 0
-=1-b4969189940d-69acbb92-1ce0c-314ba1
+!s110 1774370519
+Vmze6ZiGBcQln5V_fC@>fS3
+Z2 04 19 4 work tb_usi_wrapper_regs fast 0
+=1-b4969189940d-69c2bed7-1dde3-317cd9
 Z3 !s124 OEM100
 o-quiet -auto_acc_if_foreign -work work
 Z4 tCvgOpt 0
@@ -30,269 +23,252 @@ n@_opt
 Z5 OL;O;2021.4;73
 R1
 T_opt1
-!s110 1772928537
-VXmhRG22Yzg]RnDlb?[?6=0
+!s110 1774371174
+VgZf6HT5T;AX>OL5R0T5D;3
 R2
-=1-b4969189940d-69acbe19-34f2-321d71
+=1-b4969189940d-69c2c166-8ca5d-32fc09
 R3
-Z6 o-quiet -auto_acc_if_foreign -work work +acc
+o-quiet -auto_acc_if_foreign -work work +acc
 R4
 n@_opt1
 R5
+vdata_buffer
+Z6 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z7 !s110 1774369895
+!i10b 1
+!s100 ]EfV1ZeXZCn0i_P0L_@if2
+I86[_Vh:cdm2hmbUSBfo_d2
+S1
 R1
-T_opt2
-!s110 1772927304
-Vo1]:KM8MCk=n6J:JCe`R40
-04 3 4 work top fast 0
-=1-b4969189940d-69acb947-df9cf-30560a
-R3
-R6
+w1773358068
+8source/data_buffer.sv
+Fsource/data_buffer.sv
+!i122 1
+L0 1 160
+Z8 VDg1SIo80bB@j0V0VzS_@n1
+Z9 OL;L;2021.4;73
+r1
+!s85 0
+31
+Z10 !s108 1774369895.000000
+Z11 !s107 testbench/tb_usi_wrapper_regs.sv|source/usi_wrapper_regs.sv|source/uart_tx.sv|source/uart_rx.sv|source/top.sv|source/spi_ctrl.sv|source/reg_map.sv|source/i2c_ctrl.sv|source/datapath.sv|source/data_buffer.sv|
+Z12 !s90 -sv|source/data_buffer.sv|source/datapath.sv|source/i2c_ctrl.sv|source/reg_map.sv|source/spi_ctrl.sv|source/top.sv|source/uart_rx.sv|source/uart_tx.sv|source/usi_wrapper_regs.sv|testbench/tb_usi_wrapper_regs.sv|
+!i113 0
+Z13 o-sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 R4
-n@_opt2
-R5
-R1
 vdatapath
-Z7 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
-Z8 !s110 1772927801
+R6
+R7
 !i10b 1
 !s100 ^63n_Nm@9Sa4chjRAO`V;0
-Iki]i9SEK7<ol=VoPzh6<i0
+IT^2`fK:`e:c6>g]]OoCB<2
 S1
 R1
 w1772566397
-=======
-Z1 d/home/asicfab/a/tseng114/USI/USI
-T_opt1
-Z2 !s110 1772924451
-VhbiXMAPW?n?T8f_NMB93[3
-Z3 04 11 4 work tb_spi_ctrl fast 0
-=1-b4969189940d-69acae23-8517b-2c90f4
-Z4 !s124 OEM100
-Z5 o-quiet -auto_acc_if_foreign -work work
-Z6 tCvgOpt 0
-n@_opt1
-Z7 OL;O;2021.4;73
-R1
-T_opt2
-!s110 1772924772
-VGBU^L[>?PQHWgSSS;0]Uc1
-R3
-=1-b4969189940d-69acaf64-5449e-2cfa41
-R4
-o-quiet -auto_acc_if_foreign -work work +acc
-R6
-n@_opt2
-R7
-R1
-vdatapath
-Z8 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
-R2
-!i10b 1
-!s100 ^63n_Nm@9Sa4chjRAO`V;0
-Iih8h0OUI2;gEV6BE`8^S83
-S1
-R1
-w1772587036
->>>>>>> 30a04555965cfb7c8a57236a28b0dcacbc21b54b
 8source/datapath.sv
 Fsource/datapath.sv
-!i122 6
+!i122 1
 L0 3 208
-Z9 VDg1SIo80bB@j0V0VzS_@n1
-Z10 OL;L;2021.4;73
+R8
+R9
 r1
 !s85 0
 31
-<<<<<<< HEAD
-Z11 !s108 1772927801.000000
-Z12 !s107 source/uart_tx.sv|source/uart_rx.sv|source/top.sv|source/spi_ctrl.sv|source/reg_map.sv|source/i2c_ctrl.sv|source/datapath.sv|
-Z13 !s90 -reportprogress|300|source/datapath.sv|source/i2c_ctrl.sv|source/reg_map.sv|source/spi_ctrl.sv|source/top.sv|source/uart_rx.sv|source/uart_tx.sv|
+R10
+R11
+R12
 !i113 0
-Z14 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R13
 R4
 vi2c_ctrl
+R6
 R7
-R8
 !i10b 1
 !s100 dP6R[PDAWW>DZG9:Eg8AZ2
-IP<Nf^5T3P4cVkkLUPgfH^1
+IQkE]Z1aEIDJicX3R7[6Q]1
 S1
 R1
-w1772898024
+Z14 w1772898024
 8source/i2c_ctrl.sv
 Fsource/i2c_ctrl.sv
-!i122 6
+!i122 1
 L0 1 168
-=======
-Z11 !s108 1772924451.000000
-Z12 !s107 testbench/tb_spi_ctrl.sv|source/datapath.sv|source/spi_ctrl.sv|
-Z13 !s90 -reportprogress|300|-sv|-work|work|source/spi_ctrl.sv|source/datapath.sv|testbench/tb_spi_ctrl.sv|
-!i113 0
-Z14 o-sv -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-R6
-vspi_ctrl
 R8
-R2
+R9
+r1
+!s85 0
+31
+R10
+R11
+R12
+!i113 0
+R13
+R4
+vreg_map
+R6
+R7
+!i10b 1
+!s100 ?51KB8ObWQV>WNgGWef@]1
+IcYC:zIkK_:?;N`a<HdDH82
+S1
+R1
+w1773358208
+8source/reg_map.sv
+Fsource/reg_map.sv
+!i122 1
+L0 121 114
+R8
+R9
+r1
+!s85 0
+31
+R10
+R11
+R12
+!i113 0
+R13
+R4
+vspi_ctrl
+R6
+R7
 !i10b 1
 !s100 CIXkL`L8?OIEWBd5elTbl3
-IKJRY0J7bS]2WjA0kHA?`j0
+I1Ad:XmQKO>?f9N<9H?LPf3
 S1
 R1
-w1772592750
+R14
 8source/spi_ctrl.sv
 Fsource/spi_ctrl.sv
-!i122 6
+!i122 1
 L0 1 95
->>>>>>> 30a04555965cfb7c8a57236a28b0dcacbc21b54b
+R8
 R9
-R10
 r1
 !s85 0
 31
+R10
 R11
 R12
+!i113 0
 R13
-!i113 0
-R14
-<<<<<<< HEAD
 R4
-vtb_top
+vtb_usi_wrapper_regs
+R6
 R7
-!s110 1772927828
 !i10b 1
-!s100 Wge`7^=EDCQ:DWold^Poi0
-I?]3_M?lP_mRi<ZRb5<cDY1
+!s100 <STm?dOE@1QWghl[HJ4X23
+IO89E]`<ZANeMolPA0=Pz21
 S1
 R1
-w1772898894
-8testbench/top_tb.sv
-Ftestbench/top_tb.sv
-!i122 7
-L0 3 150
+w1773357792
+8testbench/tb_usi_wrapper_regs.sv
+Ftestbench/tb_usi_wrapper_regs.sv
+!i122 1
+L0 6 251
+R8
 R9
-R10
 r1
 !s85 0
 31
-!s108 1772927828.000000
-!s107 testbench/top_tb.sv|
-!s90 -reportprogress|300|testbench/top_tb.sv|
-!i113 0
-R14
-R4
-vtb_uart_rx_fsm_8n1
-R7
-!s110 1772926823
-!i10b 1
-!s100 c@hGWlkA>X?^KVR3Q05Y50
-IK^U^IjkRVlzo>PeXlgzSQ1
-S1
-R1
-w1772919100
-8testbench/tb_uart_rx.sv
-Ftestbench/tb_uart_rx.sv
-!i122 3
-L0 3 270
-R9
 R10
-r1
-!s85 0
-31
-!s108 1772926823.000000
-!s107 testbench/tb_uart_rx.sv|
-!s90 -reportprogress|300|testbench/tb_uart_rx.sv|
+R11
+R12
 !i113 0
-R14
+R13
 R4
 vtop
-R7
-R8
+R6
+!s110 1774370479
 !i10b 1
-!s100 COG;dIM[0J5D4Pl=a3ZWb2
-IRAU0Z^jV7^SobFgoiXg0Y0
+!s100 9=i:e[2`D4P@i1am8QjiP0
+IeS6>Ooebog30WE2G4cDEb0
 S1
 R1
-w1772898818
+w1774370294
 8source/top.sv
 Fsource/top.sv
-!i122 6
-L0 1 137
-=======
-R6
-vtb_spi_ctrl
+!i122 2
+L0 1 144
 R8
-R2
-!i10b 1
-!s100 @zL87o:]d17H6>i0zn3Db2
-I7CNG9LgaVInX[:dRPbO?E3
-S1
-R1
-w1772924417
-8testbench/tb_spi_ctrl.sv
-Ftestbench/tb_spi_ctrl.sv
-!i122 6
-L0 3 155
->>>>>>> 30a04555965cfb7c8a57236a28b0dcacbc21b54b
 R9
-R10
 r1
 !s85 0
 31
-R11
-R12
-R13
+!s108 1774370479.000000
+!s107 source/top.sv|
+!s90 -sv|source/top.sv|
 !i113 0
-R14
-<<<<<<< HEAD
+R13
 R4
 vuart_rx_fsm_8n1
+R6
 R7
-R8
 !i10b 1
 !s100 ifbBYU>87:5^;F2cieTa11
-IlTAT]AdR2SX29:]DTBdfR1
+InOV16Yz1:j`Va15>UfGUH1
 S1
 R1
 w1772902123
 8source/uart_rx.sv
 Fsource/uart_rx.sv
-!i122 6
+!i122 1
 L0 1 181
+R8
 R9
-R10
 r1
 !s85 0
 31
+R10
 R11
 R12
-R13
 !i113 0
-R14
+R13
 R4
 vuart_tx_fsm_8n1
+R6
 R7
-R8
 !i10b 1
 !s100 hH9i]ahOQh;7P?SF2NZ<D3
-IjMCmz<2BcdBBA1Fnkb0=P1
+I]RmgSBZ=5dn37`HB2MJJ>1
 S1
 R1
 w1772905010
 8source/uart_tx.sv
 Fsource/uart_tx.sv
-!i122 6
+!i122 1
 L0 1 167
+R8
 R9
-R10
 r1
 !s85 0
 31
+R10
 R11
 R12
-R13
 !i113 0
-R14
+R13
 R4
-=======
+vusi_wrapper_regs
 R6
->>>>>>> 30a04555965cfb7c8a57236a28b0dcacbc21b54b
+!s110 1774370498
+!i10b 1
+!s100 Qo0hY2>4n]9HHYM?oXX961
+IDoW:fK;95^KP:Ek2oGlQ33
+S1
+R1
+w1773358337
+8source/usi_wrapper_regs.sv
+Fsource/usi_wrapper_regs.sv
+!i122 3
+L0 27 412
+R8
+R9
+r1
+!s85 0
+31
+!s108 1774370498.000000
+!s107 source/usi_wrapper_regs.sv|
+!s90 -sv|source/usi_wrapper_regs.sv|
+!i113 0
+R13
+R4
