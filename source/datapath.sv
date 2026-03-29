@@ -1,5 +1,3 @@
-`timescale 1ns/1ps
-
 module datapath (
   input logic clk,
   input logic n_rst,
@@ -11,7 +9,6 @@ module datapath (
   input logic tx_enable, // enable transmitting data (shift out to serial_out)
   input logic msb_first, // whether to shift MSB first or LSB first
   input logic [1:0] parity_mode, // 00 = no parity, 01 = even parity, 10 = odd parity
-  input logic [2:0] data_bits, // number of data bits (5 to 8)
   input logic [7:0] data_out, 
   output logic start_bit_det,
   output logic parity_error,
@@ -26,64 +23,116 @@ typedef enum logic [2:0] {
   DATA_BITS = 3'd2,
   PARITY_BIT = 3'd3,
   STOP_BIT = 3'd4
-} shift_out_state_t;
+} shift_state_t;
 
 // Shift register state machine for RX and TX
-  shift_out_state_t state, next_state;
-  logic [2:0] data_bit_cnt, next_data_bit_cnt; // counts number of data bits shifted in/out (0 to 7)
+  shift_state_t rx_state, next_rx_state, tx_state, next_tx_state;
+  logic [2:0] rx_bit_cnt, next_rx_bit_cnt, tx_bit_cnt, next_tx_bit_cnt; // counts number of data bits shifted in/out (0 to 7)
   always_ff @(posedge clk, negedge n_rst) begin
     if (~n_rst) begin
-      state <= IDLE;
-      data_bit_cnt <= 3'd0;
+      rx_state <= IDLE;
+      tx_state <= IDLE;
+      rx_bit_cnt <= 3'd0;
+      tx_bit_cnt <= 3'd0;
     end else begin
-      state <= next_state;
-      data_bit_cnt <= next_data_bit_cnt;
+      rx_state <= next_rx_state;
+      tx_state <= next_tx_state;
+      rx_bit_cnt <= next_rx_bit_cnt;
+      tx_bit_cnt <= next_tx_bit_cnt;
     end
   end
   always_comb begin 
-    next_state = state;
-    next_data_bit_cnt = data_bit_cnt;
-    unique case (state)
+    next_rx_state = rx_state;
+    next_rx_bit_cnt = rx_bit_cnt;
+    unique case (rx_state)
       IDLE: begin
-        next_data_bit_cnt = 3'd0;
-        if (start_bit_en) begin
-          next_state = START_BIT;
+        next_rx_bit_cnt = 3'd0;
+        if (rx_enable) begin
+          next_rx_state = DATA_BITS;
         end
         else begin
-          next_state = IDLE;
+          next_rx_state = IDLE;
         end
       end
       START_BIT: begin
-        next_data_bit_cnt = 3'b0;
-        next_state = DATA_BITS;
+        next_rx_state = DATA_BITS;
       end
       DATA_BITS: begin
-        if (serial_clk && data_bit_cnt < data_bits) begin
-          next_data_bit_cnt = data_bit_cnt + 1;
+        if (serial_clk && rx_bit_cnt < 3'd7) begin
+          next_rx_bit_cnt = rx_bit_cnt + 1;
         end
-        else if (serial_clk && data_bit_cnt >= data_bits) begin
-          next_data_bit_cnt = 3'd0;
+        else if (serial_clk && rx_bit_cnt >= 3'd7) begin
+          next_rx_bit_cnt = 3'd0;
           if (parity_mode != 2'b00) begin
-            next_state = PARITY_BIT;
+            next_rx_state = PARITY_BIT;
           end
           else if (stop_bit_en) begin
-            next_state = STOP_BIT;
+            next_rx_state = STOP_BIT;
           end
           else begin
-            next_state = IDLE;
+            next_rx_state = IDLE;
           end
         end
       end
       PARITY_BIT: begin
         if (serial_clk && stop_bit_en) begin 
-          next_state = STOP_BIT; 
+          next_rx_state = STOP_BIT; 
         end
         else if (serial_clk) begin
-          next_state = IDLE;
+          next_rx_state = IDLE;
         end
       end
       STOP_BIT: begin
-        if (serial_clk) next_state = IDLE;
+        if (serial_clk) next_rx_state = IDLE;
+      end
+    endcase
+  end
+  always_comb begin
+    next_tx_state = tx_state;
+    next_tx_bit_cnt = tx_bit_cnt;
+    unique case (tx_state)
+      IDLE: begin
+        next_tx_bit_cnt = 3'd0;
+        if (tx_enable) begin
+          next_tx_state = START_BIT;
+        end
+        else begin
+          next_tx_state = IDLE;
+        end
+      end
+      START_BIT: begin
+        next_tx_bit_cnt = 3'b0;
+        if (serial_clk || !start_bit_en) begin
+          next_tx_state = DATA_BITS;
+        end
+      end
+      DATA_BITS: begin
+        if (serial_clk && tx_bit_cnt < 3'd7) begin
+          next_tx_bit_cnt = tx_bit_cnt + 1;
+        end
+        else if (serial_clk && tx_bit_cnt >= 3'd7) begin
+          next_tx_bit_cnt = 3'd0;
+          if (parity_mode != 2'b00) begin
+            next_tx_state = PARITY_BIT;
+          end
+          else if (stop_bit_en) begin
+            next_tx_state = STOP_BIT;
+          end
+          else begin
+            next_tx_state = IDLE;
+          end
+        end
+      end
+      PARITY_BIT: begin
+        if (serial_clk && stop_bit_en) begin 
+          next_tx_state = STOP_BIT; 
+        end
+        else if (serial_clk) begin
+          next_tx_state = IDLE;
+        end
+      end
+      STOP_BIT: begin
+        if (serial_clk) next_tx_state = IDLE;
       end
     endcase
   end
@@ -118,25 +167,25 @@ typedef enum logic [2:0] {
     next_parallel_in = parallel_in;
     next_parity_bit = parity_bit;
     next_stop_bit = stop_bit;
-    if (state == IDLE) begin
+    if (rx_state == IDLE) begin
       next_parallel_in = 8'b0;
       next_parity_bit = 1'b0;
       next_stop_bit = 1'b0;
     end
-    else if (rx_enable && serial_clk && !msb_first && state == DATA_BITS) begin
+    else if (rx_enable && serial_clk && !msb_first && rx_state == DATA_BITS) begin
       next_parallel_in = {serial_in, parallel_in[7:1]}; // shift in new bit LSB first
     end
-    else if (rx_enable && serial_clk && msb_first && state == DATA_BITS) begin
+    else if (rx_enable && serial_clk && msb_first && rx_state == DATA_BITS) begin
       next_parallel_in = {parallel_in[6:0], serial_in}; // shift in new bit MSB first
     end
-    else if (rx_enable && serial_clk && state == PARITY_BIT) begin
+    else if (rx_enable && serial_clk && rx_state == PARITY_BIT) begin
       next_parity_bit = serial_in;
     end
-    else if (rx_enable && serial_clk && state == STOP_BIT) begin
+    else if (rx_enable && serial_clk && rx_state == STOP_BIT) begin
       next_stop_bit = serial_in;
     end
   end
-  assign data_in = parallel_in >> (7 - data_bits); // right-align the received data bits in data_in
+  assign data_in = parallel_in; // right-align the received data bits in data_in
 
 // Shift register out
   logic [7:0] shift_out, next_shift_out; // holds the data bits being shifted out
@@ -151,7 +200,7 @@ typedef enum logic [2:0] {
     serial_out = 1'b1; // default idle high
     next_shift_out = shift_out;
     if (tx_enable) begin
-      unique case (state)
+      unique case (tx_state)
         IDLE: begin 
           serial_out = 1'b1;
           next_shift_out = data_out;
@@ -191,7 +240,7 @@ typedef enum logic [2:0] {
   always_comb begin
     parity_error = 1'b0;
     stop_error = 1'b0;
-    if (state == STOP_BIT && rx_enable) begin
+    if (rx_state == STOP_BIT && rx_enable) begin
       if (stop_bit_en && stop_bit != 1'b1) begin
         stop_error = 1'b1; // stop bit should be high
       end
