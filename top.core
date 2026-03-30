@@ -8,10 +8,8 @@ filesets:
         files:
             - source/top.sv
             - source/reg_map.sv
-<<<<<<< HEAD
-=======
             - source/data_buffer.sv
->>>>>>> 30a04555965cfb7c8a57236a28b0dcacbc21b54b
+            - source/datapath.sv
         file_type: systemVerilogSource
 
     tb:
@@ -24,22 +22,22 @@ filesets:
             - testbench/reg_map_tb.sv
         file_type: systemVerilogSource
 
-<<<<<<< HEAD
-=======
     tb_data_buffer:
         files:
             - testbench/data_buffer_tb.sv
         file_type: systemVerilogSource
 
->>>>>>> 30a04555965cfb7c8a57236a28b0dcacbc21b54b
+    tb_datapath:
+        files:
+            - testbench/datapath_tb.sv
+        file_type: systemVerilogSource
+
     lint_files:
         files:
             - source/top.sv
             - source/reg_map.sv
-<<<<<<< HEAD
-=======
             - source/data_buffer.sv
->>>>>>> 30a04555965cfb7c8a57236a28b0dcacbc21b54b
+            - source/datapath.sv
             - testbench/top_tb.sv
         file_type: systemVerilogSource
 
@@ -108,8 +106,6 @@ targets:
                     - --trace-fst
                     - --trace-structs
 
-<<<<<<< HEAD
-=======
     sim_data_buffer:
         <<: *default
         description: Simulate w/TB
@@ -139,7 +135,35 @@ targets:
                     - --trace-fst
                     - --trace-structs
 
->>>>>>> 30a04555965cfb7c8a57236a28b0dcacbc21b54b
+    sim_datapath:
+        <<: *default
+        description: Simulate w/TB
+        default_tool: verilator
+        filesets_append:
+            - "!tool_verilator? (tb_datapath)"
+            - "tool_verilator? (tb_datapath)"
+        toplevel: 
+            - "tool_verilator? (datapath_tb)"
+            - "!tool_verilator? (datapath_tb)"
+        tools:
+            xcelium:
+                xrun_options:
+                    - +xmtimescale+1ns/100ps
+            modelsim:
+                vsim_options:
+                    - -vopt
+                    - -voptargs='+acc'
+                    - -t ps
+            vcs:
+                vcs_options:
+                    - -assert svaext
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --trace
+                    - --trace-fst
+                    - --trace-structs
+
     fpga:
         <<: *default
         description: Synthesize for FPGA
