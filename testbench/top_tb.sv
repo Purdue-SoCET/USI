@@ -1,155 +1,3 @@
-<<<<<<< HEAD
-`timescale 1ns/1ps
-
-module tb_top;
-
-  logic clk;
-  logic n_rst;
-  logic enable;
-  logic tx_req;
-  logic rx_activity;
-  logic [1:0] mode;
-  logic uart_done;
-  logic uart_err;
-  logic i2c_done;
-  logic i2c_err;
-  logic spi_done;
-  logic spi_err;
-  logic usi_busy;
-  logic engines_off;
-  logic latch_mode;
-  logic uart_en;
-  logic i2c_en;
-  logic spi_en;
-
-  // DUT
-  top dut (
-    .clk(clk),
-    .n_rst(n_rst),
-    .enable(enable),
-    .tx_req(tx_req),
-    .rx_activity(rx_activity),
-    .mode(mode),
-    .uart_done(uart_done),
-    .uart_err(uart_err),
-    .i2c_done(i2c_done),
-    .i2c_err(i2c_err),
-    .spi_done(spi_done),
-    .spi_err(spi_err),
-    .usi_busy(usi_busy),
-    .engines_off(engines_off),
-    .latch_mode(latch_mode),
-    .uart_en(uart_en),
-    .i2c_en(i2c_en),
-    .spi_en(spi_en)
-  );
-
-  // Clock generation
-  initial begin
-    clk = 1'b0;
-    forever #5 clk = ~clk;
-  end
-
-  // Main stimulus
-  initial begin
-    // Initialize everything
-    n_rst       = 1'b0;
-    enable      = 1'b0;
-    tx_req      = 1'b0;
-    rx_activity = 1'b0;
-    mode        = 2'b00;
-    uart_done   = 1'b0;
-    uart_err    = 1'b0;
-    i2c_done    = 1'b0;
-    i2c_err     = 1'b0;
-    spi_done    = 1'b0;
-    spi_err     = 1'b0;
-
-    // Reset
-    @(negedge clk);
-    n_rst = 1'b0;
-    @(negedge clk);
-    n_rst = 1'b1;
-
-    // -----------------------------------
-    // 1) IDLE -> DISPATCH -> UART_ENGINE -> RETURN_IDLE -> IDLE
-    // -----------------------------------
-    @(negedge clk);
-    enable = 1'b1;
-    tx_req = 1'b1;
-    mode   = 2'b00;
-
-    @(negedge clk);
-    tx_req = 1'b0;   // request only needs to be seen once
-
-    @(negedge clk);
-    uart_done = 1'b1;
-
-    @(negedge clk);
-    uart_done = 1'b0;
-    enable    = 1'b0;
-
-    // -----------------------------------
-    // 2) IDLE -> DISPATCH -> I2C_ENGINE -> RETURN_IDLE -> IDLE
-    // -----------------------------------
-    @(negedge clk);
-    enable      = 1'b1;
-    rx_activity = 1'b1;
-    mode        = 2'b01;
-
-    @(negedge clk);
-    rx_activity = 1'b0;
-
-    @(negedge clk);
-    i2c_done = 1'b1;
-
-    @(negedge clk);
-    i2c_done = 1'b0;
-    enable   = 1'b0;
-
-    // -----------------------------------
-    // 3) IDLE -> DISPATCH -> SPI_ENGINE -> RETURN_IDLE -> IDLE
-    // -----------------------------------
-    @(negedge clk);
-    enable = 1'b1;
-    tx_req = 1'b1;
-    mode   = 2'b10;
-
-    @(negedge clk);
-    tx_req = 1'b0;
-
-    @(negedge clk);
-    spi_done = 1'b1;
-
-    @(negedge clk);
-    spi_done = 1'b0;
-    enable   = 1'b0;
-
-    // -----------------------------------
-    // 4) Optional: invalid mode goes to RETURN_IDLE
-    // -----------------------------------
-    @(negedge clk);
-    enable = 1'b1;
-    tx_req = 1'b1;
-    mode   = 2'b11;
-
-    @(negedge clk);
-    tx_req  = 1'b0;
-    enable  = 1'b0;
-
-    repeat (3) @(negedge clk);
-
-    $finish;
-  end
-
-  // Monitor
-  initial begin
-    $monitor("T=%0t | state=%0d | en=%b tx_req=%b rx_act=%b mode=%b | uart_done=%b i2c_done=%b spi_done=%b | usi_busy=%b engines_off=%b latch_mode=%b uart_en=%b i2c_en=%b spi_en=%b",
-              $time, dut.state, enable, tx_req, rx_activity, mode,
-              uart_done, i2c_done, spi_done,
-              usi_busy, engines_off, latch_mode, uart_en, i2c_en, spi_en);
-  end
-=======
 module top_tb;
 
     logic CLK;
@@ -158,6 +6,13 @@ module top_tb;
     logic load;
     logic send;
     logic [7:0] data_in;
+    logic rx_line;
+    logic spi_miso;
+
+    logic tx_out;
+    logic spi_mosi;
+    logic serial_clk;
+    logic [3:0] spi_cs_n;
     logic [7:0] data_out;
     logic [7:0] buffer_occupancy;
 
@@ -170,6 +25,12 @@ module top_tb;
         .load(load),
         .send(send),
         .data_in(data_in),
+        .rx_line(rx_line),
+        .spi_miso(spi_miso),
+        .tx_out(tx_out),
+        .spi_mosi(spi_mosi),
+        .serial_clk(serial_clk),
+        .spi_cs_n(spi_cs_n),
         .data_out(data_out),
         .buffer_occupancy(buffer_occupancy)
     );
@@ -181,7 +42,8 @@ module top_tb;
     int fail = 0;
 
     logic [31:0] rdata;
-    logic [7:0] b0, b1, b2, b3;
+    logic [7:0] occ_before;
+    logic [7:0] occ_after;
 
     task reset_dut;
     begin
@@ -194,6 +56,8 @@ module top_tb;
         load = 1'b0;
         send = 1'b0;
         data_in = 8'h00;
+        rx_line = 1'b1;
+        spi_miso = 1'b0;
 
         repeat (2) @(posedge CLK);
         nRST = 1'b1;
@@ -211,6 +75,8 @@ module top_tb;
         bpif.ren    = 1'b0;
 
         @(posedge CLK);
+        #1;
+
         @(negedge CLK);
         bpif.wen    = 1'b0;
         bpif.addr   = 32'h0;
@@ -249,13 +115,10 @@ module top_tb;
     end
     endtask
 
-    task send_byte(output logic [7:0] dout);
+    task pulse_send;
     begin
         @(negedge CLK);
         send = 1'b1;
-
-        #1;
-        dout = data_out;
 
         @(posedge CLK);
         @(negedge CLK);
@@ -279,9 +142,14 @@ module top_tb;
     initial begin
         $dumpfile("waveform.fst");
         $dumpvars(0, top_tb);
+
         reset_dut();
 
-        write(32'h0, 32'h2, 4'hF);
+        check("serial_clk placeholder", 32'h00000000, {31'h0, serial_clk});
+        check("spi_mosi placeholder",   32'h00000000, {31'h0, spi_mosi});
+        check("spi_cs_n placeholder",   32'h0000000F, {28'h0, spi_cs_n});
+
+        write(32'h0, 32'h00000002, 4'hF);
         read(32'h0, rdata);
         check("mode_sel", 32'h00000002, rdata);
 
@@ -298,25 +166,37 @@ module top_tb;
         load_byte(8'h33);
         load_byte(8'h44);
 
+        @(posedge CLK);
+        check("buffer occupancy after 4 loads", 32'h00000004, {24'h0, buffer_occupancy});
+
         read(32'h10, rdata);
-        check("RX pop", 32'h44332211, rdata);
+        check("buffer read/pop", 32'h44332211, rdata);
+
+        @(posedge CLK);
+        check("buffer occupancy after pop", 32'h00000000, {24'h0, buffer_occupancy});
 
         write(32'hC, 32'hAABBCCDD, 4'hF);
+        read(32'hC, rdata);
+        check("tx_data", 32'hAABBCCDD, rdata);
 
-        send_byte(b0);
-        send_byte(b1);
-        send_byte(b2);
-        send_byte(b3);
+        @(posedge CLK);
+        check("buffer occupancy after tx write push", 32'h00000004, {24'h0, buffer_occupancy});
 
-        check("TX byte0", 32'h000000DD, {24'h0, b0});
-        check("TX byte1", 32'h000000CC, {24'h0, b1});
-        check("TX byte2", 32'h000000BB, {24'h0, b2});
-        check("TX byte3", 32'h000000AA, {24'h0, b3});
+        pulse_send();
+        check("serial_clk after send pulse", 32'h00000000, {31'h0, serial_clk});
+        check("spi_mosi after send pulse",   32'h00000000, {31'h0, spi_mosi});
+        check("spi_cs_n after send pulse",   32'h0000000F, {28'h0, spi_cs_n});
+
+        @(posedge CLK);
+        occ_before = buffer_occupancy;
 
         load_byte(8'h55);
         load_byte(8'h66);
+
         @(posedge CLK);
-        check("buffer occupancy", 32'h00000002, {24'h0, buffer_occupancy});
+        occ_after = buffer_occupancy;
+        check("buffer occupancy increment by 2", 32'h00000002, {24'h0, (occ_after - occ_before)});
+        check("buffer occupancy final", 32'h00000005, {24'h0, buffer_occupancy});
 
         write(32'h20, 32'hDEADBEEF, 4'hF);
         if (bpif.error) begin
@@ -352,6 +232,5 @@ module top_tb;
         #20;
         $finish;
     end
->>>>>>> 30a04555965cfb7c8a57236a28b0dcacbc21b54b
 
 endmodule
