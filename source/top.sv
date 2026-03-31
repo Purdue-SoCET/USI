@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 module top(
     input logic CLK, nRST,
     bus_protocol_if.peripheral_vital bpif,
@@ -35,59 +34,31 @@ module top(
     logic [7:0] uart_rx_data_out;
 
     logic push_rx_fifo;
-=======
-module top (
-    input  logic       clk,
-    input  logic       n_rst,
-    input  logic       enable,
-    input  logic       tx_req,
-    input  logic       rx_activity,
-    input  logic [1:0] mode,
-    input  logic       uart_done,
-    input  logic       uart_err,
-    input  logic       i2c_done,
-    input  logic       i2c_err,
-    input  logic       spi_done,
-    input  logic       spi_err,
 
-    output logic       usi_busy,
-    output logic       engines_off,
-    output logic       latch_mode,
-    output logic       uart_en,
-    output logic       i2c_en,
-    output logic       spi_en
-);
+    logic start_bit_det;
+    logic parity_error;
+    logic stop_error;
 
-    typedef enum logic [2:0] {
-        IDLE,
-        LATCH,
-        UART_ENGINE,
-        I2C_ENGINE,
-        SPI_ENGINE,
-        RETURN_IDLE
-    } state_t;
+    logic start_bit_en;
+    logic stop_bit_en;
+    logic rx_enable;
+    logic tx_enable;
+    logic msb_first;
+    logic [1:0] parity_mode;
 
-    state_t state, next_state;
+    assign ctrl_unit_error = 1'b0;
 
-    logic [1:0] latched_mode;
+    assign start_bit_en = 1'b1;
+    assign stop_bit_en  = 1'b1;
+    assign rx_enable    = 1'b0;
+    assign tx_enable    = send;
+    assign msb_first    = configuration[0];
+    assign parity_mode  = configuration[2:1];
 
-    // ---------------------------
-    // State register
-    // ---------------------------
-    always_ff @(posedge clk or negedge n_rst) begin
-        if (!n_rst) begin
-            state <= IDLE;
-            latched_mode <= 2'b00;
-        end else begin
-            state <= next_state;
->>>>>>> bd284691b7b8c9fd2f5848a815d7c6a2155b8d04
+    assign serial_clk = 1'b0;
+    assign spi_mosi   = 1'b0;
+    assign spi_cs_n   = 4'b1111;
 
-            if (state == LATCH)
-                latched_mode <= mode;
-        end
-    end
-
-<<<<<<< HEAD
     reg_map REG_MAP (
         .bpif(bpif),
         .CLK(CLK),
@@ -119,7 +90,28 @@ module top (
         .buffer_occupancy(buffer_occupancy)
     );
 
-    control_unit CONTROL_UNIT (
+    datapath DATAPATH (
+        .clk(CLK),
+        .n_rst(nRST),
+        .serial_in(rx_line),
+        .start_bit_en(start_bit_en),
+        .stop_bit_en(stop_bit_en),
+        .rx_enable(rx_enable),
+        .serial_clk(serial_clk),
+        .tx_enable(tx_enable),
+        .msb_first(msb_first),
+        .parity_mode(parity_mode),
+        .data_out(data_out),
+        .start_bit_det(start_bit_det),
+        .parity_error(parity_error),
+        .stop_error(stop_error),
+        .serial_out(tx_out),
+        .data_in(uart_rx_data_out)
+    );
+
+    //TO FIX LATER
+
+  /*  control_unit CONTROL_UNIT (
         .clk(CLK),
         .n_rst(nRST),
         .enable(send),
@@ -131,141 +123,6 @@ module top (
         .usi_busy(usi_busy)
     );
 
-    spi_ctrl SPI_INST (
-        .clk(CLK),
-        .n_rst(nRST),
-        .spi_en(spi_en),
-        .tx_data(tx_data[7:0]),
-        .miso(spi_miso),
-        .mosi(spi_mosi),
-        .sclk(serial_clk),
-        .cs_n(spi_cs_n),
-        .data_out(spi_data_out),
-        .done(done)
-    );
-
-    i2c_ctrl I2C_INST (
-        .clk(CLK),
-        .n_rst(nRST),
-        .i2c_en(i2c_en),
-        .tx_data(tx_data[7:0]),
-        .data_out(i2c_data_out),
-        .done(done)
-    );
-
-    uart_tx_fsm_8n1 UART_TX_INST (
-        .clk(CLK),
-        .n_rst(nRST),
-        .tx_enable(uart_en),
-        .tx_data(tx_data[7:0]),
-        .tx_out(tx_out),
-        .done(done)
-    );
-
-    uart_rx_fsm_8n1 UART_RX_INST (
-        .clk(CLK),
-        .n_rst(nRST),
-        .rx_enable(uart_en),
-        .rx_line(rx_line),
-        .rx_byte_out(uart_rx_data_out),
-        .push_rx_fifo(push_rx_fifo)
-    );
+    */
 
 endmodule
-
-=======
-    // ---------------------------
-    // Next-state logic
-    // ---------------------------
-    always_comb begin
-        next_state = state;
-
-        case (state)
-            IDLE: begin
-                if (enable && (tx_req || rx_activity))
-                    next_state = LATCH;
-            end
-
-            LATCH: begin
-                case (mode)
-                    2'b00: next_state = UART_ENGINE;
-                    2'b01: next_state = SPI_ENGINE;
-                    2'b10: next_state = I2C_ENGINE;
-                    default: next_state = RETURN_IDLE;
-                endcase
-            end
-
-            UART_ENGINE: begin
-                if (uart_done || uart_err)
-                    next_state = RETURN_IDLE;
-            end
-
-            SPI_ENGINE: begin
-                if (spi_done || spi_err)
-                    next_state = RETURN_IDLE;
-            end
-
-            I2C_ENGINE: begin
-                if (i2c_done || i2c_err)
-                    next_state = RETURN_IDLE;
-            end
-
-            RETURN_IDLE: begin
-                next_state = IDLE;
-            end
-
-            default: begin
-                next_state = IDLE;
-            end
-        endcase
-    end
-
-    // ---------------------------
-    // Output logic
-    // ---------------------------
-    always_comb begin
-        // defaults
-        usi_busy    = 1'b0;
-        engines_off = 1'b0;
-        latch_mode  = 1'b0;
-        uart_en     = 1'b0;
-        i2c_en      = 1'b0;
-        spi_en      = 1'b0;
-
-        case (state)
-            IDLE: begin
-                engines_off = 1'b1;
-            end
-
-            LATCH: begin
-                latch_mode = 1'b1;
-                usi_busy   = 1'b1;
-            end
-
-            UART_ENGINE: begin
-                usi_busy = 1'b1;
-                uart_en  = 1'b1;
-            end
-
-            SPI_ENGINE: begin
-                usi_busy = 1'b1;
-                spi_en   = 1'b1;
-            end
-
-            I2C_ENGINE: begin
-                usi_busy = 1'b1;
-                i2c_en   = 1'b1;
-            end
-
-            RETURN_IDLE: begin
-                usi_busy = 1'b0;
-            end
-
-            default: begin
-                engines_off = 1'b1;
-            end
-        endcase
-    end
-
-endmodule
->>>>>>> bd284691b7b8c9fd2f5848a815d7c6a2155b8d04
