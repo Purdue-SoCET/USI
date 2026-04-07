@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Sun Mar 29 22:16:23 2026
+[*] Tue Apr  7 16:27:23 2026
 [*]
 [dumpfile] "/home/jason/SoCET/USI/build/socet_aft_USI_0.1.0/sim_datapath-verilator/waveform.fst"
-[dumpfile_mtime] "Sun Mar 29 22:14:53 2026"
-[dumpfile_size] 1621
+[dumpfile_mtime] "Tue Apr  7 16:24:25 2026"
+[dumpfile_size] 1805
 [savefile] "/home/jason/SoCET/USI/waves/datapath.gtkw"
 [timestart] 0
 [size] 1908 1095
-[pos] -206 -362
-*-8.754681 335 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 32735 32735
+*-8.754681 2599 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] datapath_tb.
 [sst_width] 293
 [signals_width] 273
@@ -33,6 +33,7 @@ datapath_tb.data_in[7:0]
 @28
 datapath_tb.DUT.parity_bit
 datapath_tb.DUT.stop_bit
+datapath_tb.rx_ready
 @200
 -TX
 @28
@@ -43,5 +44,7 @@ datapath_tb.DUT.tx_state[2:0]
 datapath_tb.data_out[7:0]
 @28
 datapath_tb.serial_out
+@29
+datapath_tb.tx_ready
 [pattern_trace] 1
 [pattern_trace] 0

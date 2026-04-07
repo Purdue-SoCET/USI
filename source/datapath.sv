@@ -10,11 +10,16 @@ module datapath (
   input logic msb_first, // whether to shift MSB first or LSB first
   input logic [1:0] parity_mode, // 00 = no parity, 01 = even parity, 10 = odd parity
   input logic [7:0] data_out, 
+  // input logic [7:0] i2c_addr, // for I2C mode, the 7-bit address to send followed by a 0 for write or 1 for read
   output logic start_bit_det,
   output logic parity_error,
   output logic stop_error,
   output logic serial_out,
-  output logic [7:0] data_in
+  output logic [7:0] data_in,
+  output logic rx_ready, // indicates a full byte has been received and is ready in data_in
+  output logic tx_ready // indicates data_out is ready to be transmitted
+  // output logic rx_busy,
+  // output logic tx_busy
 );
 
 typedef enum logic [2:0] { 
@@ -28,26 +33,35 @@ typedef enum logic [2:0] {
 // Shift register state machine for RX and TX
   shift_state_t rx_state, next_rx_state, tx_state, next_tx_state;
   logic [2:0] rx_bit_cnt, next_rx_bit_cnt, tx_bit_cnt, next_tx_bit_cnt; // counts number of data bits shifted in/out (0 to 7)
+  logic next_rx_ready, next_tx_ready;
   always_ff @(posedge clk, negedge n_rst) begin
     if (~n_rst) begin
       rx_state <= IDLE;
       tx_state <= IDLE;
       rx_bit_cnt <= 3'd0;
       tx_bit_cnt <= 3'd0;
+      rx_ready <= 1'b0;
+      tx_ready <= 1'b0;
     end else begin
       rx_state <= next_rx_state;
       tx_state <= next_tx_state;
       rx_bit_cnt <= next_rx_bit_cnt;
       tx_bit_cnt <= next_tx_bit_cnt;
+      rx_ready <= next_rx_ready;
+      tx_ready <= next_tx_ready;
     end
   end
   always_comb begin 
     next_rx_state = rx_state;
     next_rx_bit_cnt = rx_bit_cnt;
-    unique case (rx_state)
+    next_rx_ready = 1'b0;
+    unique casez (rx_state)
       IDLE: begin
         next_rx_bit_cnt = 3'd0;
-        if (rx_enable) begin
+        if (rx_enable && start_bit_en) begin
+          next_rx_state = START_BIT;
+        end
+        else if (rx_enable) begin
           next_rx_state = DATA_BITS;
         end
         else begin
@@ -55,7 +69,9 @@ typedef enum logic [2:0] {
         end
       end
       START_BIT: begin
-        next_rx_state = DATA_BITS;
+        if (serial_clk) begin
+          next_rx_state = DATA_BITS;
+        end
       end
       DATA_BITS: begin
         if (serial_clk && rx_bit_cnt < 3'd7) begin
@@ -71,6 +87,7 @@ typedef enum logic [2:0] {
           end
           else begin
             next_rx_state = IDLE;
+            next_rx_ready = 1'b1;
           end
         end
       end
@@ -80,29 +97,41 @@ typedef enum logic [2:0] {
         end
         else if (serial_clk) begin
           next_rx_state = IDLE;
+          next_rx_ready = 1'b1;
         end
       end
       STOP_BIT: begin
-        if (serial_clk) next_rx_state = IDLE;
+        if (serial_clk) begin
+          next_rx_state = IDLE;
+          next_rx_ready = 1'b1;
+        end
       end
     endcase
   end
   always_comb begin
     next_tx_state = tx_state;
     next_tx_bit_cnt = tx_bit_cnt;
-    unique case (tx_state)
+    next_tx_ready = 1'b0;
+    unique casez (tx_state)
       IDLE: begin
         next_tx_bit_cnt = 3'd0;
-        if (tx_enable) begin
+        next_tx_ready = 1'b1;
+        if (tx_enable && start_bit_en) begin
           next_tx_state = START_BIT;
+          next_tx_ready = 1'b0;
         end
+        else if (tx_enable) begin
+          next_tx_state = DATA_BITS;
+          next_tx_bit_cnt = 3'd0;
+          next_tx_ready = 1'b0;
+         end
         else begin
           next_tx_state = IDLE;
         end
       end
       START_BIT: begin
         next_tx_bit_cnt = 3'b0;
-        if (serial_clk || !start_bit_en) begin
+        if (serial_clk) begin
           next_tx_state = DATA_BITS;
         end
       end
@@ -120,6 +149,7 @@ typedef enum logic [2:0] {
           end
           else begin
             next_tx_state = IDLE;
+            next_tx_ready = 1'b1;
           end
         end
       end
@@ -129,10 +159,14 @@ typedef enum logic [2:0] {
         end
         else if (serial_clk) begin
           next_tx_state = IDLE;
+          next_tx_ready = 1'b1;
         end
       end
       STOP_BIT: begin
-        if (serial_clk) next_tx_state = IDLE;
+        if (serial_clk) begin
+          next_tx_state = IDLE;
+          next_tx_ready = 1'b1;
+        end
       end
     endcase
   end
@@ -142,11 +176,11 @@ typedef enum logic [2:0] {
   always_ff @(posedge clk, negedge n_rst) begin
     if (~n_rst) begin
       serial_in_reg <= 1'b1; // idle state is high
-    end else begin
+    end else if (serial_clk) begin
       serial_in_reg <= serial_in;
     end
   end
-  assign start_bit_det = (serial_in_reg == 1'b1) && (serial_in == 1'b0);
+  assign start_bit_det = (serial_in_reg == 1'b1) && (serial_in == 1'b0) && start_bit_en; // detect falling edge of serial_in when start_bit_en is high
 
 // Shift register in
   logic [7:0] parallel_in, next_parallel_in; // 1 start bit + 8 data bits + 1 parity bit + 1 stop bit
@@ -172,16 +206,16 @@ typedef enum logic [2:0] {
       next_parity_bit = 1'b0;
       next_stop_bit = 1'b0;
     end
-    else if (rx_enable && serial_clk && !msb_first && rx_state == DATA_BITS) begin
+    else if (serial_clk && !msb_first && rx_state == DATA_BITS) begin
       next_parallel_in = {serial_in, parallel_in[7:1]}; // shift in new bit LSB first
     end
-    else if (rx_enable && serial_clk && msb_first && rx_state == DATA_BITS) begin
+    else if (serial_clk && msb_first && rx_state == DATA_BITS) begin
       next_parallel_in = {parallel_in[6:0], serial_in}; // shift in new bit MSB first
     end
-    else if (rx_enable && serial_clk && rx_state == PARITY_BIT) begin
+    else if (serial_clk && rx_state == PARITY_BIT) begin
       next_parity_bit = serial_in;
     end
-    else if (rx_enable && serial_clk && rx_state == STOP_BIT) begin
+    else if (serial_clk && rx_state == STOP_BIT) begin
       next_stop_bit = serial_in;
     end
   end
@@ -199,41 +233,39 @@ typedef enum logic [2:0] {
   always_comb begin // shift register output logic
     serial_out = 1'b1; // default idle high
     next_shift_out = shift_out;
-    if (tx_enable) begin
-      unique case (tx_state)
-        IDLE: begin 
-          serial_out = 1'b1;
-          next_shift_out = data_out;
-        end
-        START_BIT: begin
-          serial_out = 1'b0;
-          next_shift_out = data_out;
-        end
-        DATA_BITS: begin
-          if (!msb_first) begin
-            serial_out = shift_out[0];
-            if (serial_clk) begin
-              next_shift_out = {1'b0, shift_out[7:1]};
-            end
-          end
-          else begin
-            serial_out = shift_out[7];
-            if (serial_clk) begin
-              next_shift_out = {shift_out[6:0], 1'b0};
-            end
+    unique case (tx_state)
+      IDLE: begin 
+        serial_out = 1'b1;
+        next_shift_out = data_out;
+      end
+      START_BIT: begin
+        serial_out = 1'b0;
+        // next_shift_out = data_out;
+      end
+      DATA_BITS: begin
+        if (!msb_first) begin
+          serial_out = shift_out[0];
+          if (serial_clk) begin
+            next_shift_out = {1'b0, shift_out[7:1]};
           end
         end
-        PARITY_BIT: begin
-          if (parity_mode == 2'b01) begin // even parity
-            serial_out = (^data_out);
-          end
-          else if (parity_mode == 2'b10) begin // odd parity
-            serial_out = ~(^data_out);
+        else begin
+          serial_out = shift_out[7];
+          if (serial_clk) begin
+            next_shift_out = {shift_out[6:0], 1'b0};
           end
         end
-        STOP_BIT: serial_out = 1'b1;
-      endcase
-    end
+      end
+      PARITY_BIT: begin
+        if (parity_mode == 2'b01) begin // even parity
+          serial_out = (^data_out);
+        end
+        else if (parity_mode == 2'b10) begin // odd parity
+          serial_out = ~(^data_out);
+        end
+      end
+      STOP_BIT: serial_out = 1'b1;
+    endcase
   end
 
 // Bit check for RX
