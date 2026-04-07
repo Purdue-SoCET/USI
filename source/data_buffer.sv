@@ -11,7 +11,8 @@ module data_buffer (
     input logic send,
     output logic [7:0] data_out,
     output logic [31:0] buffer_read,
-    output logic [7:0] buffer_occupancy
+    output logic [7:0] buffer_occupancy,
+    output logic [7:0] tx_buffer_occupancy
 );
 
     logic [7:0] mem [255:0];
@@ -156,5 +157,6 @@ module data_buffer (
         n_buffer_occupancy = n_occupancy1 + n_occupancy2;
     end
 
+    assign tx_buffer_occupancy = occupancy2;
 
 endmodule

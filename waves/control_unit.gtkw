@@ -1,0 +1,69 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Tue Apr  7 18:02:53 2026
+[*]
+[dumpfile] "/home/jason/SoCET/USI/build/socet_aft_USI_0.1.0/sim_control_unit-verilator/waveform.fst"
+[dumpfile_mtime] "Tue Apr  7 18:01:21 2026"
+[dumpfile_size] 2789
+[savefile] "/home/jason/SoCET/USI/waves/control_unit.gtkw"
+[timestart] 2965
+[size] 1908 1095
+[pos] -1 -1
+*-9.331388 6356 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] control_unit_tb.
+[sst_width] 214
+[signals_width] 312
+[sst_expanded] 1
+[sst_vpaned_height] 326
+@100000028
+control_unit_tb.clk
+@28
+control_unit_tb.n_rst
+@100000029
+control_unit_tb.cu.state[1:0]
+@22
+control_unit_tb.clkdiv[31:0]
+@28
+control_unit_tb.serial_clk
+@22
+control_unit_tb.configuration[31:0]
+control_unit_tb.cs_n[31:0]
+@28
+control_unit_tb.ctrl_unit_error
+control_unit_tb.mode_select[1:0]
+control_unit_tb.msb_first
+control_unit_tb.parity_error
+control_unit_tb.stop_error
+control_unit_tb.start_bit_en
+control_unit_tb.stop_bit_en
+control_unit_tb.parity_mode[1:0]
+@200
+-RX
+@100000028
+control_unit_tb.dp.rx_state[2:0]
+@28
+control_unit_tb.start_bit_det
+control_unit_tb.rx_enable
+control_unit_tb.serial_in
+@22
+control_unit_tb.data_in[7:0]
+@28
+control_unit_tb.rx_ready
+control_unit_tb.load
+@200
+-TX
+@100000028
+control_unit_tb.dp.tx_state[2:0]
+@28
+control_unit_tb.tx_enable
+@22
+control_unit_tb.data_out[7:0]
+@28
+control_unit_tb.serial_out
+control_unit_tb.send
+@22
+control_unit_tb.tx_buffer_occupancy[7:0]
+@28
+control_unit_tb.tx_ready
+[pattern_trace] 1
+[pattern_trace] 0
