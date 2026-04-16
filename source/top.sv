@@ -16,6 +16,12 @@ module top(
     logic [7:0] data_in;
     logic [7:0] data_out;
     logic [7:0] buffer_occupancy;
+<<<<<<< HEAD
+=======
+    logic [7:0] tx_buffer_occupancy;
+    logic rx_ready;
+    logic tx_ready;
+>>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3
     logic load;
     logic send;
 
@@ -63,7 +69,29 @@ module top(
         .send(send),
         .data_out(data_out),
         .buffer_read(buffer_read),
-        .buffer_occupancy(buffer_occupancy)
+        .buffer_occupancy(buffer_occupancy),
+        .tx_buffer_occupancy(tx_buffer_occupancy)
+    );
+
+    datapath DATAPATH (
+        .clk(CLK),
+        .n_rst(nRST),
+        .serial_in(serial_in),
+        .start_bit_en(start_bit_en),
+        .stop_bit_en(stop_bit_en),
+        .rx_enable(rx_enable),
+        .serial_clk(serial_clk),
+        .tx_enable(tx_enable),
+        .msb_first(msb_first),
+        .parity_mode(parity_mode),
+        .data_out(data_out),
+        .start_bit_det(start_bit_det),
+        .parity_error(parity_error),
+        .stop_error(stop_error),
+        .serial_out(serial_out),
+        .data_in(data_in),
+        .rx_ready(rx_ready),
+        .tx_ready(tx_ready)
     );
 
     datapath DATAPATH (
@@ -94,7 +122,14 @@ module top(
         .start_bit_det(start_bit_det),
         .parity_error(parity_error),
         .stop_error(stop_error),
+<<<<<<< HEAD
         .buffer_occupancy(buffer_occupancy),
+=======
+        .rx_ready(rx_ready),
+        .tx_ready(tx_ready),
+        .buffer_occupancy(buffer_occupancy),
+        .tx_buffer_occupancy(tx_buffer_occupancy),
+>>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3
         .ctrl_unit_error(ctrl_unit_error),
         .cs_n(spi_cs_n),
         .parity_mode(parity_mode),
@@ -108,4 +143,8 @@ module top(
         .send(send)
     );
 
+<<<<<<< HEAD
 endmodule
+=======
+endmodule
+>>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3

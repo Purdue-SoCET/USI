@@ -1,13 +1,32 @@
+<<<<<<< HEAD
 `timescale 1ns/1ps
 
+=======
+>>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3
 module top_tb;
 
     logic CLK;
     logic nRST;
+<<<<<<< HEAD
     logic serial_in;
     logic serial_out;
     logic serial_clk;
     logic [31:0] spi_cs_n;
+=======
+
+    logic load;
+    logic send;
+    logic [7:0] data_in;
+    logic rx_line;
+    logic spi_miso;
+
+    logic tx_out;
+    logic spi_mosi;
+    logic serial_clk;
+    logic [3:0] spi_cs_n;
+    logic [7:0] data_out;
+    logic [7:0] buffer_occupancy;
+>>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3
 
     bus_protocol_if bpif();
 
@@ -15,10 +34,24 @@ module top_tb;
         .CLK(CLK),
         .nRST(nRST),
         .bpif(bpif),
+<<<<<<< HEAD
         .serial_in(serial_in),
         .serial_out(serial_out),
         .serial_clk(serial_clk),
         .spi_cs_n(spi_cs_n)
+=======
+        .load(load),
+        .send(send),
+        .data_in(data_in),
+        .rx_line(rx_line),
+        .spi_miso(spi_miso),
+        .tx_out(tx_out),
+        .spi_mosi(spi_mosi),
+        .serial_clk(serial_clk),
+        .spi_cs_n(spi_cs_n),
+        .data_out(data_out),
+        .buffer_occupancy(buffer_occupancy)
+>>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3
     );
 
     initial CLK = 1'b0;
@@ -28,6 +61,13 @@ module top_tb;
     int pass = 0;
     int fail = 0;
 
+<<<<<<< HEAD
+=======
+    logic [31:0] rdata;
+    logic [7:0] occ_before;
+    logic [7:0] occ_after;
+
+>>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3
     task reset_dut;
     begin
         nRST = 1'b0;
@@ -36,12 +76,22 @@ module top_tb;
         bpif.addr = 32'h0;
         bpif.wdata = 32'h0;
         bpif.strobe = 4'hF;
+<<<<<<< HEAD
         bpif.is_burst = 1'b0;
         bpif.burst_type = 2'b00;
         bpif.burst_length = 8'h00;
         bpif.secure_transfer = 1'b0;
         serial_in = 1'b0;
         repeat (4) @(posedge CLK);
+=======
+        load = 1'b0;
+        send = 1'b0;
+        data_in = 8'h00;
+        rx_line = 1'b1;
+        spi_miso = 1'b0;
+
+        repeat (2) @(posedge CLK);
+>>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3
         nRST = 1'b1;
         repeat (4) @(posedge CLK);
     end
@@ -56,6 +106,8 @@ module top_tb;
         bpif.wen    = 1'b1;
         bpif.ren    = 1'b0;
         @(posedge CLK);
+        #1;
+
         @(negedge CLK);
         bpif.wen    = 1'b1;
         bpif.addr   = 32'h0;
@@ -78,6 +130,33 @@ module top_tb;
     end
     endtask
 
+<<<<<<< HEAD
+=======
+    task load_byte(input logic [7:0] din);
+    begin
+        @(negedge CLK);
+        data_in = din;
+        load    = 1'b1;
+
+        @(posedge CLK);
+        @(negedge CLK);
+        load    = 1'b0;
+        data_in = 8'h00;
+    end
+    endtask
+
+    task pulse_send;
+    begin
+        @(negedge CLK);
+        send = 1'b1;
+
+        @(posedge CLK);
+        @(negedge CLK);
+        send = 1'b0;
+    end
+    endtask
+
+>>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3
     task check(input string name, input logic [31:0] expected, input logic [31:0] actual);
     begin
         if (expected === actual) begin

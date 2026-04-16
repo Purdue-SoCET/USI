@@ -16,6 +16,8 @@ module datapath_tb;
   logic stop_error;
   logic serial_out;
   logic [7:0] data_in;
+  logic rx_ready;
+  logic tx_ready;
 
   always begin
     clk = ~clk;
@@ -38,15 +40,17 @@ module datapath_tb;
     .parity_error(parity_error),
     .stop_error(stop_error),
     .serial_out(serial_out),
-    .data_in(data_in)
+    .data_in(data_in),
+    .rx_ready(rx_ready),
+    .tx_ready(tx_ready)
   );
 
   task serial_clk_tick();
     begin
       serial_clk = 1;
-      @(negedge clk);
+      @(posedge clk);
       serial_clk = 0;
-      repeat(10) @(negedge clk);
+      repeat(10) @(posedge clk);
     end
   endtask
 
@@ -56,7 +60,6 @@ module datapath_tb;
       serial_in = 1;
       start_bit_en = 0;
       stop_bit_en = 0;
-      rx_enable = 0;
       serial_clk = 0;
       tx_enable = 0;
       msb_first = 0;
@@ -81,7 +84,6 @@ module datapath_tb;
       stop_bit_en = stop_bit;
       parity_mode = parity;
       msb_first = msb_first;
-      rx_enable = 1;
 
       // Send start bit if enabled
       if (start_bit) begin
@@ -117,7 +119,10 @@ module datapath_tb;
         serial_clk_tick();
       end
 
-      rx_enable = 0; // Done sending byte
+      if (stop_error) $display("Stop bit error detected");
+      if (parity_error) $display("Parity error detected");
+      if (data_in !== data) $display("Data mismatch: expected %h, got %h", data, data_in);
+
     end
   endtask
 
@@ -142,6 +147,8 @@ module datapath_tb;
       tx_enable = 0; // Done transmitting byte
     end
   endtask
+
+  assign rx_enable = start_bit_det; // RX is enabled when start bit is detected
 
   initial begin
     $dumpfile("waveform.fst");
