@@ -17,3 +17,4 @@ top_level/tb/version.h
 .clangd
 .zed/**
 filelist.tcl
+work/
