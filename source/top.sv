@@ -16,12 +16,9 @@ module top(
     logic [7:0] data_in;
     logic [7:0] data_out;
     logic [7:0] buffer_occupancy;
-<<<<<<< HEAD
-=======
     logic [7:0] tx_buffer_occupancy;
     logic rx_ready;
     logic tx_ready;
->>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3
     logic load;
     logic send;
 

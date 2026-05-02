@@ -131,8 +131,4 @@ module control_unit (
 
   assign serial_clk = (clkdiv_cnt == 32'd1) ? 1'b1 : 1'b0;
 
-<<<<<<< HEAD
 endmodule
-=======
-endmodule
->>>>>>> b7137afde8411a9485a608b85ebdd0736de3acd3
