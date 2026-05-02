@@ -9,3 +9,6 @@ $(eval $(ARGS):;@:)
 sim:
 	fusesoc --cores-root . run --target sim_$(ARGS) socet:aft:USI:0.1.0
 	gtkwave build/socet_aft_USI_0.1.0/sim_$(ARGS)-verilator/waveform.fst waves/$(ARGS).gtkw
+
+lint:
+	verilator --lint-only source/$(ARGS).sv

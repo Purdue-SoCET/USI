@@ -39,12 +39,13 @@ filesets:
         file_type: systemVerilogSource
 
     lint_files:
+        depend:
+            - "socet:bus-components:bus_protocol_if"
         files:
             - source/top.sv
             - source/reg_map.sv
             - source/data_buffer.sv
             - source/datapath.sv
-            - testbench/top_tb.sv
             - source/control_unit.sv
         file_type: systemVerilogSource
 
@@ -219,7 +220,7 @@ targets:
             - lint_files
         description: Linting
         default_tool: verilator
-        toplevel: top_tb
+        toplevel: top
         tools:
             verilator:
                 verilator_options: ['--lint-only']
