@@ -18,3 +18,4 @@ top_level/tb/version.h
 .zed/**
 filelist.tcl
 work/
+obj_dir/
