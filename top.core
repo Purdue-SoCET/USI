@@ -9,6 +9,7 @@ filesets:
             - source/top.sv
             - source/reg_map.sv
             - source/data_buffer.sv
+            - source/shift_register.sv
         file_type: systemVerilogSource
 
     tb:
@@ -26,6 +27,11 @@ filesets:
             - testbench/data_buffer_tb.sv
         file_type: systemVerilogSource
 
+    tb_shift_register:
+        files:
+            - testbench/shift_register_tb.sv
+        file_type: systemVerilogSource
+
     lint_files:
         depend:
             - "socet:bus-components:bus_protocol_if:0.0.1"
@@ -33,6 +39,7 @@ filesets:
             - source/top.sv
             - source/reg_map.sv
             - source/data_buffer.sv
+            - source/shift_register.sv
         file_type: systemVerilogSource
 
 
@@ -110,6 +117,35 @@ targets:
         toplevel: 
             - "tool_verilator? (data_buffer_tb)"
             - "!tool_verilator? (data_buffer_tb)"
+        tools:
+            xcelium:
+                xrun_options:
+                    - +xmtimescale+1ns/100ps
+            modelsim:
+                vsim_options:
+                    - -vopt
+                    - -voptargs='+acc'
+                    - -t ps
+            vcs:
+                vcs_options:
+                    - -assert svaext
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --trace
+                    - --trace-fst
+                    - --trace-structs
+
+    sim_shift_register:
+        <<: *default
+        description: Simulate w/TB
+        default_tool: verilator
+        filesets_append:
+            - "!tool_verilator? (tb_shift_register)"
+            - "tool_verilator? (tb_shift_register)"
+        toplevel: 
+            - "tool_verilator? (shift_register_tb)"
+            - "!tool_verilator? (shift_register_tb)"
         tools:
             xcelium:
                 xrun_options:
