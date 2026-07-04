@@ -92,7 +92,8 @@ module reg_map_tb;
     logic [31:0] rdata;
 
     initial begin
-
+        $dumpfile("waveform.fst");
+        $dumpvars(0, data_buffer_tb);
         CLK = 0;
         bpif.wen = 0;
         bpif.ren = 0;
