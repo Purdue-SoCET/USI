@@ -1,19 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Sat Jul  4 04:29:16 2026
+[*] Mon Jul  6 21:28:46 2026
 [*]
 [dumpfile] "/home/jason/SoCET/USI/build/socet_aft_USI_0.1.0/sim_shift_register-verilator/waveform.fst"
-[dumpfile_mtime] "Sat Jul  4 04:27:43 2026"
-[dumpfile_size] 767
+[dumpfile_mtime] "Mon Jul  6 21:17:17 2026"
+[dumpfile_size] 1792
 [savefile] "/home/jason/SoCET/USI/waves/shift_register.gtkw"
 [timestart] 0
 [size] 1908 1095
-[pos] -298 -263
-*-2.678622 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 32735 32735
+*-4.341587 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 214
-[signals_width] 166
+[signals_width] 207
 [sst_expanded] 1
 [sst_vpaned_height] 326
+@24
+shift_register_tb.tb_test_num
 @28
 shift_register_tb.CLK
 shift_register_tb.nRST
@@ -23,7 +25,7 @@ shift_register_tb.nRST
 shift_register_tb.parallel_in[7:0]
 @28
 shift_register_tb.serial_in
-shift_register_tb.start
+shift_register_tb.parallel_load
 shift_register_tb.shift_en
 shift_register_tb.msb_first
 @200
@@ -32,6 +34,5 @@ shift_register_tb.msb_first
 shift_register_tb.parallel_out[7:0]
 @28
 shift_register_tb.serial_out
-shift_register_tb.done
 [pattern_trace] 1
 [pattern_trace] 0
