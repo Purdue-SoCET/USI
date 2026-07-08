@@ -1,13 +1,14 @@
 module asym_fifo #(
-    parameter READ_BYTES = 1, 
-    parameter WRITE_BYTES = 1, 
-    parameter DEPTH_BYTES = 8 // total capacity in bytes, must be power of 2
+    parameter unsigned READ_BYTES = 1, 
+    parameter unsigned WRITE_BYTES = 1, 
+    parameter unsigned DEPTH_BYTES = 16 // total capacity in bytes, must be power of 2
 )(
-    input CLK,
-    input nRST,
-    input WEN,
-    input REN,
-    input clear,
+    input logic CLK,
+    input logic nRST,
+    input logic WEN,
+    input logic REN,
+    input logic clear_status,
+    input logic flush,
     input logic [(WRITE_BYTES*8-1):0] wdata, 
     output logic full,
     output logic empty,
@@ -17,13 +18,12 @@ module asym_fifo #(
     output logic [(READ_BYTES*8-1):0] rdata  
 );
 
-    // Parameter checking
-    //
-    // Width can be any number of bits > 1, but depth must be a power-of-2 to accomodate addressing scheme
-    // TODO: 
     generate
-        if(DEPTH_BYTES == 0 || (DEPTH_BYTES & (DEPTH_BYTES - 1)) != 0) begin
+        if (DEPTH_BYTES == 0 || (DEPTH_BYTES & (DEPTH_BYTES - 1)) != 0) begin : DEPTH_power
             $error("%m: DEPTH must be a power of 2 >= 1!");
+        end
+        if (READ_BYTES > DEPTH_BYTES || WRITE_BYTES > DEPTH_BYTES) begin : DEPTH_size
+            $error("%m: DEPTH must be >= READ_BYTES and WRITE_BYTES");
         end
     endgenerate
     
@@ -32,11 +32,11 @@ module asym_fifo #(
     logic overrun_next, underrun_next;
     logic [ADDR_BITS-1:0] write_ptr, write_ptr_next, read_ptr, read_ptr_next;
     logic [$clog2(DEPTH_BYTES+1)-1:0] count_next;
-    logic [7:0] [DEPTH_BYTES-1:0] fifo, fifo_next;  
+    logic [7:0] fifo [DEPTH_BYTES-1:0];
+    logic [7:0] fifo_next [DEPTH_BYTES-1:0];
 
     always_ff @(posedge CLK, negedge nRST) begin
         if(!nRST) begin
-            fifo <= '{default: '0};
             write_ptr <= '0;
             read_ptr <= '0;
             overrun <= 1'b0;
@@ -60,7 +60,7 @@ module asym_fifo #(
         underrun_next = underrun;
         count_next = count;
 
-        if(clear) begin
+        if(flush) begin
             // No need to actually reset FIFO data,
             // changing pointers/flags to "empty" state is OK
             write_ptr_next = '0;
@@ -68,31 +68,34 @@ module asym_fifo #(
             overrun_next = 1'b0;
             underrun_next = 1'b0;
             count_next = '0;
+        end else if(clear_status) begin
+            overrun_next = 1'b0;
+            underrun_next = 1'b0;
         end else begin
-            if(REN && !empty && !(full && WEN)) begin
+            if(REN && !empty) begin
                 read_ptr_next = read_ptr + READ_BYTES;
             end else if(REN && empty) begin
                 underrun_next = 1'b1;
             end
 
-            if(WEN && !full && !(empty && REN)) begin
+            if(WEN && !full) begin
                 write_ptr_next = write_ptr + WRITE_BYTES;
                 for (int j = 0; j < WRITE_BYTES; j++)
-                    fifo_next[(write_ptr + j & (DEPTH_BYTES-1))] = wdata[8*j +: 8];
+                    fifo_next[((write_ptr + j) & {ADDR_BITS{1'b1}})] = wdata[8*j +: 8];
             end else if(WEN && full) begin
                 overrun_next = 1'b1;
             end
 
-            count_next = count + ((WEN && !full) ? WRITE_BYTES : '0) + ((REN && !empty) ? READ_BYTES : '0);
+            count_next = count + (WEN && !full ? WRITE_BYTES : '0) - (REN && !empty ? READ_BYTES : '0);
         end
     end
 
-    assign full = (DEPTH_BYTES - count) < WRITE_BYTES;
+    assign full = (DEPTH_BYTES - count + (REN && !empty ? READ_BYTES : '0)) < WRITE_BYTES;
     assign empty = READ_BYTES > count;
     genvar i;
     generate
-        for (i = 0; i < READ_BYTES; i++) begin
-            assign rdata[8*i +: 8] = fifo[(read_ptr+i & (DEPTH_BYTES-1))];
+        for (i = 0; i < READ_BYTES; i++) begin : rdata_block
+            assign rdata[8*i +: 8] = fifo[((read_ptr+i) & {ADDR_BITS{1'b1}})];
         end
     endgenerate
 
