@@ -7,7 +7,8 @@ module asym_fifo #(
     input logic nRST,
     input logic WEN,
     input logic REN,
-    input logic clear_status,
+    input logic clear_underrun,
+    input logic clear_overrun,
     input logic flush,
     input logic [(WRITE_BYTES*8-1):0] wdata, 
     output logic full,
@@ -34,6 +35,7 @@ module asym_fifo #(
     logic [$clog2(DEPTH_BYTES+1)-1:0] count_next;
     logic [7:0] fifo [DEPTH_BYTES-1:0];
     logic [7:0] fifo_next [DEPTH_BYTES-1:0];
+    logic [$clog2(DEPTH_BYTES+1):0] count_after_read;
 
     always_ff @(posedge CLK, negedge nRST) begin
         if(!nRST) begin
@@ -68,10 +70,9 @@ module asym_fifo #(
             overrun_next = 1'b0;
             underrun_next = 1'b0;
             count_next = '0;
-        end else if(clear_status) begin
-            overrun_next = 1'b0;
-            underrun_next = 1'b0;
         end else begin
+            overrun_next = clear_overrun ? 1'b0 : overrun;
+            underrun_next = clear_underrun ? 1'b0 : underrun;
             if(REN && !empty) begin
                 read_ptr_next = read_ptr + READ_BYTES;
             end else if(REN && empty) begin
@@ -90,8 +91,9 @@ module asym_fifo #(
         end
     end
 
-    assign full = (DEPTH_BYTES - count + (REN && !empty ? READ_BYTES : '0)) < WRITE_BYTES;
-    assign empty = READ_BYTES > count;
+    assign count_after_read = {1'b0, count} - (REN && !empty ? READ_BYTES : '0);
+    assign full = (count_after_read + WRITE_BYTES) > DEPTH_BYTES; // Can read + write when full
+    assign empty = READ_BYTES > count; // Can't read + write when empty
     genvar i;
     generate
         for (i = 0; i < READ_BYTES; i++) begin : rdata_block
