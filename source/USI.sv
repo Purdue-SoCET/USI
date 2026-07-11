@@ -15,7 +15,7 @@ module USI #(
     inout wire i2c_scl
 );
     logic [31:0] rx_rdata, rx_wdata, tx_rdata, tx_wdata;
-    logic [31:0] clkdiv;
+    logic [15:0] clkdiv;
     logic [1:0] mode_sel;
     logic [7:0] uart_config;
     logic [7:0] spi_config;
