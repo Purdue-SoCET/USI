@@ -6,25 +6,25 @@ filesets:
         depend:
             - "socet:bus-components:bus_protocol_if:0.0.1"
         files:
-            - source/top.sv
-            - source/reg_map.sv
-            - source/data_buffer.sv
+            - source/USI.sv
+            - source/register_map.sv
+            - source/asym_fifo.sv
             - source/shift_register.sv
         file_type: systemVerilogSource
 
     tb:
         files:
-            - testbench/top_tb.sv
+            - testbench/USI_tb.sv
         file_type: systemVerilogSource
 
-    tb_reg_map:
+    tb_register_map:
         files:
-            - testbench/reg_map_tb.sv
+            - testbench/register_map_tb.sv
         file_type: systemVerilogSource
 
-    tb_data_buffer:
+    tb_asym_fifo:
         files:
-            - testbench/data_buffer_tb.sv
+            - testbench/asym_fifo_tb.sv
         file_type: systemVerilogSource
 
     tb_shift_register:
@@ -36,9 +36,9 @@ filesets:
         depend:
             - "socet:bus-components:bus_protocol_if:0.0.1"
         files:
-            - source/top.sv
-            - source/reg_map.sv
-            - source/data_buffer.sv
+            - source/USI.sv
+            - source/register_map.sv
+            - source/asym_fifo.sv
             - source/shift_register.sv
         file_type: systemVerilogSource
 
@@ -47,7 +47,7 @@ targets:
     default: &default
         filesets:
             - rtl
-        toplevel: top
+        toplevel: USI
     
     sim:
         <<: *default
@@ -57,8 +57,8 @@ targets:
             - "!tool_verilator? (tb)"
             - "tool_verilator? (tb)"
         toplevel: 
-            - "tool_verilator? (top_tb)"
-            - "!tool_verilator? (top_tb)"
+            - "tool_verilator? (USI_tb)"
+            - "!tool_verilator? (USI_tb)"
         tools:
             xcelium:
                 xrun_options:
@@ -78,16 +78,16 @@ targets:
                     - --trace-fst
                     - --trace-structs
     
-    sim_reg_map:
+    sim_register_map:
         <<: *default
         description: Simulate w/TB
         default_tool: verilator
         filesets_append:
-            - "!tool_verilator? (tb_reg_map)"
-            - "tool_verilator? (tb_reg_map)"
+            - "!tool_verilator? (tb_register_map)"
+            - "tool_verilator? (tb_register_map)"
         toplevel: 
-            - "tool_verilator? (reg_map_tb)"
-            - "!tool_verilator? (reg_map_tb)"
+            - "tool_verilator? (register_map_tb)"
+            - "!tool_verilator? (register_map_tb)"
         tools:
             xcelium:
                 xrun_options:
@@ -107,16 +107,16 @@ targets:
                     - --trace-fst
                     - --trace-structs
 
-    sim_data_buffer:
+    sim_asym_fifo:
         <<: *default
         description: Simulate w/TB
         default_tool: verilator
         filesets_append:
-            - "!tool_verilator? (tb_data_buffer)"
-            - "tool_verilator? (tb_data_buffer)"
+            - "!tool_verilator? (tb_asym_fifo)"
+            - "tool_verilator? (tb_asym_fifo)"
         toplevel: 
-            - "tool_verilator? (data_buffer_tb)"
-            - "!tool_verilator? (data_buffer_tb)"
+            - "tool_verilator? (asym_fifo_tb_top)"
+            - "!tool_verilator? (asym_fifo_tb_top)"
         tools:
             xcelium:
                 xrun_options:
@@ -171,7 +171,7 @@ targets:
         description: Synthesize for FPGA
         default_tool: quartus
         toplevel:
-            - top
+            - USI
         parameters:
             - SYNTHESIS=true
         tools:
@@ -185,7 +185,7 @@ targets:
             - lint_files
         description: Linting
         default_tool: verilator
-        toplevel: top
+        toplevel: USI
         tools:
             verilator:
                 verilator_options: ['--lint-only']
@@ -197,7 +197,7 @@ targets:
             - lint_files
         description: Formatting
         default_tool: veribleformat
-        toplevel: top_tb
+        toplevel: USI_tb
         tools:
             veribleformat:
                 verible_format_args: ['--indentation_spaces=4', '--inplace']
