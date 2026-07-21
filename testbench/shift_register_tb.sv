@@ -12,8 +12,8 @@ module shift_register_tb;
     logic [7:0] parallel_in;
     logic shift_en;
     logic msb_first;
-    logic serial_in;
-    logic serial_out;
+    logic shift_in;
+    logic shift_out;
     logic [7:0] parallel_out;
 
     // Declare Test Case Signals
@@ -24,7 +24,7 @@ module shift_register_tb;
 
     // Declare the Test Bench Signals for Expected Results
     logic [7:0] exp_parallel_out;
-    logic exp_serial_out;
+    logic exp_shift_out;
 
     shift_register DUT (.*);
 
@@ -51,16 +51,16 @@ module shift_register_tb;
     end
     endtask
 
-    task check_serial_out;
+    task check_shift_out;
     begin
-        if (serial_out == exp_serial_out) begin
+        if (shift_out == exp_shift_out) begin
             $write("%c[32m", 8'd27);
-            $display("Test case #%0d, %s: Correct serial output.", tb_test_num, tb_test_case);
+            $display("Test case #%0d, %s: Correct shift output.", tb_test_num, tb_test_case);
         end
         else begin
             tb_error_num = tb_error_num + 1;
             $write("%c[31m", 8'd27);
-            $display("ERROR: Test case #%0d, %s: Incorrect serial output. Expected: %b Actual: %b", tb_test_num, tb_test_case, exp_serial_out, serial_out);
+            $display("ERROR: Test case #%0d, %s: Incorrect shift output. Expected: %b Actual: %b", tb_test_num, tb_test_case, exp_shift_out, shift_out);
         end
     end
     endtask
@@ -84,7 +84,7 @@ module shift_register_tb;
     );
     begin
         for (tb_bit_num = 0; tb_bit_num < 8; tb_bit_num++) begin
-            serial_in = msb_first ? value[7 - tb_bit_num] : value[tb_bit_num];
+            shift_in = msb_first ? value[7 - tb_bit_num] : value[tb_bit_num];
             serial_pulse();
         end
         exp_parallel_out = value;
@@ -103,8 +103,8 @@ module shift_register_tb;
         parallel_in = 8'b0;
         repeat (10) @(posedge CLK); #PROPAGATION_DELAY;
         for (tb_bit_num = 0; tb_bit_num < 8; tb_bit_num++) begin
-            exp_serial_out = msb_first ? value[7 - tb_bit_num] : value[tb_bit_num];
-            check_serial_out();
+            exp_shift_out = msb_first ? value[7 - tb_bit_num] : value[tb_bit_num];
+            check_shift_out();
             serial_pulse();
         end
     end
@@ -119,20 +119,20 @@ module shift_register_tb;
         parallel_in      = 8'b0;
         shift_en         = 1'b0;
         msb_first        = 1'b0;
-        serial_in        = 1'b0;
+        shift_in        = 1'b0;
         tb_test_num      = 0;
         tb_test_case     = "Testbench intialization";
         tb_bit_num       = -1;
         tb_error_num     = 0;
         exp_parallel_out = 8'b0;
-        exp_serial_out   = 1'b0;
+        exp_shift_out   = 1'b0;
         #(0.1);
 
         // Test 0:
         tb_test_case = "Power on Reset";
         reset_dut();
         check_parallel_out();
-        check_serial_out();
+        check_shift_out();
 
         // Test 1:
         tb_test_num  = tb_test_num + 1;
@@ -156,14 +156,14 @@ module shift_register_tb;
 
         // Test 3:
         tb_test_num  = tb_test_num + 1;
-        tb_test_case = "Serial in LSB first";
+        tb_test_case = "shift in LSB first";
         rx_byte(8'h45);
         rx_byte(8'hFF);
         rx_byte(8'h00);
 
         // Test 4:
         tb_test_num  = tb_test_num + 1;
-        tb_test_case = "Serial in MSB first";
+        tb_test_case = "shift in MSB first";
         msb_first = 1'b1;
         rx_byte(8'h98);
         rx_byte(8'hFF);
@@ -172,21 +172,21 @@ module shift_register_tb;
         // Test 5:
         tb_test_num  = tb_test_num + 1;
         tb_test_case = "Hold parallel out";
-        serial_in = 1'b1;
+        shift_in = 1'b1;
         repeat (10) @(posedge CLK); #PROPAGATION_DELAY;
         exp_parallel_out = 8'b0;
         check_parallel_out();
 
         // Test 6:
         tb_test_num  = tb_test_num + 1;
-        tb_test_case = "Serial out MSB first";
+        tb_test_case = "shift out MSB first";
         tx_byte(8'h72);
         tx_byte(8'hFF);
         tx_byte(8'h00);
 
         // Test 7:
         tb_test_num  = tb_test_num + 1;
-        tb_test_case = "Serial out LSB first";
+        tb_test_case = "shift out LSB first";
         msb_first = 1'b0;
         tx_byte(8'hB3);
         tx_byte(8'hFF);
