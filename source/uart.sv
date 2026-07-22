@@ -7,18 +7,18 @@ module uart (
     input logic [1:0] parity_mode,
     input logic flow_control_en,
     input logic uart_cts,
-    input logic rx_fifo_full,
-    input logic tx_fifo_empty,
-    input logic [7:0] tx_fifo_read,
+    input logic rx_full,
+    input logic tx_empty,
+    input logic [7:0] tx_rdata,
     input logic [7:0] rx_byte,
     input logic clear_parity_error,
     input logic clear_frame_error,
     output logic tx_load,
     output logic [7:0] tx_data,
     output logic tx_shift_en,
-    output logic tx_fifo_REN,
+    output logic tx_REN,
     output logic rx_shift_en,
-    output logic rx_fifo_WEN,
+    output logic rx_WEN,
     output logic parity_error,
     output logic frame_error,
     output logic uart_rts,
@@ -37,7 +37,7 @@ module uart (
     logic [2:0] rx_bit_count, next_rx_bit_count;
     logic parity_bit, next_parity_bit;
     logic next_frame_error, next_parity_error;
-    logic next_rx_fifo_WEN;
+    logic next_rx_WEN;
 
     always_ff @(posedge CLK, negedge nRST) begin
         if (~nRST) begin
@@ -48,7 +48,7 @@ module uart (
             parity_bit <= 1'b0;
             parity_error <= 1'b0;
             frame_error <= 1'b0;
-            rx_fifo_WEN <= 1'b0;
+            rx_WEN <= 1'b0;
         end
         else begin
             tx_state <= next_tx_state;
@@ -58,7 +58,7 @@ module uart (
             parity_bit <= next_parity_bit;
             parity_error <= next_parity_error;
             frame_error <= next_frame_error;
-            rx_fifo_WEN <= next_rx_fifo_WEN;
+            rx_WEN <= next_rx_WEN;
         end
     end
 
@@ -67,7 +67,7 @@ module uart (
         next_tx_state = tx_state;
         case(tx_state)
             IDLE: begin
-                if (!tx_fifo_empty && uart_cts && uart_en && serial_tick) begin
+                if (!tx_empty && uart_cts && uart_en && serial_tick) begin
                     next_tx_state = START;
                 end
             end
@@ -93,7 +93,7 @@ module uart (
         next_tx_bit_count = tx_bit_count;
         tx_data = 8'hFF;
         tx_load = 1'b0;
-        tx_fifo_REN = 1'b0;
+        tx_REN = 1'b0;
         next_parity_bit = parity_bit;
         tx_shift_en = 1'b0;
         tx_active = 1'b1;
@@ -106,12 +106,12 @@ module uart (
                 tx_data[0] = 1'b0;
                 tx_load = 1'b1;
                 if (serial_tick) begin
-                    tx_data = tx_fifo_read;
-                    tx_fifo_REN = 1'b1;
+                    tx_data = tx_rdata;
+                    tx_REN = 1'b1;
                 end
                 case(parity_mode) 
-                    2'b01: next_parity_bit = ~(^tx_fifo_read); // odd parity
-                    2'b10: next_parity_bit = ^tx_fifo_read; // even parity
+                    2'b01: next_parity_bit = ~(^tx_rdata); // odd parity
+                    2'b10: next_parity_bit = ^tx_rdata; // even parity
                     default: next_parity_bit = parity_bit;
                 endcase
             end
@@ -136,7 +136,7 @@ module uart (
         next_rx_state = rx_state;
         case(rx_state)
             IDLE: begin
-                if (serial_tick && uart_en && !rx_fifo_full && uart_rx == 1'b1) begin
+                if (serial_tick && uart_en && !rx_full && uart_rx == 1'b1) begin
                     next_rx_state = START;
                 end
             end
@@ -159,7 +159,7 @@ module uart (
     end
 
     always_comb begin
-        next_rx_fifo_WEN = 1'b0;
+        next_rx_WEN = 1'b0;
         next_parity_error = parity_error;
         next_frame_error = frame_error;
         next_rx_bit_count = rx_bit_count;
@@ -173,7 +173,7 @@ module uart (
         end
         case(rx_state)
             IDLE: begin
-                if (serial_tick && uart_rx == 1'b0 && uart_en && !rx_fifo_full) begin
+                if (serial_tick && uart_rx == 1'b0 && uart_en && !rx_full) begin
                     next_frame_error = 1'b1;
                 end
             end
@@ -185,7 +185,7 @@ module uart (
                     next_rx_bit_count = rx_bit_count + 1;
                     rx_shift_en = 1'b1;
                     if (rx_bit_count == 3'd7) begin
-                        next_rx_fifo_WEN = 1'b1;
+                        next_rx_WEN = 1'b1;
                     end
                 end
             end
@@ -201,6 +201,6 @@ module uart (
         endcase
     end
 
-    assign uart_rts = (flow_control_en) ? ~rx_fifo_full : 1'b0;
+    assign uart_rts = (flow_control_en) ? ~rx_full : 1'b0;
 
 endmodule
