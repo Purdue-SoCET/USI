@@ -19,7 +19,7 @@ module register_map #(
     output logic [1:0] mode_sel,
     output logic [15:0] clkdiv,
     output logic [31:0] tx_wdata,
-    output logic [7:0] uart_config,
+    output logic [2:0] uart_config,
     output logic [7:0] spi_config,
     output logic i2c_config,
     output logic [9:0] i2c_addr,
@@ -36,7 +36,7 @@ module register_map #(
 );
     logic [1:0] next_mode_sel;
     logic [15:0] next_clkdiv;
-    logic [7:0] next_uart_config;
+    logic [2:0] next_uart_config;
     logic [7:0] next_spi_config;
     logic next_i2c_config;
     logic [9:0] next_i2c_addr;
@@ -86,7 +86,7 @@ module register_map #(
                 32'h00: next_mode_sel = bpif.wdata[1:0];
                 32'h04: next_clkdiv = bpif.wdata[15:0];
                 32'h08: {rx_clear_underrun, rx_clear_overrun, tx_clear_underrun, tx_clear_overrun} = bpif.wdata[3:0];
-                32'h0C: next_uart_config = bpif.wdata[7:0];
+                32'h0C: next_uart_config = bpif.wdata[2:0];
                 32'h10: next_spi_config = bpif.wdata[7:0];
                 32'h14: next_i2c_config = bpif.wdata[0];
                 32'h18: next_i2c_addr = bpif.wdata[9:0];
@@ -111,7 +111,7 @@ module register_map #(
                 32'h00: bpif.rdata = {30'b0, mode_sel};
                 32'h04: bpif.rdata = {16'b0, clkdiv};
                 32'h08: bpif.rdata = {24'b0, rx_empty, rx_full, tx_empty, tx_full, rx_underrun, rx_overrun, tx_underrun, tx_overrun};
-                32'h0C: bpif.rdata = {24'b0, uart_config};
+                32'h0C: bpif.rdata = {29'b0, uart_config};
                 32'h10: bpif.rdata = {24'b0, spi_config};
                 32'h14: bpif.rdata = {31'b0, i2c_config};
                 32'h18: bpif.rdata = {22'b0, i2c_addr};
