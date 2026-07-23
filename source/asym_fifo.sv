@@ -1,3 +1,4 @@
+/* verilator lint_off WIDTHTRUNC */
 module asym_fifo #(
     parameter unsigned READ_BYTES = 1, 
     parameter unsigned WRITE_BYTES = 1, 
@@ -81,8 +82,10 @@ module asym_fifo #(
 
             if(WEN && !full) begin
                 write_ptr_next = write_ptr + WRITE_BYTES;
+                /* verilator lint_off WIDTHEXPAND */
                 for (int j = 0; j < WRITE_BYTES; j++)
                     fifo_next[((write_ptr + j) & {ADDR_BITS{1'b1}})] = wdata[8*j +: 8];
+                    /* verilator lint_on WIDTHEXPAND */
             end else if(WEN && full) begin
                 overrun_next = 1'b1;
             end
