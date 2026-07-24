@@ -5,11 +5,14 @@ filesets:
     rtl:
         depend:
             - "socet:bus-components:bus_protocol_if:0.0.1"
+            - "socet:digital-lib:counter:0.0.1"
         files:
             - source/USI.sv
             - source/register_map.sv
             - source/asym_fifo.sv
             - source/shift_register.sv
+            - source/uart.sv
+            - source/control_unit.sv
         file_type: systemVerilogSource
 
     tb:
@@ -32,14 +35,22 @@ filesets:
             - testbench/shift_register_tb.sv
         file_type: systemVerilogSource
 
+    tb_uart:
+        files:
+            - testbench/uart_tb.sv
+        file_type: systemVerilogSource
+
     lint_files:
         depend:
             - "socet:bus-components:bus_protocol_if:0.0.1"
+            - "socet:digital-lib:counter:0.0.1"
         files:
             - source/USI.sv
             - source/register_map.sv
             - source/asym_fifo.sv
             - source/shift_register.sv
+            - source/uart.sv
+            - source/control_unit.sv
         file_type: systemVerilogSource
 
 
@@ -165,6 +176,34 @@ targets:
                     - --trace-fst
                     - --trace-structs
 
+    sim_uart:
+        <<: *default
+        description: Simulate w/TB
+        default_tool: verilator
+        filesets_append:
+            - "!tool_verilator? (tb_uart)"
+            - "tool_verilator? (tb_uart)"
+        toplevel: 
+            - "tool_verilator? (uart_tb_top)"
+            - "!tool_verilator? (uart_tb_top)"
+        tools:
+            xcelium:
+                xrun_options:
+                    - +xmtimescale+1ns/100ps
+            modelsim:
+                vsim_options:
+                    - -vopt
+                    - -voptargs='+acc'
+                    - -t ps
+            vcs:
+                vcs_options:
+                    - -assert svaext
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --trace
+                    - --trace-fst
+                    - --trace-structs
 
     fpga:
         <<: *default
