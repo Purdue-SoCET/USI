@@ -6,125 +6,149 @@ module register_map #(
     bus_protocol_if.peripheral_vital bpif,
     input logic CLK,
     input logic nRST,
-    input logic tx_overrun,
-    input logic tx_underrun,
-    input logic rx_overrun,
-    input logic rx_underrun,
+
+    // FIFO SIGNALS
     input logic tx_full,
     input logic tx_empty,
     input logic rx_full,
     input logic rx_empty,
+
+    // FIFO COUNTS
     input logic [$clog2(TX_FIFO_SIZE+1)-1:0] tx_count,
     input logic [$clog2(RX_FIFO_SIZE+1)-1:0] rx_count,
+
     input logic [31:0] rx_rdata,
-    output logic [1:0] mode_sel,
+
+    //PROTOCOL STATUS
+    input logic protocol_busy,
+    input logic protocol_done,
+    input logic protocol_error,
+    output logic [2:0] mode_sel,
     output logic [CLKDIV_BITS-1:0] clkdiv,
     output logic [31:0] tx_wdata,
-    output logic [2:0] uart_config,
     output logic [7:0] spi_config,
-    output logic i2c_config,
-    output logic [9:0] i2c_addr,
-    output logic [CLKDIV_BITS-1:0] i2c_t_low,
-    output logic [CLKDIV_BITS-1:0] i2c_t_high,
-    output logic tx_WEN,
-    output logic rx_REN,
-    output logic tx_clear_overrun,
-    output logic tx_clear_underrun,
-    output logic rx_clear_overrun,
-    output logic rx_clear_underrun,
+    output logic [7:0] i2c_config,
+    output logic [6:0] i2c_addr,
+    output logic [5:0] spi_length,
+
+    // number of transactions to transfer for everything except UART
+    output logic [31:0] transfer_count,
+    
+    output logic error_clear,
+    output logic done_clear,
+    output logic start,
+    output logic abort,
+    output logic tx_wen,
+    output logic rx_ren,
     output logic tx_flush,
     output logic rx_flush
 );
-    logic [1:0] next_mode_sel;
-    logic [CLKDIV_BITS:0] next_clkdiv;
-    logic [2:0] next_uart_config;
-    logic [7:0] next_spi_config;
-    logic next_i2c_config;
-    logic [9:0] next_i2c_addr;
-    logic [CLKDIV_BITS:0] next_i2c_t_low;
-    logic [CLKDIV_BITS:0] next_i2c_t_high;
+    logic [2:0] mode_sel_n;
+    logic [CLKDIV_BITS-1:0] clkdiv_n;
+    logic [7:0] spi_config_n;
+    logic [7:0] i2c_config_n;
+    logic [6:0] i2c_addr_n;
+    logic [5:0] spi_length_n;
+    logic [31:0] transfer_count_n;
     logic strobe_error, write_error, read_error;
 
     always_ff @(posedge CLK, negedge nRST) begin
         if (~nRST) begin
             mode_sel <= '0;
             clkdiv <= '0;
-            uart_config <= '0;
             spi_config <= '0;
             i2c_config <= '0;
             i2c_addr <= '0;
-            i2c_t_low <= '0;
-            i2c_t_high <= '0;
+            spi_length <= 6'd8;
+            transfer_count <= '0;
         end
         else begin
-            mode_sel <= next_mode_sel;
-            clkdiv <= next_clkdiv;
-            uart_config <= next_uart_config;
-            spi_config <= next_spi_config;
-            i2c_config <= next_i2c_config;
-            i2c_addr <= next_i2c_addr;
-            i2c_t_low <= next_i2c_t_low;
-            i2c_t_high <= next_i2c_t_high;
+            mode_sel <= mode_sel_n;
+            clkdiv <= clkdiv_n;
+            spi_config <= spi_config_n;
+            i2c_config <= i2c_config_n;
+            i2c_addr <= i2c_addr_n;
+            spi_length <= spi_length_n;
+            transfer_count <= transfer_count_n;
         end
     end
 
-// Write to register map
+    // Write to register map.
     always_comb begin
         write_error = 1'b0;
-        next_mode_sel = mode_sel;
-        next_clkdiv = clkdiv;
-        {rx_clear_underrun, rx_clear_overrun, tx_clear_underrun, tx_clear_overrun} = 4'b0;
-        next_uart_config = uart_config;
-        next_spi_config = spi_config;
-        next_i2c_config = i2c_config;
-        next_i2c_addr = i2c_addr;
-        next_i2c_t_low = i2c_t_low;
-        next_i2c_t_high = i2c_t_high;
-        tx_WEN = 1'b0;
-        {rx_flush, tx_flush} = 2'b0;
+        mode_sel_n = mode_sel;
+        clkdiv_n = clkdiv;
+        spi_config_n = spi_config;
+        i2c_config_n = i2c_config;
+        spi_length_n = spi_length;
+        i2c_addr_n = i2c_addr;
+        transfer_count_n = transfer_count;
+        start = 1'b0;
+        abort = 1'b0;
+        done_clear = 1'b0;
+        error_clear = 1'b0;
+        tx_wen = 1'b0;
+        tx_flush = 1'b0;
+        rx_flush = 1'b0;
+
         if (bpif.wen && !strobe_error) begin
             case (bpif.addr)
-                32'h00: next_mode_sel = bpif.wdata[1:0];
-                32'h04: next_clkdiv = bpif.wdata[CLKDIV_BITS-1:0];
-                32'h08: {rx_clear_underrun, rx_clear_overrun, tx_clear_underrun, tx_clear_overrun} = bpif.wdata[3:0];
-                32'h0C: next_uart_config = bpif.wdata[2:0];
-                32'h10: next_spi_config = bpif.wdata[7:0];
-                32'h14: next_i2c_config = bpif.wdata[0];
-                32'h18: next_i2c_addr = bpif.wdata[9:0];
-                32'h1C: next_i2c_t_low = bpif.wdata[CLKDIV_BITS-1:0];
-                32'h20: next_i2c_t_high = bpif.wdata[CLKDIV_BITS-1:0];
-                32'h24: tx_WEN = 1'b1;
-                32'h28: {rx_flush, tx_flush} = bpif.wdata[1:0];
-                // 32'h2C: read only
-                // 32'h30: read only
+                32'h00: mode_sel_n = bpif.wdata[2:0];
+                32'h04: clkdiv_n = bpif.wdata[CLKDIV_BITS-1:0];
+                // 0x08: protocol_status, read only.
+                // 0x0C: fifo_status, read only.
+                32'h10: tx_wen = 1'b1;
+                32'h14: {tx_flush, rx_flush} = bpif.wdata[1:0];
+                32'h18: start = bpif.wdata[0];
+                32'h1C: transfer_count_n = bpif.wdata;
+                32'h20: begin
+                    if (bpif.wdata[5:0] >= 6'd5 &&
+                        bpif.wdata[5:0] <= 6'd32)
+                        spi_length_n = bpif.wdata[5:0];
+                    else
+                        write_error = 1'b1;
+                end
+                32'h24: spi_config_n = bpif.wdata[7:0];
+                32'h28: i2c_config_n = bpif.wdata[7:0];
+                32'h2C: i2c_addr_n = bpif.wdata[6:0];
+                32'h30: {error_clear, done_clear} = bpif.wdata[2:1];
+                // 0x34: rx_count, read only.
+                // 0x38: tx_count, read only.
+                32'h3C: abort = bpif.wdata[0];
                 default: write_error = 1'b1;
             endcase
         end
     end
 
-// Read from register map
+    // Read from register map.
     always_comb begin
         bpif.rdata = 32'b0;
         read_error = 1'b0;
-        rx_REN = 1'b0;
+        rx_ren = 1'b0;
+
         if (bpif.ren && !strobe_error) begin
             case (bpif.addr)
-                32'h00: bpif.rdata = {30'b0, mode_sel};
+                32'h00: bpif.rdata[2:0] = mode_sel;
                 32'h04: bpif.rdata[CLKDIV_BITS-1:0] = clkdiv;
-                32'h08: bpif.rdata = {24'b0, rx_empty, rx_full, tx_empty, tx_full, rx_underrun, rx_overrun, tx_underrun, tx_overrun};
-                32'h0C: bpif.rdata = {29'b0, uart_config};
-                32'h10: bpif.rdata = {24'b0, spi_config};
-                32'h14: bpif.rdata = {31'b0, i2c_config};
-                32'h18: bpif.rdata = {22'b0, i2c_addr};
-                32'h1C: bpif.rdata[CLKDIV_BITS-1:0] = i2c_t_low;
-                32'h20: bpif.rdata[CLKDIV_BITS-1:0] = i2c_t_high;
-                32'h24: begin
+                32'h08: bpif.rdata[2:0] =
+                    {protocol_error, protocol_done, protocol_busy};
+                32'h0C: bpif.rdata[3:0] =
+                    {tx_full, tx_empty, rx_full, rx_empty};
+                32'h10: begin
                     bpif.rdata = rx_rdata;
-                    rx_REN = 1'b1;
+                    rx_ren = 1'b1;
                 end
-                // 32'h28: write only
-                32'h2C: bpif.rdata[$clog2(TX_FIFO_SIZE+1)-1:0] = tx_count;
-                32'h30: bpif.rdata[$clog2(RX_FIFO_SIZE+1)-1:0] = rx_count;
+                // 0x14: buffer_flush, write only.
+                // 0x18: start, write only.
+                32'h1C: bpif.rdata = transfer_count;
+                32'h20: bpif.rdata[5:0] = spi_length;
+                32'h24: bpif.rdata[7:0] = spi_config;
+                32'h28: bpif.rdata[7:0] = i2c_config;
+                32'h2C: bpif.rdata[6:0] = i2c_addr;
+                // 0x30: status_clear, write only.
+                32'h34: bpif.rdata[$clog2(RX_FIFO_SIZE+1)-1:0] = rx_count;
+                32'h38: bpif.rdata[$clog2(TX_FIFO_SIZE+1)-1:0] = tx_count;
+                // 0x3C: abort, write only.
                 default: read_error = 1'b1;
             endcase
         end
@@ -132,7 +156,6 @@ module register_map #(
 
     assign tx_wdata = bpif.wdata;
     assign strobe_error = (bpif.strobe == 4'b1111) ? 1'b0 : 1'b1;
-    assign bpif.error = (strobe_error || write_error || read_error);
+    assign bpif.error = strobe_error || write_error || read_error;
     assign bpif.request_stall = 1'b0;
-
 endmodule
