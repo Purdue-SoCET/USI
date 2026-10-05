@@ -2,6 +2,12 @@ CAPI=2:
 name: socet:aft:USI:0.1.0
 
 filesets:
+    rtl_register_map:
+        depend:
+            - "socet:bus-components:bus_protocol_if:0.0.1"
+        files:
+            - source/register_map.sv
+        file_type: systemVerilogSource
     rtl:
         depend:
             - "socet:bus-components:bus_protocol_if:0.0.1"
@@ -90,15 +96,12 @@ targets:
                     - --trace-structs
     
     sim_register_map:
-        <<: *default
-        description: Simulate w/TB
+        description: Simulate register map
         default_tool: verilator
-        filesets_append:
-            - "!tool_verilator? (tb_register_map)"
-            - "tool_verilator? (tb_register_map)"
-        toplevel: 
-            - "tool_verilator? (register_map_tb)"
-            - "!tool_verilator? (register_map_tb)"
+        filesets:
+            - rtl_register_map
+            - tb_register_map
+        toplevel: register_map_tb
         tools:
             xcelium:
                 xrun_options:

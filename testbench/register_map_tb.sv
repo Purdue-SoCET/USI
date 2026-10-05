@@ -1,6 +1,8 @@
 `timescale 1ns/1ps
 
-module reg_map_tb;
+/* verilator lint_off WIDTHEXPAND */
+
+module register_map_tb;
     localparam int RX_FIFO_SIZE = 16;
     localparam int TX_FIFO_SIZE = 16;
     localparam int CLKDIV_BITS = 16;
@@ -329,3 +331,4 @@ module reg_map_tb;
         $finish;
     end
 endmodule
+/* verilator lint_on WIDTHEXPAND */

@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module register_map #(
     parameter unsigned RX_FIFO_SIZE = 16,
     parameter unsigned TX_FIFO_SIZE = 16,
