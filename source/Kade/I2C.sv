@@ -2,7 +2,7 @@ module I2C #(
 ) (
     input logic clk,
     input logic n_rst,
-    input logic rwconfig, // read/write mode
+    input logic rwconfig, // read/write mode. 1 is write, 0 is read
     input logic addr_config,
     input logic en,
     input logic [15:0] div,
