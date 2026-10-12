@@ -29,6 +29,8 @@ module uart (
     typedef enum logic [1:0] {
         IDLE, START, DATA, PARITY
     } uart_state_t;
+    
+    //NEW DATAPATH (Packet) Placeholder
 
     uart_state_t rx_state, next_rx_state;
     uart_state_t tx_state, next_tx_state;
