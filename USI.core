@@ -8,6 +8,12 @@ filesets:
         files:
             - source/register_map.sv
         file_type: systemVerilogSource
+    
+    rtl_split_fifo:
+        files:
+            - source/split_fifo.sv
+        file_type: systemVerilogSource
+
     rtl:
         depend:
             - "socet:bus-components:bus_protocol_if:0.0.1"
@@ -45,6 +51,11 @@ filesets:
         files:
             - testbench/uart_tb.sv
         file_type: systemVerilogSource
+    
+    tb_split_fifo:
+        files:
+            - testbench/split_fifo_tb.sv
+        file_type: systemVerilogSource
 
     lint_files:
         depend:
@@ -57,6 +68,7 @@ filesets:
             - source/shift_register.sv
             - source/uart.sv
             - source/control_unit.sv
+            - source/split_fifo.sv
         file_type: systemVerilogSource
 
 
@@ -117,6 +129,22 @@ targets:
             verilator:
                 verilator_options:
                     - --binary
+                    - --trace
+                    - --trace-fst
+                    - --trace-structs
+
+    sim_split_fifo:
+        description: Simulate split FIFO
+        default_tool: verilator
+        filesets:
+            - rtl_split_fifo
+            - tb_split_fifo
+        toplevel: split_fifo_tb
+        tools:
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --timing
                     - --trace
                     - --trace-fst
                     - --trace-structs

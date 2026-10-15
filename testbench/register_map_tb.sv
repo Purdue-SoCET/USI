@@ -142,11 +142,11 @@ module register_map_tb;
     task check(input string name, input [31:0] expected, input [31:0] actual);
     begin
         if (expected === actual) begin
-            $display("PASS: %s Expected=%h Actual=%h", name, expected, actual);
+            $display("PASS: %s Expected=%0h Actual=%0h", name, expected, actual);
             pass_count++;
         end
         else begin
-            $display("FAIL: %s Expected=%h Actual=%h", name, expected, actual);
+            $display("FAIL: %s Expected=%0h Actual=%0h", name, expected, actual);
             fail_count++;
         end
     end
