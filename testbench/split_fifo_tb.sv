@@ -477,7 +477,7 @@ module split_fifo_tb;
 
         $display("PASS: all-RX split");
         $display("PASS: all directed split FIFO tests completed");
-        $finish
+        $finish;
     end
 
 endmodule

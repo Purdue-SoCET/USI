@@ -2,8 +2,8 @@
 
 module split_fifo #(
     parameter int unsigned DEPTH_BYTES  = 256,
-    parameter int unsigned BUSIF_BYTES = 4, // 32 bits
-    parameter int unsigned DP_BYTES = 2 // 16 bits
+    parameter int unsigned BUSIF_BYTES = 4, // 32 bits - bus interface bytes
+    parameter int unsigned DP_BYTES = 2 // 16 bits - datapath bytes
 )(
     input logic clk,
     input logic nRST,
@@ -245,9 +245,7 @@ module split_fifo #(
         end
         else begin
             // occupancy after pop, then add accepted push
-            rx_occupancy_n =
-            rx_occupancy_after_pop +
-            (rx_push_accept ? COUNT_BITS'(rx_push_num_bytes) : '0);
+            rx_occupancy_n = rx_occupancy_after_pop + (rx_push_accept ? COUNT_BITS'(rx_push_num_bytes) : '0);
 
             if (rx_pop_accept) begin
                 // if crossed end of RX memory
@@ -370,20 +368,17 @@ module split_fifo #(
     
     // number of bytes rx is gunna pop
     assign rx_pop_num_bytes = 
-        !rx_pop_accept ? 
+            !rx_pop_accept ? 
             '0 : // if rx pop not accepted
-            (rx_occupancy >= COUNT_BITS'(BUSIF_BYTES)) ?
-                COUNT_BITS'(BUSIF_BYTES) : // if there is at least one bus word (4 bytes), pop that much from fifo
+            (rx_occupancy >= COUNT_BITS'(BUSIF_BYTES)) ? // 4 bytes
+                COUNT_BITS'(BUSIF_BYTES) : // if there is at least one bus word (4 bytes), pop the bus word from fifo
                 rx_occupancy; // if less than 4 bytes, pop all from fifo
 
     // Subtract only when the TX pop is accepted
-    assign tx_occupancy_after_pop =
-        tx_occupancy -
-        (tx_pop_accept ? COUNT_BITS'(tx_pop_num_bytes) : '0);
+    assign tx_occupancy_after_pop = tx_occupancy - (tx_pop_accept ? COUNT_BITS'(tx_pop_num_bytes) : '0);
 
     // rx_pop_num_bytes is already zero when no RX pop is accepted
-    assign rx_occupancy_after_pop =
-        rx_occupancy - rx_pop_num_bytes;
+    assign rx_occupancy_after_pop = rx_occupancy - rx_pop_num_bytes;
 
     
     // Space available after any accepted pop on this clock edge.
@@ -393,11 +388,11 @@ module split_fifo #(
     // full if number of free bytes less than 4 bytes
     assign tx_full = (int'(tx_free_bytes) < BUSIF_BYTES);
 
-    // rx push contains requested number of bytes
+    // rx_full checks if size is invalid, or if there is not enough space to accept valid push
     assign rx_full =
     (rx_push_num_bytes == '0) || // reject 0 bytes
     (int'(rx_push_num_bytes) > DP_BYTES) || // reject more bytes than rx_wdata contains
-    (int'(rx_free_bytes) < int'(rx_push_num_bytes));
+    (int'(rx_free_bytes) < int'(rx_push_num_bytes)); // not enough space for requested push
 
     // Accept pushes only when not resetting/flushing and enough space exists
     assign tx_push_accept =
