@@ -14,6 +14,18 @@ filesets:
             - source/split_fifo.sv
         file_type: systemVerilogSource
 
+    rtl_usi_datapath:
+        files:
+            - source/usi_datapath.sv
+            - source/split_fifo.sv
+            - source/shift_register.sv
+        file_type: systemVerilogSource
+
+    tb_usi_datapath:
+        files:
+            - testbench/usi_datapath_tb.sv
+        file_type: systemVerilogSource
+
     rtl:
         depend:
             - "socet:bus-components:bus_protocol_if:0.0.1"
@@ -73,6 +85,21 @@ filesets:
 
 
 targets:
+    sim_usi_datapath:
+        description: Simulate shared datapath with split FIFO
+        default_tool: verilator
+        filesets:
+            - rtl_usi_datapath
+            - tb_usi_datapath
+        toplevel: usi_datapath_tb
+        tools:
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --timing
+                    - --assert
+                    - -Wno-TIMESCALEMOD
+
     default: &default
         filesets:
             - rtl

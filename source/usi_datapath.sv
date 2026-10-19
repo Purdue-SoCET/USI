@@ -39,8 +39,7 @@ package usi_datapath_pkg;
 endpackage
 
 module usi_datapath #(
-    parameter unsigned TX_FIFO_SIZE = 16,
-    parameter unsigned RX_FIFO_SIZE = 16
+    parameter unsigned FIFO_SIZE = 256 
 )(
     input logic CLK,
     input logic nRST,
@@ -52,13 +51,17 @@ module usi_datapath #(
     input logic rx_bit_i,
     output usi_datapath_pkg::dp_status_t dp_status,
 
-    // Regmap interface. FIFO size and count in bytes
+    // Regmap interface. size and counts are in bytes.
     input logic [31:0] tx_wdata,
     input logic tx_wen,
     input logic rx_ren,
     input logic tx_flush,
     input logic rx_flush,
     input logic error_clear,
+    input logic protocol_busy,
+    input logic split_apply,
+    input logic [$clog2(FIFO_SIZE+1)-1:0] fifo_tx_start,
+    output logic split_ready,
     output logic [31:0] rx_rdata,
     output logic [2:0] rx_read_valid_bytes,
     output logic tx_full,
@@ -66,16 +69,19 @@ module usi_datapath #(
     output logic rx_full,
     output logic rx_empty,
     output logic fifo_error,
-    output logic [$clog2(TX_FIFO_SIZE+1)-1:0] tx_count,
-    output logic [$clog2(RX_FIFO_SIZE+1)-1:0] rx_count
+    output logic [$clog2(FIFO_SIZE+1)-1:0] tx_count,
+    output logic [$clog2(FIFO_SIZE+1)-1:0] rx_count
 );
     import usi_datapath_pkg::*;
+
+    localparam int COUNT_BITS = $clog2(FIFO_SIZE+1);
 
     dp_cmd_t selected_dp_cmd;
     usi_mode_t previous_mode;
     logic mode_valid, mode_changed, bit_length_valid;
     logic engine_clear, tx_clear, rx_clear;
-    logic [7:0] tx_fifo_rdata, tx_load_data, tx_payload;
+    logic [7:0] tx_fifo_rdata, unused_tx_high;
+    logic [7:0] tx_load_data, tx_payload;
     logic [7:0] rx_parallel_data, rx_byte;
     logic tx_shift_bit;
     logic tx_pop, rx_push;
@@ -88,7 +94,14 @@ module usi_datapath #(
     logic tx_load_done, tx_load_failed, tx_done;
     logic rx_begin_done, rx_begin_failed, rx_done;
     logic rx_commit_done, rx_commit_failed;
-    logic tx_overrun, tx_underrun, rx_overrun, rx_underrun;
+    logic tx_overrun, rx_underrun;
+    logic fifo_busy, command_pending;
+
+    generate
+        if (FIFO_SIZE < 4) begin : INVALID_FIFO_SIZE
+            $error("%m: FIFO_SIZE must be at least four bytes");
+        end
+    endgenerate
 
     // Active protocol sends requests, other protocols are idle
     always_comb begin
@@ -96,7 +109,7 @@ module usi_datapath #(
         mode_valid = 1'b1;
         case (active_mode)
             MODE_UART: selected_dp_cmd = uart_dp_cmd;
-            MODE_SPI: selected_dp_cmd = spi_dp_cmd;`
+            MODE_SPI: selected_dp_cmd = spi_dp_cmd;
             MODE_I2C: selected_dp_cmd = i2c_dp_cmd;
             default: mode_valid = 1'b0;
         endcase
@@ -111,7 +124,6 @@ module usi_datapath #(
 
     // Changing protocols ignores commands on the handoff edge 
     // Abort/clear cancels active data but preserves FIFOs
-    // Directional flush cancels that shifter AND clears FIFO
     assign mode_changed = (active_mode != previous_mode);
     assign engine_clear = !nRST || dp_clear || mode_changed || !mode_valid;
     assign tx_clear = engine_clear || tx_flush;
@@ -137,54 +149,56 @@ module usi_datapath #(
     assign rx_push = rx_commit_accept;
     assign rx_byte = rx_lsb_first ? (rx_parallel_data >> rx_padding) : rx_parallel_data;
 
-    // Software writes four bytes, low lane first
-    asym_fifo #(
-        .READ_BYTES(1),
-        .WRITE_BYTES(4),
-        .DEPTH_BYTES(TX_FIFO_SIZE)
-    ) tx_fifo (
-        .CLK(CLK),
+    // Repartition between transactions
+    assign command_pending = selected_dp_cmd.tx_load || selected_dp_cmd.tx_shift ||
+        selected_dp_cmd.rx_begin || selected_dp_cmd.rx_sample ||
+        selected_dp_cmd.rx_commit || selected_dp_cmd.rx_discard;
+    assign fifo_busy = protocol_busy || tx_active || rx_active || rx_byte_valid || command_pending;
+    assign split_ready = nRST && !fifo_busy && !dp_clear && !mode_changed &&
+        tx_empty && rx_empty && !tx_wen && !rx_ren && !tx_flush && !rx_flush &&
+        (fifo_tx_start <= COUNT_BITS'(FIFO_SIZE));
+
+    split_fifo #(
+        .DEPTH_BYTES(FIFO_SIZE),
+        .BUSIF_BYTES(4),
+        .DP_BYTES(2)
+    ) shared_fifo (
+        .clk(CLK),
         .nRST(nRST),
-        .WEN(tx_wen),
-        .REN(tx_pop),
-        .clear_underrun(error_clear),
-        .clear_overrun(error_clear),
-        .flush(tx_flush),
-        .wdata(tx_wdata),
-        .full(tx_full),
-        .empty(tx_empty),
-        .underrun(tx_underrun),
-        .overrun(tx_overrun),
-        .count(tx_count),
-        .rdata(tx_fifo_rdata),
-        .read_valid_bytes()
+        .tx_wdata(tx_wdata),
+        .tx_push(tx_wen),
+        .tx_pop(tx_pop),
+        .tx_flush(tx_flush),
+        .tx_pop_num_bytes(2'd1),
+        .tx_rdata({unused_tx_high, tx_fifo_rdata}),
+        .tx_empty(tx_empty),
+        .tx_full(tx_full),
+        .tx_occupancy(tx_count),
+        .rx_wdata({8'b0, rx_byte}),
+        .rx_push(rx_push),
+        .rx_pop(rx_ren),
+        .rx_flush(rx_flush),
+        .rx_push_num_bytes(2'd1),
+        .rx_rdata(rx_rdata),
+        .rx_empty(rx_empty),
+        .rx_full(rx_full),
+        .rx_occupancy(rx_count),
+        .dp_busy(fifo_busy),
+        .split_apply(split_apply && split_ready),
+        .fifo_tx_start(fifo_tx_start)
     );
 
-    // RX commits one byte
-    // Bus read drains up to four bytes, zero-fills unused lanes
-    // Concurrent commit is queued after the read
-    asym_fifo #(
-        .READ_BYTES(4),
-        .WRITE_BYTES(1),
-        .DEPTH_BYTES(RX_FIFO_SIZE),
-        .ALLOW_PARTIAL_READ(1'b1)
-    ) rx_fifo (
-        .CLK(CLK),
-        .nRST(nRST),
-        .WEN(rx_push),
-        .REN(rx_ren),
-        .clear_underrun(error_clear),
-        .clear_overrun(error_clear),
-        .flush(rx_flush),
-        .wdata(rx_byte),
-        .full(rx_full),
-        .empty(rx_empty),
-        .underrun(rx_underrun),
-        .overrun(rx_overrun),
-        .count(rx_count),
-        .rdata(rx_rdata),
-        .read_valid_bytes(rx_read_valid_bytes)
-    );
+    assign rx_read_valid_bytes = (rx_count >= 4) ? 3'd4 : 3'(rx_count);
+
+    always_ff @(posedge CLK or negedge nRST) begin
+        if (!nRST) begin
+            tx_overrun <= 1'b0;
+            rx_underrun <= 1'b0;
+        end else begin
+            tx_overrun <= !tx_flush && ((tx_wen && tx_full) || (tx_overrun && !error_clear));
+            rx_underrun <= !rx_flush && ((rx_ren && rx_empty) || (rx_underrun && !error_clear));
+        end
+    end
 
     shift_register tx_sr (
         .CLK(CLK),
@@ -274,10 +288,9 @@ module usi_datapath #(
         end
     end
 
-    // Completion/failure strobes for one cycle after the request edge
     // fifo_error and protocol errors bundled together in register_map.procol_error
     // Error >> Clear
-    assign fifo_error = tx_overrun || tx_underrun || rx_overrun || rx_underrun;
+    assign fifo_error = tx_overrun || rx_underrun;
     always_comb begin
         dp_status = '0;
         dp_status.tx_fifo_valid = !tx_empty && !tx_flush;
