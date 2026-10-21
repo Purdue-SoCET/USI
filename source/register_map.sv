@@ -1,9 +1,9 @@
 `timescale 1ns/1ps
 
 module register_map #(
-    parameter unsigned RX_FIFO_SIZE = 16,
-    parameter unsigned TX_FIFO_SIZE = 16,
-    parameter int CLKDIV_BITS = 16
+    parameter unsigned FIFO_SIZE = 256,
+    parameter int CLKDIV_BITS = 16,
+    parameter logic [7:0] SUPPORTED_MODES = 8'h0F
 )(
     bus_protocol_if.peripheral_vital bpif,
     input logic CLK,
@@ -16,10 +16,12 @@ module register_map #(
     input logic rx_empty,
 
     // FIFO COUNTS
-    input logic [$clog2(TX_FIFO_SIZE+1)-1:0] tx_count,
-    input logic [$clog2(RX_FIFO_SIZE+1)-1:0] rx_count,
+    input logic [$clog2(FIFO_SIZE+1)-1:0] tx_count,
+    input logic [$clog2(FIFO_SIZE+1)-1:0] rx_count,
 
     input logic [31:0] rx_rdata,
+    input logic [2:0] rx_read_valid_bytes,
+    input logic split_ready,
 
     //PROTOCOL STATUS
     input logic protocol_busy,
@@ -28,6 +30,9 @@ module register_map #(
     output logic [2:0] mode_sel,
     output logic [CLKDIV_BITS-1:0] clkdiv,
     output logic [31:0] tx_wdata,
+    output logic [2:0] uart_config,
+    output logic [$clog2(FIFO_SIZE+1)-1:0] fifo_tx_start,
+    output logic split_apply,
     output logic [7:0] spi_config,
     output logic [7:0] i2c_config,
     output logic [6:0] i2c_addr,
@@ -45,6 +50,7 @@ module register_map #(
     output logic tx_flush,
     output logic rx_flush
 );
+    localparam int COUNT_BITS = $clog2(FIFO_SIZE+1);
     logic [2:0] mode_sel_n;
     logic [CLKDIV_BITS-1:0] clkdiv_n;
     logic [7:0] spi_config_n;
@@ -52,7 +58,16 @@ module register_map #(
     logic [6:0] i2c_addr_n;
     logic [5:0] spi_length_n;
     logic [31:0] transfer_count_n;
+    logic [2:0] uart_config_n;
+    logic [2:0] last_rx_read_valid_bytes;
+    logic [COUNT_BITS-1:0] split_boundary, split_boundary_n;
     logic strobe_error, write_error, read_error;
+
+    generate
+        if (CLKDIV_BITS < 4 || CLKDIV_BITS > 32) begin : INVALID_CLKDIV_BITS
+            $error("%m: CLKDIV_BITS must be between four and 32");
+        end
+    endgenerate
 
     always_ff @(posedge CLK, negedge nRST) begin
         if (~nRST) begin
@@ -63,6 +78,9 @@ module register_map #(
             i2c_addr <= '0;
             spi_length <= 6'd8;
             transfer_count <= '0;
+            uart_config <= '0;
+            split_boundary <= COUNT_BITS'(FIFO_SIZE/2);
+            last_rx_read_valid_bytes <= '0;
         end
         else begin
             mode_sel <= mode_sel_n;
@@ -72,6 +90,12 @@ module register_map #(
             i2c_addr <= i2c_addr_n;
             spi_length <= spi_length_n;
             transfer_count <= transfer_count_n;
+            uart_config <= uart_config_n;
+            split_boundary <= split_boundary_n;
+            // Snapshot metadata with the actual pop, not a separate CSR read:
+            // incoming bytes cannot change the meaning of an earlier read.
+            if (rx_ren)
+                last_rx_read_valid_bytes <= rx_read_valid_bytes;
         end
     end
 
@@ -85,6 +109,9 @@ module register_map #(
         spi_length_n = spi_length;
         i2c_addr_n = i2c_addr;
         transfer_count_n = transfer_count;
+        uart_config_n = uart_config;
+        split_boundary_n = split_boundary;
+        split_apply = 1'b0;
         start = 1'b0;
         abort = 1'b0;
         done_clear = 1'b0;
@@ -95,8 +122,18 @@ module register_map #(
 
         if (bpif.wen && !strobe_error) begin
             case (bpif.addr)
-                32'h00: mode_sel_n = bpif.wdata[2:0];
-                32'h04: clkdiv_n = bpif.wdata[CLKDIV_BITS-1:0];
+                32'h00: begin
+                    if (!protocol_busy && bpif.wdata < 8 && SUPPORTED_MODES[bpif.wdata[2:0]])
+                        mode_sel_n = bpif.wdata[2:0];
+                    else
+                        write_error = 1'b1;
+                end
+                32'h04: begin
+                    if (!protocol_busy)
+                        clkdiv_n = bpif.wdata[CLKDIV_BITS-1:0];
+                    else
+                        write_error = 1'b1;
+                end
                 // 0x08: protocol_status, read only.
                 // 0x0C: fifo_status, read only.
                 32'h10: tx_wen = 1'b1;
@@ -117,6 +154,20 @@ module register_map #(
                 // 0x34: rx_count, read only.
                 // 0x38: tx_count, read only.
                 32'h3C: abort = bpif.wdata[0];
+                32'h40: begin
+                    if (!protocol_busy && bpif.wdata <= 7 && bpif.wdata[1:0] != 2'b11)
+                        uart_config_n = bpif.wdata[2:0];
+                    else
+                        write_error = 1'b1;
+                end
+                32'h44: begin
+                    if (bpif.wdata <= FIFO_SIZE && split_ready) begin
+                        split_boundary_n = fifo_tx_start;
+                        split_apply = 1'b1;
+                    end else
+                        write_error = 1'b1;
+                end
+                // 0x48: last RX read valid-byte count, read only.
                 default: write_error = 1'b1;
             endcase
         end
@@ -148,16 +199,24 @@ module register_map #(
                 32'h28: bpif.rdata[7:0] = i2c_config;
                 32'h2C: bpif.rdata[6:0] = i2c_addr;
                 // 0x30: status_clear, write only.
-                32'h34: bpif.rdata[$clog2(RX_FIFO_SIZE+1)-1:0] = rx_count;
-                32'h38: bpif.rdata[$clog2(TX_FIFO_SIZE+1)-1:0] = tx_count;
+                32'h34: bpif.rdata[$clog2(FIFO_SIZE+1)-1:0] = rx_count;
+                32'h38: bpif.rdata[$clog2(FIFO_SIZE+1)-1:0] = tx_count;
                 // 0x3C: abort, write only.
+                32'h40: bpif.rdata[2:0] = uart_config;
+                32'h44: bpif.rdata[$clog2(FIFO_SIZE+1)-1:0] = split_boundary;
+                32'h48: bpif.rdata[2:0] = last_rx_read_valid_bytes;
                 default: read_error = 1'b1;
             endcase
         end
     end
 
     assign tx_wdata = bpif.wdata;
-    assign strobe_error = (bpif.strobe == 4'b1111) ? 1'b0 : 1'b1;
+    // Present the candidate boundary BEFORE the apply edge so split_ready
+    // checks that exact request. Readback is the last accepted boundary.
+    assign fifo_tx_start = (bpif.wen && bpif.addr == 32'h44) ?
+        bpif.wdata[$clog2(FIFO_SIZE+1)-1:0] : split_boundary;
+    assign strobe_error = (bpif.wen && bpif.ren) ||
+        ((bpif.wen || bpif.ren) && bpif.strobe != 4'b1111);
     assign bpif.error = strobe_error || write_error || read_error;
     assign bpif.request_stall = 1'b0;
 endmodule
