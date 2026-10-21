@@ -26,11 +26,25 @@ filesets:
             - testbench/usi_datapath_tb.sv
         file_type: systemVerilogSource
 
+    tb_bus_interface_shim:
+        files:
+            - testbench/support/bus_protocol_if.sv
+        file_type: systemVerilogSource
+
+    rtl_usi_uart:
+        files:
+            - source/register_map.sv
+            - source/control_unit.sv
+            - source/uart.sv
+            - source/USI.sv
+        file_type: systemVerilogSource
+
     rtl:
         depend:
             - "socet:bus-components:bus_protocol_if:0.0.1"
-            - "socet:digital-lib:counter:0.0.1"
         files:
+            - source/usi_datapath.sv
+            - source/split_fifo.sv
             - source/USI.sv
             - source/register_map.sv
             - source/asym_fifo.sv
@@ -41,7 +55,8 @@ filesets:
 
     tb:
         files:
-            - testbench/USI_tb.sv
+            - testbench/uart_peer.sv
+            - testbench/usi_uart_tb.sv
         file_type: systemVerilogSource
 
     tb_register_map:
@@ -61,7 +76,8 @@ filesets:
 
     tb_uart:
         files:
-            - testbench/uart_tb.sv
+            - testbench/uart_peer.sv
+            - testbench/usi_uart_tb.sv
         file_type: systemVerilogSource
     
     tb_split_fifo:
@@ -72,8 +88,8 @@ filesets:
     lint_files:
         depend:
             - "socet:bus-components:bus_protocol_if:0.0.1"
-            - "socet:digital-lib:counter:0.0.1"
         files:
+            - source/usi_datapath.sv
             - source/USI.sv
             - source/register_map.sv
             - source/asym_fifo.sv
@@ -85,6 +101,24 @@ filesets:
 
 
 targets:
+    sim_usi_uart: &uart_integration
+        description: UART register-map/datapath integration with a pin-level peer
+        default_tool: verilator
+        filesets:
+            - tb_bus_interface_shim
+            - rtl_usi_datapath
+            - rtl_usi_uart
+            - tb_uart
+        toplevel: usi_uart_tb
+        tools:
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --timing
+                    - --assert
+                    - --no-sched-zero-delay
+                    - -Wno-TIMESCALEMOD
+
     sim_usi_datapath:
         description: Simulate shared datapath with split FIFO
         default_tool: verilator
@@ -113,8 +147,8 @@ targets:
             - "!tool_verilator? (tb)"
             - "tool_verilator? (tb)"
         toplevel: 
-            - "tool_verilator? (USI_tb)"
-            - "!tool_verilator? (USI_tb)"
+            - "tool_verilator? (usi_uart_tb)"
+            - "!tool_verilator? (usi_uart_tb)"
         tools:
             xcelium:
                 xrun_options:
@@ -130,6 +164,10 @@ targets:
             verilator:
                 verilator_options:
                     - --binary
+                    - --timing
+                    - --assert
+                    - --no-sched-zero-delay
+                    - -Wno-TIMESCALEMOD
                     - --trace
                     - --trace-fst
                     - --trace-structs
@@ -235,33 +273,7 @@ targets:
                     - --trace-structs
 
     sim_uart:
-        <<: *default
-        description: Simulate w/TB
-        default_tool: verilator
-        filesets_append:
-            - "!tool_verilator? (tb_uart)"
-            - "tool_verilator? (tb_uart)"
-        toplevel: 
-            - "tool_verilator? (uart_tb_top)"
-            - "!tool_verilator? (uart_tb_top)"
-        tools:
-            xcelium:
-                xrun_options:
-                    - +xmtimescale+1ns/100ps
-            modelsim:
-                vsim_options:
-                    - -vopt
-                    - -voptargs='+acc'
-                    - -t ps
-            vcs:
-                vcs_options:
-                    - -assert svaext
-            verilator:
-                verilator_options:
-                    - --binary
-                    - --trace
-                    - --trace-fst
-                    - --trace-structs
+        <<: *uart_integration
 
     fpga:
         <<: *default
