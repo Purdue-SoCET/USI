@@ -79,7 +79,7 @@ module usi_datapath #(
     dp_cmd_t selected_dp_cmd;
     usi_mode_t previous_mode;
     logic mode_valid, mode_changed, bit_length_valid;
-    logic engine_clear, tx_clear, rx_clear;
+    logic engine_clear, tx_clear, rx_clear, rx_path_clear;
     logic [7:0] tx_fifo_rdata, unused_tx_high;
     logic [7:0] tx_load_data, tx_payload;
     logic [7:0] rx_parallel_data, rx_byte;
@@ -127,7 +127,8 @@ module usi_datapath #(
     assign mode_changed = (active_mode != previous_mode);
     assign engine_clear = !nRST || dp_clear || mode_changed || !mode_valid;
     assign tx_clear = engine_clear || tx_flush;
-    assign rx_clear = engine_clear || rx_flush || selected_dp_cmd.rx_discard;
+    assign rx_path_clear = engine_clear || rx_flush;
+    assign rx_clear = rx_path_clear || selected_dp_cmd.rx_discard;
     assign bit_length_valid = (selected_dp_cmd.bit_length >= 4'd1) && (selected_dp_cmd.bit_length <= 4'd8);
     assign chunk_padding = 3'(4'd8 - selected_dp_cmd.bit_length);
     assign tx_active = (tx_bits_left != 4'd0);
@@ -293,20 +294,20 @@ module usi_datapath #(
     assign fifo_error = tx_overrun || rx_underrun;
     always_comb begin
         dp_status = '0;
-        dp_status.tx_fifo_valid = !tx_empty && !tx_flush;
-        dp_status.rx_fifo_ready = !rx_full && !rx_flush;
+        dp_status.tx_fifo_valid = !tx_empty && !tx_clear;
+        dp_status.rx_fifo_ready = !rx_full && !rx_path_clear;
         dp_status.tx_active = tx_active && !tx_clear;
-        dp_status.rx_active = rx_active && !rx_clear;
+        dp_status.rx_active = rx_active && !rx_path_clear;
         dp_status.tx_bit = (tx_active && !tx_clear) ? tx_shift_bit : 1'b1;
-        dp_status.rx_byte = rx_clear ? 8'b0 : rx_byte;
-        dp_status.rx_byte_valid = rx_byte_valid && !rx_clear;
+        dp_status.rx_byte = rx_path_clear ? 8'b0 : rx_byte;
+        dp_status.rx_byte_valid = rx_byte_valid && !rx_path_clear;
         dp_status.tx_load_done = tx_load_done && !tx_clear;
         dp_status.tx_load_failed = tx_load_failed && !tx_clear;
         dp_status.tx_done = tx_done && !tx_clear;
-        dp_status.rx_begin_done = rx_begin_done && !rx_clear;
-        dp_status.rx_begin_failed = rx_begin_failed && !rx_clear;
-        dp_status.rx_done = rx_done && !rx_clear;
-        dp_status.rx_commit_done = rx_commit_done && !rx_clear;
-        dp_status.rx_commit_failed = rx_commit_failed && !rx_clear;
+        dp_status.rx_begin_done = rx_begin_done && !rx_path_clear;
+        dp_status.rx_begin_failed = rx_begin_failed && !rx_path_clear;
+        dp_status.rx_done = rx_done && !rx_path_clear;
+        dp_status.rx_commit_done = rx_commit_done && !rx_path_clear;
+        dp_status.rx_commit_failed = rx_commit_failed && !rx_path_clear;
     end
 endmodule
