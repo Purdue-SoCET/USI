@@ -3,8 +3,7 @@
 /* verilator lint_off WIDTHEXPAND */
 
 module register_map_tb;
-    localparam int RX_FIFO_SIZE = 16;
-    localparam int TX_FIFO_SIZE = 16;
+    localparam int FIFO_SIZE = 256;
     localparam int CLKDIV_BITS = 16;
 
     logic CLK;
@@ -15,8 +14,7 @@ module register_map_tb;
     int fail_count = 0;
 
     logic tx_full, tx_empty, rx_full, rx_empty;
-    logic [$clog2(TX_FIFO_SIZE+1)-1:0] tx_count;
-    logic [$clog2(RX_FIFO_SIZE+1)-1:0] rx_count;
+    logic [$clog2(FIFO_SIZE+1)-1:0] tx_count, rx_count;
     logic [31:0] rx_rdata;
     logic protocol_busy, protocol_done, protocol_error;
     logic [2:0] mode_sel;
@@ -26,13 +24,17 @@ module register_map_tb;
     logic [7:0] spi_config, i2c_config;
     logic [6:0] i2c_addr;
     logic [5:0] spi_length;
+    logic [2:0] uart_config;
+    logic [2:0] rx_read_valid_bytes = 3'd1;
+    logic [$clog2(FIFO_SIZE+1)-1:0] fifo_tx_start;
+    logic split_ready = 1'b1;
+    logic split_apply;
     logic error_clear, done_clear, start, abort;
     logic tx_wen, rx_ren, tx_flush, rx_flush;
     logic [31:0] rdata;
 
     register_map #(
-        .RX_FIFO_SIZE(RX_FIFO_SIZE),
-        .TX_FIFO_SIZE(TX_FIFO_SIZE),
+        .FIFO_SIZE(FIFO_SIZE),
         .CLKDIV_BITS(CLKDIV_BITS)
     ) DUT (.*);
 
@@ -154,7 +156,7 @@ module register_map_tb;
 
     initial begin
         $dumpfile("reg_map.vcd");
-        $dumpvars(0, reg_map_tb);
+        $dumpvars(0, register_map_tb);
         CLK = 0;
         nRST = 0;
         bpif.addr = '0;
@@ -211,7 +213,6 @@ module register_map_tb;
         write(32'h10, 32'hBBBBBBBB, 4'b1111, 0);
 
         // RX FIFO contains one entry
-        // reading buffer data should return value driven on rx_Data    
         rx_empty = 0;
         rx_count = 1;
         read(32'h10, rdata);
@@ -244,8 +245,7 @@ module register_map_tb;
         check("protocol error input deasserted", 0, rdata);
 
         // test FIFO flags and counts
-        // FIFO status bits:
-        // [3] TX full, [2] TX empty, [1] RX full, [0] RX empty.
+        // FIFO status bits: [3] TX full, [2] TX empty, [1] RX full, [0] RX empty.
 
         // both fifos empty
         tx_full = 0; tx_empty = 1; rx_full = 0; rx_empty = 1;
@@ -267,7 +267,6 @@ module register_map_tb;
         check("TX count read", 9, rdata);
 
         // store transfer count of 10
-        // verify output to controller and data back to software
         write(32'h1C, 32'd10, 4'b1111, 0);
         check("transfer_count write", 32'd10, transfer_count);
         read(32'h1C, rdata);
@@ -313,6 +312,28 @@ module register_map_tb;
         // check that transfer_count stays at the configured value
         read(32'h1C, rdata);
         check("configured transfer count stays the same", 10, rdata);
+
+        write(32'h40, 32'd6, 4'b1111, 0);
+        read(32'h40, rdata);
+        check("UART even parity and flow control", 6, rdata);
+        write(32'h40, 32'd3, 4'b1111, 1);
+        write(32'h44, 32'd256, 4'b1111, 0);
+        read(32'h44, rdata);
+        check("all-RX split readback", 256, rdata);
+        split_ready = 1'b0;
+        write(32'h44, 32'd0, 4'b1111, 1);
+        read(32'h44, rdata);
+        check("rejected split preserves readback", 256, rdata);
+        split_ready = 1'b1;
+        write(32'h44, 32'd257, 4'b1111, 1);
+        rx_count = 9'd256;
+        read(32'h34, rdata);
+        check("full-depth RX count", 256, rdata);
+        read(32'h48, rdata);
+        check("RX valid-byte metadata", 1, rdata);
+        rx_read_valid_bytes = 3'd4;
+        read(32'h48, rdata);
+        check("RX metadata remains tied to last buffer read", 1, rdata);
 
         $display("---------------------------------");
         $display("TEST COMPLETE");
