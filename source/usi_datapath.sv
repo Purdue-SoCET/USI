@@ -9,14 +9,14 @@ package usi_datapath_pkg;
     typedef struct packed {
         logic       tx_load;
         logic       tx_from_fifo;
-        logic [7:0] tx_immediate;
+        logic [15:0] tx_immediate;
         logic       tx_shift;
         logic       rx_begin;
         logic       rx_sample;
         logic       rx_commit;
         logic       rx_discard;
         logic       lsb_first;
-        logic [3:0] bit_length;
+        logic [4:0] bit_length;
     } dp_cmd_t;
 
     typedef struct packed {
@@ -25,7 +25,7 @@ package usi_datapath_pkg;
         logic       tx_active;
         logic       rx_active;
         logic       tx_bit;
-        logic [7:0] rx_byte;
+        logic [15:0] rx_byte;
         logic       rx_byte_valid;
         logic       tx_load_done;
         logic       tx_load_failed;
@@ -80,17 +80,18 @@ module usi_datapath #(
     usi_mode_t previous_mode;
     logic mode_valid, mode_changed, bit_length_valid;
     logic engine_clear, tx_clear, rx_clear, rx_path_clear;
-    logic [7:0] tx_fifo_rdata, unused_tx_high;
-    logic [7:0] tx_load_data, tx_payload;
-    logic [7:0] rx_parallel_data, rx_byte;
+    logic [15:0] tx_fifo_rdata;
+    logic [15:0] tx_load_data, tx_payload;
+    logic [15:0] rx_parallel_data, rx_byte;
+    logic [1:0] requested_bytes, rx_fifo_bytes;
     logic tx_shift_bit;
     logic tx_pop, rx_push;
     logic tx_load_accept, tx_shift_accept;
     logic rx_begin_accept, rx_sample_accept, rx_commit_accept;
     logic tx_active, rx_active, rx_byte_valid;
     logic tx_lsb_first, rx_lsb_first;
-    logic [3:0] tx_bits_left, rx_bits_left;
-    logic [2:0] chunk_padding, rx_padding;
+    logic [4:0] tx_bits_left, rx_bits_left;
+    logic [3:0] chunk_padding, rx_padding;
     logic tx_load_done, tx_load_failed, tx_done;
     logic rx_begin_done, rx_begin_failed, rx_done;
     logic rx_commit_done, rx_commit_failed;
@@ -103,7 +104,6 @@ module usi_datapath #(
         end
     endgenerate
 
-    // Active protocol sends requests, other protocols are idle
     always_comb begin
         selected_dp_cmd = '0;
         mode_valid = 1'b1;
@@ -129,19 +129,25 @@ module usi_datapath #(
     assign tx_clear = engine_clear || tx_flush;
     assign rx_path_clear = engine_clear || rx_flush;
     assign rx_clear = rx_path_clear || selected_dp_cmd.rx_discard;
-    assign bit_length_valid = (selected_dp_cmd.bit_length >= 4'd1) && (selected_dp_cmd.bit_length <= 4'd8);
-    assign chunk_padding = 3'(4'd8 - selected_dp_cmd.bit_length);
-    assign tx_active = (tx_bits_left != 4'd0);
-    assign rx_active = (rx_bits_left != 4'd0);
+    assign bit_length_valid = (selected_dp_cmd.bit_length >= 5'd1) && (selected_dp_cmd.bit_length <= 5'd16);
+    assign chunk_padding = 4'(5'd16 - selected_dp_cmd.bit_length);
+    assign tx_active = (tx_bits_left != 5'd0);
+    assign rx_active = (rx_bits_left != 5'd0);
+
+    // FIFO accounting stays byte-based: 1-8 bits use one byte, 9-16 use two.
+    // RX size follows the latched chunk, including commit + begin on one edge.
+    assign requested_bytes = (selected_dp_cmd.bit_length > 5'd8) ? 2'd2 : 2'd1;
+    assign rx_fifo_bytes = (rx_active || rx_byte_valid) ?
+        ((rx_padding < 4'd8) ? 2'd2 : 2'd1) : requested_bytes;
 
     // Load >> shift
-    assign tx_load_accept = !tx_clear && selected_dp_cmd.tx_load && bit_length_valid && !tx_active && (!selected_dp_cmd.tx_from_fifo || !tx_empty);
+    assign tx_load_accept = !tx_clear && selected_dp_cmd.tx_load && bit_length_valid && !tx_active &&
+        (!selected_dp_cmd.tx_from_fifo || (tx_count >= COUNT_BITS'(requested_bytes)));
     assign tx_shift_accept = !tx_clear && selected_dp_cmd.tx_shift && tx_active && !selected_dp_cmd.tx_load;
     assign tx_pop = tx_load_accept && selected_dp_cmd.tx_from_fifo;
     assign tx_payload = selected_dp_cmd.tx_from_fifo ? tx_fifo_rdata : selected_dp_cmd.tx_immediate;
     assign tx_load_data = selected_dp_cmd.lsb_first ? tx_payload : (tx_payload << chunk_padding);
 
-    // RX chunk stays in the shifter until discard/commit
     // Old chunk is queued while the shifter clears 
     // Discard >> Begin >> Sample 
     assign rx_commit_accept = !rx_clear && selected_dp_cmd.rx_commit && rx_byte_valid && !rx_full;
@@ -170,16 +176,16 @@ module usi_datapath #(
         .tx_push(tx_wen),
         .tx_pop(tx_pop),
         .tx_flush(tx_flush),
-        .tx_pop_num_bytes(2'd1),
-        .tx_rdata({unused_tx_high, tx_fifo_rdata}),
+        .tx_pop_num_bytes(requested_bytes),
+        .tx_rdata(tx_fifo_rdata),
         .tx_empty(tx_empty),
         .tx_full(tx_full),
         .tx_occupancy(tx_count),
-        .rx_wdata({8'b0, rx_byte}),
+        .rx_wdata(rx_byte),
         .rx_push(rx_push),
         .rx_pop(rx_ren),
         .rx_flush(rx_flush),
-        .rx_push_num_bytes(2'd1),
+        .rx_push_num_bytes(rx_fifo_bytes),
         .rx_rdata(rx_rdata),
         .rx_empty(rx_empty),
         .rx_full(rx_full),
@@ -205,7 +211,7 @@ module usi_datapath #(
         .CLK(CLK),
         .nRST(nRST),
         .parallel_load(tx_clear || tx_load_accept),
-        .parallel_in(tx_clear ? 8'b0 : tx_load_data),
+        .parallel_in(tx_clear ? 16'b0 : tx_load_data),
         .shift_en(tx_shift_accept),
         .msb_first(!tx_lsb_first),
         .shift_in(1'b0),
@@ -217,7 +223,7 @@ module usi_datapath #(
         .CLK(CLK),
         .nRST(nRST),
         .parallel_load(rx_clear || rx_begin_accept),
-        .parallel_in(8'b0),
+        .parallel_in(16'b0),
         .shift_en(rx_sample_accept),
         .msb_first(!rx_lsb_first),
         .shift_in(rx_bit_i),
@@ -235,7 +241,7 @@ module usi_datapath #(
         end else begin
             tx_load_done <= tx_load_accept;
             tx_load_failed <= !tx_clear && selected_dp_cmd.tx_load && !tx_load_accept;
-            tx_done <= tx_shift_accept && (tx_bits_left == 4'd1);
+            tx_done <= tx_shift_accept && (tx_bits_left == 5'd1);
 
             if (tx_clear) begin
                 tx_bits_left <= '0;
@@ -244,7 +250,7 @@ module usi_datapath #(
                 tx_bits_left <= selected_dp_cmd.bit_length;
                 tx_lsb_first <= selected_dp_cmd.lsb_first;
             end else if (tx_shift_accept) begin
-                tx_bits_left <= tx_bits_left - 4'd1;
+                tx_bits_left <= tx_bits_left - 5'd1;
             end
         end
     end
@@ -263,7 +269,7 @@ module usi_datapath #(
         end else begin
             rx_begin_done <= rx_begin_accept;
             rx_begin_failed <= !rx_clear && selected_dp_cmd.rx_begin && !rx_begin_accept;
-            rx_done <= rx_sample_accept && (rx_bits_left == 4'd1);
+            rx_done <= rx_sample_accept && (rx_bits_left == 5'd1);
             rx_commit_done <= rx_commit_accept;
             rx_commit_failed <= !rx_clear && selected_dp_cmd.rx_commit && !rx_commit_accept;
 
@@ -281,8 +287,8 @@ module usi_datapath #(
                     rx_lsb_first <= selected_dp_cmd.lsb_first;
                     rx_padding <= chunk_padding;
                 end else if (rx_sample_accept) begin
-                    rx_bits_left <= rx_bits_left - 4'd1;
-                    if (rx_bits_left == 4'd1)
+                    rx_bits_left <= rx_bits_left - 5'd1;
+                    if (rx_bits_left == 5'd1)
                         rx_byte_valid <= 1'b1;
                 end
             end
@@ -294,12 +300,12 @@ module usi_datapath #(
     assign fifo_error = tx_overrun || rx_underrun;
     always_comb begin
         dp_status = '0;
-        dp_status.tx_fifo_valid = !tx_empty && !tx_clear;
+        dp_status.tx_fifo_valid = (tx_count >= COUNT_BITS'(requested_bytes)) && !tx_clear;
         dp_status.rx_fifo_ready = !rx_full && !rx_path_clear;
         dp_status.tx_active = tx_active && !tx_clear;
         dp_status.rx_active = rx_active && !rx_path_clear;
         dp_status.tx_bit = (tx_active && !tx_clear) ? tx_shift_bit : 1'b1;
-        dp_status.rx_byte = rx_path_clear ? 8'b0 : rx_byte;
+        dp_status.rx_byte = rx_path_clear ? 16'b0 : rx_byte;
         dp_status.rx_byte_valid = rx_byte_valid && !rx_path_clear;
         dp_status.tx_load_done = tx_load_done && !tx_clear;
         dp_status.tx_load_failed = tx_load_failed && !tx_clear;

@@ -8,7 +8,6 @@ module uart #(
     input logic tx_flush,
     input logic rx_flush,
     input logic [CLKDIV_BITS-1:0] clkdiv,
-    // [1:0]: 0=none, 1=odd, 2=even; [2]: enable flow control
     input logic [2:0] uart_config,
     input logic uart_rx,
     input logic uart_cts,
@@ -50,7 +49,6 @@ module uart #(
     logic tx_parity, rx_bad;
     logic expected_rx_parity;
 
-    // Synchronize external RX and CTS inputs.
     always_ff @(posedge CLK or negedge nRST) begin : INPUT_SYNC
         if (!nRST) begin
             rx_meta <= 1'b1;
@@ -84,6 +82,11 @@ module uart #(
 
     assign uart_rts = uart_en && baud_valid && uart_config[2] &&
         dp_status.rx_fifo_ready && !abort && !rx_flush;
+
+    assign dp_cmd.bit_length = 5'd8;
+    assign dp_cmd.lsb_first = 1'b1;
+    assign dp_cmd.tx_from_fifo = 1'b1;
+    assign dp_cmd.tx_immediate = '0;
 
     always_comb begin : TX_Next_State
         next_tx_state = tx_state;
@@ -164,12 +167,12 @@ module uart #(
     end
 
     always_comb begin : STATE_OUTPUTS
-        // Default configuration
-        dp_cmd = '0;
-        dp_cmd.bit_length = 4'd8;
-        dp_cmd.lsb_first = 1'b1;
-        dp_cmd.tx_from_fifo = 1'b1;
         dp_cmd.tx_load = tx_start;
+        dp_cmd.tx_shift = 1'b0;
+        dp_cmd.rx_begin = 1'b0;
+        dp_cmd.rx_sample = 1'b0;
+        dp_cmd.rx_commit = 1'b0;
+        dp_cmd.rx_discard = 1'b0;
 
         // Default TX output
         uart_tx = 1'b1;
@@ -189,7 +192,6 @@ module uart #(
                 end
 
                 TX_PARITY: begin
-                    // Invert the data XOR for odd parity.
                     uart_tx = tx_parity ^ (tx_parity_mode == 2'd1);
                 end
 
@@ -203,7 +205,6 @@ module uart #(
         if (uart_en && !abort && !rx_flush) begin
             case (rx_state)
                 RX_START: begin
-                    // Confirm the start bit at its midpoint.
                     dp_cmd.rx_begin = (rx_timer == '0) && !rx_sync;
                 end
 
@@ -224,7 +225,6 @@ module uart #(
                 end
 
                 default: begin
-                    // Keep default values: no request.
                 end
             endcase
         end
@@ -250,12 +250,10 @@ module uart #(
     end
 
     always_comb begin : PARITY_CHECK
-        // Even parity uses the data XOR; odd parity inverts it.
         expected_rx_parity =
-            (^dp_status.rx_byte) ^ (rx_parity_mode == 2'd1);
+            (^dp_status.rx_byte[7:0]) ^ (rx_parity_mode == 2'd1);
     end
 
-    // TX bit counter, baud timer, and parity calculation.
     always_ff @(posedge CLK or negedge nRST) begin : TX_Counter_And_Parity
         if (!nRST) begin
             tx_period <= '0;
@@ -304,13 +302,11 @@ module uart #(
                 end
 
                 default: begin
-                    // No additional updates.
                 end
             endcase
         end
     end
 
-    // RX bit counter, baud timer, and saved parity result.
     always_ff @(posedge CLK or negedge nRST) begin : RX_Counter_And_Parity
         if (!nRST) begin
             rx_period <= '0;
@@ -359,7 +355,6 @@ module uart #(
                 end
 
                 default: begin
-                    // No additional updates.
                 end
             endcase
         end
