@@ -32,17 +32,18 @@ module spi #(
         SPI_IDLE, SPI_TRANSFER, SPI_HOLD, SPI_COMMIT
     } spi_state_t;
 
-    spi_state_t spi_state;
+    spi_state_t spi_state, next_spi_state;
 
     logic miso_meta, miso_sync;
     logic clkdiv_valid, transfer_start, cancel_transfer;
     logic transfer_failed, rx_ready_to_commit;
+
     logic [CLKDIV_BITS-1:0] spi_period, spi_timer;
     logic [2:0] bit_index;
     logic sclk_level;
 
     // Synchronize the external MISO input.
-    always_ff @(posedge CLK or negedge nRST) begin
+    always_ff @(posedge CLK or negedge nRST) begin : INPUT_SYNC
         if (!nRST) begin
             miso_meta <= 1'b0;
             miso_sync <= 1'b0;
@@ -78,12 +79,46 @@ module spi #(
         ((spi_state == SPI_COMMIT) &&
             dp_status.rx_commit_failed);
 
-    // SPI outputs and datapath requests.
-    always_comb begin
+    always_comb begin : SPI_Next_State
+        next_spi_state = spi_state;
+
+        case (spi_state)
+            SPI_IDLE: begin
+                if (transfer_start) begin
+                    next_spi_state = SPI_TRANSFER;
+                end
+            end
+
+            SPI_TRANSFER: begin
+                if (spi_timer == '0 && sclk_level &&
+                    bit_index == 3'd7) begin
+                    next_spi_state = SPI_HOLD;
+                end
+            end
+
+            SPI_HOLD: begin
+                if (spi_timer == '0) begin
+                    next_spi_state = SPI_COMMIT;
+                end
+            end
+
+            SPI_COMMIT: begin
+                if (dp_status.rx_commit_done) begin
+                    next_spi_state = SPI_IDLE;
+                end
+            end
+
+            default: next_spi_state = SPI_IDLE;
+        endcase
+    end
+
+    always_comb begin : STATE_OUTPUTS
+        // Default pin outputs
         spi_mosi = 1'b1;
         spi_sclk = 1'b0;
         spi_cs_n = 1'b1;
 
+        // Default datapath configuration
         dp_cmd = '0;
         dp_cmd.bit_length = 4'd8;
         dp_cmd.lsb_first = 1'b0;
@@ -117,25 +152,36 @@ module spi #(
                     spi_cs_n = 1'b0;
 
                     if (spi_timer == '0 && rx_ready_to_commit) begin
+                        // Store the received byte in the RX FIFO.
                         dp_cmd.rx_commit = 1'b1;
                     end
                 end
 
-                default: ;
+                default: begin
+                    // Keep default values: no request.
+                end
             endcase
         end
     end
 
-    // SPI state, clock timer, and bit counter.
-    always_ff @(posedge CLK or negedge nRST) begin
+    always_ff @(posedge CLK or negedge nRST) begin : State_Register
         if (!nRST) begin
             spi_state <= SPI_IDLE;
+        end else if (cancel_transfer || transfer_failed) begin
+            spi_state <= SPI_IDLE;
+        end else begin
+            spi_state <= next_spi_state;
+        end
+    end
+
+    // SPI clock timer and bit counter.
+    always_ff @(posedge CLK or negedge nRST) begin : SPI_Counter_And_Clock
+        if (!nRST) begin
             spi_period <= '0;
             spi_timer <= '0;
             bit_index <= '0;
             sclk_level <= 1'b0;
         end else if (cancel_transfer || transfer_failed) begin
-            spi_state <= SPI_IDLE;
             spi_timer <= '0;
             bit_index <= '0;
             sclk_level <= 1'b0;
@@ -148,7 +194,6 @@ module spi #(
             case (spi_state)
                 SPI_IDLE: begin
                     if (transfer_start) begin
-                        spi_state <= SPI_TRANSFER;
                         spi_period <= clkdiv;
                         spi_timer <= clkdiv - 1'b1;
                         bit_index <= '0;
@@ -162,9 +207,9 @@ module spi #(
                         sclk_level <= ~sclk_level;
 
                         if (sclk_level) begin
-                            // Count completed SCLK cycles.
+                            // Keep the index at seven after the final bit.
                             if (bit_index == 3'd7) begin
-                                spi_state <= SPI_HOLD;
+                                bit_index <= bit_index;
                             end else begin
                                 bit_index <= bit_index + 1'b1;
                             end
@@ -172,27 +217,15 @@ module spi #(
                     end
                 end
 
-                SPI_HOLD: begin
-                    // Hold CS low for another half period.
-                    if (spi_timer == '0) begin
-                        spi_state <= SPI_COMMIT;
-                    end
+                default: begin
+                    // No additional updates.
                 end
-
-                SPI_COMMIT: begin
-                    // Wait for the RX FIFO write acknowledgement.
-                    if (dp_status.rx_commit_done) begin
-                        spi_state <= SPI_IDLE;
-                    end
-                end
-
-                default: spi_state <= SPI_IDLE;
             endcase
         end
     end
 
     // Error flag, completion pulse, and datapath cleanup.
-    always_ff @(posedge CLK or negedge nRST) begin
+    always_ff @(posedge CLK or negedge nRST) begin : ERROR_FLAGS
         if (!nRST) begin
             dp_error <= 1'b0;
             frame_done <= 1'b0;
@@ -211,10 +244,12 @@ module spi #(
                 dp_clear_req <= 1'b1;
             end
 
+            // A new error takes priority over error_clear.
             if (!cancel_transfer && transfer_failed) begin
                 dp_error <= 1'b1;
             end
 
+            // Report completion after the RX commit is acknowledged.
             if (!cancel_transfer && !transfer_failed &&
                 spi_state == SPI_COMMIT &&
                 dp_status.rx_commit_done) begin
