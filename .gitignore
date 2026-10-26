@@ -20,3 +20,5 @@ filelist.tcl
 work/
 obj_dir/
 Archive/
+README.md
+.DS_Store
