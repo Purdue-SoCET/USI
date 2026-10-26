@@ -1,4 +1,4 @@
-module flex_counter #(
+module flexCounter #(
     SIZE = 8
 ) (
     input logic clk,

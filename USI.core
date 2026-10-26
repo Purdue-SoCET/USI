@@ -26,6 +26,17 @@ filesets:
             - testbench/usi_datapath_tb.sv
         file_type: systemVerilogSource
 
+    rtl_I2C:
+        files:
+            - source/Kade/flexCounter.sv
+            - source/Kade/I2C.sv
+        file_type: systemVerilogSource
+
+    tb_I2C:
+        files:
+            - testbench/I2C_tb.sv
+        file_type: systemVerilogSource
+
     tb_bus_interface_shim:
         files:
             - testbench/support/bus_protocol_if.sv
@@ -101,6 +112,25 @@ filesets:
 
 
 targets:
+    sim_I2C:
+        description: Check I2C controller output signals
+        default_tool: verilator
+        filesets:
+            - rtl_usi_datapath
+            - rtl_I2C
+            - tb_I2C
+        toplevel: I2C_tb
+        tools:
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --timing
+                    - --assert
+                    - -Wno-TIMESCALEMOD
+                    - --trace
+                    - --trace-fst
+                    - --trace-structs
+
     sim_usi_uart: &uart_integration
         description: UART register-map/datapath integration with a pin-level peer
         default_tool: verilator

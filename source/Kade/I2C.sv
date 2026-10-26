@@ -13,7 +13,7 @@ module I2C #(
     output logic scl // this is SCL control. This could be added to datapath later...
 );
 
-    localparam sys_clk = 150000 // MHz
+    localparam sys_clk = 150000; // MHz
     logic div_clk;
 
 
@@ -32,7 +32,9 @@ module I2C #(
     logic scl_en, scl_clr;
     logic [3:0] broll, count_out;
 
-    flexCounter clkDiv(
+    flexCounter #(
+        .SIZE(16)
+    ) clkDiv(
         .clk(clk),
         .n_rst(n_rst),
         .rollover_val(div),
@@ -42,7 +44,9 @@ module I2C #(
         .rollover_flag(div_clk)
     );
 
-    flexCounter bitCount(
+    flexCounter #(
+        .SIZE(4)
+    ) bitCount(
         .clk(clk),
         .n_rst(n_rst),
         .rollover_val(broll),
@@ -54,7 +58,7 @@ module I2C #(
 
     state_t state, next_state;
     logic next_scl;
-    logic bcount_en;
+    //logic bcount_en;
 
     always_ff @(posedge clk, negedge n_rst) begin
         if(!n_rst) begin
@@ -103,13 +107,14 @@ module I2C #(
     endtask
 
     always_comb begin : FSM
-        bcount_en = 1'b0;
-        scl_en = 1'b1;
+        //bcount_en = 1'b0;
+        //scl_en = 1'b1;
         rx_config(1'b0, 1'b0, 1'b0, 1'b0); // rx active but continually clearing to be free for later reads
         tx_push(8'd1, 1'b0, 1'b1);
         set_counters(1'b0, 1'b1, 1'b1, 1'b0); // default is scl on, data counter off
         next_scl = scl_in ? (div_clk ? !scl : scl) : 1'b0;
         broll = 4'd8; // default for byte package
+        next_state = state;
         case(state) 
             IDLE: begin
                 // I2C idle state is 1 for SDA and SCL
@@ -119,10 +124,10 @@ module I2C #(
             START: begin
                 tx_push(8'd0, 1'b0, 1'b1); 
                 next_scl = 1'b1; // keep scl high to activate start bit
-                if(scl) begin
+                if(div_clk) begin
                     set_counters(1'b0, 1'b1, 1'b0, 1'b1);
                 end
-                next_state = scl ? ADDR : state;
+                next_state = div_clk ? ADDR : state;
             end
             ADDR: begin
                 set_counters(1'b0, 1'b1, 1'b0, 1'b1);
@@ -133,7 +138,7 @@ module I2C #(
                 end
             end
             RWBIT: begin
-                next_state = scl ? rwconfig ? RSET : AWK : state;
+                next_state = div_clk && !scl ? rwconfig ? RSET : AWK : state;
                 if(rwconfig) begin // writing/sending
                     tx_push(8'd0, 1'b0, 1'b1);
                 end else begin // reading
@@ -150,13 +155,13 @@ module I2C #(
                 next_state = state;
                 if(rwconfig) begin // write mode (reading for awk bit from slave)
                     rx_config(1'b0, 1'b1, 1'b0, 1'b0); 
-                    if(scl) begin // proper awknolwedge is a pull down
+                    if(div_clk && !scl) begin // proper awknolwedge is a pull down
                         set_counters(1'b0, 1'b1, 1'b0, 1'b1);
-                        next_state = (!data_byte[0] && dp_in.tx_fifo_valid) ? DATA : STOP;
+                        next_state = (!dp_in.rx_byte[0] && dp_in.tx_fifo_valid) ? DATA : STOP;
                     end
                 end else begin
                     tx_push(8'd0, 1'b0, 1'b1);  
-                    if(scl) begin // proper awknolwedge is a pull down
+                    if(div_clk && !scl) begin // proper awknolwedge is a pull down
                         set_counters(1'b0, 1'b1, 1'b0, 1'b1);
                         next_state = read_done ? STOP : RSET;
                     end
@@ -166,23 +171,23 @@ module I2C #(
                 set_counters(1'b0, 1'b1, 1'b0, 1'b1);
                 next_state = state;
                 if(rwconfig) begin // write mode
-                    if(count_out & 4'd1) begin
+                    if(count_out != 4'd8) begin
                         tx_push(8'hFF, 1'b1, 1'b0);  
                     end
-                    if(scl) begin
+                    else if(div_clk && !scl) begin
                         next_state = count_sig ? AWK : state;
                     end
                 end else begin // read mode
                     rx_config(1'b0, 1'b1, 1'b0, 1'b0);
-                    if(scl) begin
-                        next_scl = dp_out.rx_fifo_ready ? next_scl : 1'b0;
+                    if(div_clk && !scl) begin
+                        next_scl = dp_in.rx_fifo_ready ? next_scl : 1'b0;
                     end
                 end
             end
             STOP: begin
                 tx_push(8'd0, 1'b1, 1'b0); 
                 next_scl = 1'b1; // have scl be high and keep SDA low until next state to IDLE
-                next_state = scl ? IDLE : state;
+                next_state = div_clk && !scl ? IDLE : state;
             end
         endcase
     end
