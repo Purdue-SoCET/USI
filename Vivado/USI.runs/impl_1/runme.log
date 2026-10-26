@@ -1,0 +1,957 @@
+
+*** Running vivado
+    with args -log USI.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source USI.tcl -notrace
+
+
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Mon Oct 26 19:11:02 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source USI.tcl -notrace
+create_project: Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 535.879 ; gain = 219.852
+Command: link_design -top USI -part xc7s50csga324-1
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+INFO: [Device 21-403] Loading part xc7s50csga324-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.080 . Memory (MB): peak = 739.152 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2570 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'USI' is not ideal for floorplanning, since the cellview 'split_fifo' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc]
+WARNING: [Vivado 12-584] No ports matched 'CLK_100MHZ'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:4]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:4]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:12]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:12]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:13]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:13]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:14]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:14]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:15]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:15]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[4]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:16]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:16]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[5]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:17]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:17]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[6]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:18]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:18]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[7]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:19]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:19]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[8]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:20]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:20]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[9]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:21]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:21]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[10]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:22]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:22]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[11]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:23]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:23]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[12]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:24]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:24]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[13]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:25]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:25]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[14]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:26]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:26]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[15]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:27]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:27]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:30]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:30]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:31]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:31]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:32]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:32]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:33]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:33]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[4]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:34]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:34]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[5]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:35]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:35]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[6]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:36]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:36]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[7]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:37]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:37]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[8]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:38]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:38]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[9]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:39]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:39]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[10]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:40]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:40]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[11]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:41]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:41]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[12]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:42]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:42]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[13]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:43]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:43]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[14]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:44]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:44]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[15]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:45]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:45]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'BTN[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:48]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:48]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'BTN[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:49]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:49]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'BTN[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:50]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:50]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'BTN[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:51]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:51]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB0[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:54]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:54]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB0[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:55]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:55]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB0[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:56]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:56]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB1[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:57]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:57]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB1[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:58]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:58]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB1[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:59]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:59]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_AN[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:62]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:62]
+WARNING: [Vivado 12-584] No ports matched 'D0_AN[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:63]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:63]
+WARNING: [Vivado 12-584] No ports matched 'D0_AN[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:64]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:64]
+WARNING: [Vivado 12-584] No ports matched 'D0_AN[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:65]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:65]
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:66]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:66]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:67]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:67]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:68]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:68]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:69]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:69]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[4]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:70]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:70]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[5]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:71]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:71]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[6]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:72]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:72]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[7]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:73]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:73]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_AN[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:76]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:76]
+WARNING: [Vivado 12-584] No ports matched 'D1_AN[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:77]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:77]
+WARNING: [Vivado 12-584] No ports matched 'D1_AN[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:78]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:78]
+WARNING: [Vivado 12-584] No ports matched 'D1_AN[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:79]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:79]
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:80]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:80]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:81]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:81]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:82]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:82]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:83]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:83]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[4]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:84]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:84]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[5]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:85]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:85]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[6]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:86]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:86]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[7]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:87]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:87]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_DO_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:90]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:90]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_D0_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:91]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:91]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_D1_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:92]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:92]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_D1_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:93]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:93]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_D2_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:94]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:94]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_D2_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:95]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:95]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_CLK_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:96]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:96]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_CLK_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:97]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:97]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_CEC_IN'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:98]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:98]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_HPD'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:99]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:99]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_I2C_SCL'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:100]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:100]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_I2C-SDA'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:101]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:101]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_SPI_MISO'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:104]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:104]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_SPI_MOSI'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:105]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:105]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_SPI_CCLK'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:106]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:106]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_SS_B'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:107]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:107]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_RESET_B'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:108]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:108]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_INT'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:109]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:109]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_DQ0'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:112]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:112]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_DQ1'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:113]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:113]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_DQ2'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:114]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:114]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_DQ3'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:115]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:115]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_CMD'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:116]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:116]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_CLK'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:117]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:117]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_CD_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:118]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:118]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SPKL'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:121]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:121]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SPKR'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:122]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:122]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'MIC_CLK'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:125]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:125]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'MIC_DATA'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:126]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:126]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AD1_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:129]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:129]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AD1_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:130]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:130]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AD15_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:131]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:131]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AD15_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:132]
+INFO: [Common 17-14] Message 'Vivado 12-584' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:132]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:132]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:133]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:136]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:137]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:138]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:139]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:140]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:141]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:144]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+INFO: [Common 17-14] Message 'Common 17-55' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:144]
+CRITICAL WARNING: [Common 17-163] Missing value for option 'objects', please type 'set_property -help' for usage info. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:463]
+Finished Parsing XDC File [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 886.273 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+9 Infos, 101 Warnings, 109 Critical Warnings and 0 Errors encountered.
+link_design completed successfully
+link_design: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 890.324 ; gain = 354.445
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7s50'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7s50'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.533 . Memory (MB): peak = 907.477 ; gain = 17.152
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 1991fbab6
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 1370.449 ; gain = 462.973
+
+Starting Logic Optimization Task
+
+Phase 1 Initialization
+
+Phase 1.1 Core Generation And Design Setup
+Phase 1.1 Core Generation And Design Setup | Checksum: 1991fbab6
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 1.2 Setup Constraints And Sort Netlist
+Phase 1.2 Setup Constraints And Sort Netlist | Checksum: 1991fbab6
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 1 Initialization | Checksum: 1991fbab6
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 2 Timer Update And Timing Data Collection
+
+Phase 2.1 Detect if minReqCache needed
+Phase 2.1 Detect if minReqCache needed | Checksum: 1991fbab6
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.048 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 2.2 Timer Update
+Phase 2.2 Timer Update | Checksum: 1991fbab6
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.244 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 2.3 Timing Data Collection
+Phase 2.3 Timing Data Collection | Checksum: 1991fbab6
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.251 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 2 Timer Update And Timing Data Collection | Checksum: 1991fbab6
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.253 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 3 Retarget
+INFO: [Opt 31-1851] Number of loadless carry chains removed were: 0
+INFO: [Opt 31-1834] Total Chains To Be Transformed Were: 0 AND Number of Transformed insts Created are: 0
+INFO: [Opt 31-1566] Pulled 3 inverters resulting in an inversion of 263 pins
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 3 Retarget | Checksum: 17b99ec15
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.561 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Retarget | Checksum: 17b99ec15
+INFO: [Opt 31-389] Phase Retarget created 0 cells and removed 3 cells
+
+Phase 4 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 4 Constant propagation | Checksum: 17b99ec15
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.693 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Constant propagation | Checksum: 17b99ec15
+INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
+
+Phase 5 Sweep
+INFO: [Constraints 18-11670] Building netlist checker database with flags, 0x8
+Done building netlist checker database: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 5 Sweep | Checksum: 156164911
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.808 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Sweep | Checksum: 156164911
+INFO: [Opt 31-389] Phase Sweep created 0 cells and removed 0 cells
+
+Phase 6 BUFG optimization
+Phase 6 BUFG optimization | Checksum: 156164911
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.930 . Memory (MB): peak = 1831.043 ; gain = 0.000
+BUFG optimization | Checksum: 156164911
+INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
+
+Phase 7 Shift Register Optimization
+INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
+Phase 7 Shift Register Optimization | Checksum: 156164911
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.948 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Shift Register Optimization | Checksum: 156164911
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 8 Post Processing Netlist
+Phase 8 Post Processing Netlist | Checksum: 156164911
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.979 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Post Processing Netlist | Checksum: 156164911
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+
+Phase 9 Finalization
+
+Phase 9.1 Finalizing Design Cores and Updating Shapes
+Phase 9.1 Finalizing Design Cores and Updating Shapes | Checksum: 191c090a2
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 9.2 Verifying Netlist Connectivity
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.043 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 9.2 Verifying Netlist Connectivity | Checksum: 191c090a2
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 9 Finalization | Checksum: 191c090a2
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |               0  |               3  |                                              0  |
+|  Constant propagation         |               0  |               0  |                                              0  |
+|  Sweep                        |               0  |               0  |                                              0  |
+|  BUFG optimization            |               0  |               0  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                              0  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+Ending Logic Optimization Task | Checksum: 191c090a2
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+Ending Power Optimization Task | Checksum: 191c090a2
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.027 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Starting Final Cleanup Task
+Ending Final Cleanup Task | Checksum: 191c090a2
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+30 Infos, 101 Warnings, 109 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1831.043 ; gain = 940.719
+INFO: [Vivado 12-24828] Executing command : report_drc -file USI_drc_opted.rpt -pb USI_drc_opted.pb -rpx USI_drc_opted.rpx
+Command: report_drc -file USI_drc_opted.rpt -pb USI_drc_opted.pb -rpx USI_drc_opted.rpx
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/GithubRepos/USI/Vivado/USI.runs/impl_1/USI_drc_opted.rpt.
+report_drc completed successfully
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.038 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/GithubRepos/USI/Vivado/USI.runs/impl_1/USI_opt.dcp' has been generated.
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7s50'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7s50'
+INFO: [Common 17-83] Releasing license: Implementation
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 2 CPUs
+
+Starting Placer Task
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: 18055f70a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 184ab5a67
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 1.3 Build Placer Netlist Model
+Phase 1.3 Build Placer Netlist Model | Checksum: 18ef9489b
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 1.4 Constrain Clocks/Macros
+Phase 1.4 Constrain Clocks/Macros | Checksum: 18ef9489b
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 1 Placer Initialization | Checksum: 18ef9489b
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 2 Global Placement
+
+Phase 2.1 Floorplanning
+Phase 2.1 Floorplanning | Checksum: 18ef9489b
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 2.2 Update Timing before SLR Path Opt
+Phase 2.2 Update Timing before SLR Path Opt | Checksum: 18ef9489b
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 2.3 Post-Processing in Floorplanning
+Phase 2.3 Post-Processing in Floorplanning | Checksum: 18ef9489b
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 2.4 Global Place Phase1
+Phase 2.4 Global Place Phase1 | Checksum: 19ccf342b
+
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:10 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 2.5 Global Place Phase2
+WARNING: [Place 46-29] Timing had been disabled during Placer and, therefore, physical synthesis in Placer will be skipped.
+Phase 2.5 Global Place Phase2 | Checksum: 1a5624fe9
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:11 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 2 Global Placement | Checksum: 1a5624fe9
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:11 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 3 Detail Placement
+
+Phase 3.1 Commit Multi Column Macros
+Phase 3.1 Commit Multi Column Macros | Checksum: 1a5624fe9
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:11 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 3.2 Commit Most Macros & LUTRAMs
+Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: 2276f0943
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:11 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 3.3 Area Swap Optimization
+Phase 3.3 Area Swap Optimization | Checksum: 29defe9ec
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:11 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 3.4 Pipeline Register Optimization
+Phase 3.4 Pipeline Register Optimization | Checksum: 29defe9ec
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:11 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 3.5 Small Shape Detail Placement
+Phase 3.5 Small Shape Detail Placement | Checksum: 2b3581444
+
+Time (s): cpu = 00:00:23 ; elapsed = 00:00:20 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 3.6 Re-assign LUT pins
+Phase 3.6 Re-assign LUT pins | Checksum: 2b3581444
+
+Time (s): cpu = 00:00:26 ; elapsed = 00:00:23 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 3.7 Pipeline Register Optimization
+Phase 3.7 Pipeline Register Optimization | Checksum: 2b3581444
+
+Time (s): cpu = 00:00:26 ; elapsed = 00:00:23 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 3 Detail Placement | Checksum: 2b3581444
+
+Time (s): cpu = 00:00:26 ; elapsed = 00:00:23 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 4 Post Placement Optimization and Clean-Up
+
+Phase 4.1 Post Commit Optimization
+Phase 4.1 Post Commit Optimization | Checksum: 2b3581444
+
+Time (s): cpu = 00:00:26 ; elapsed = 00:00:23 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 4.2 Post Placement Cleanup
+Phase 4.2 Post Placement Cleanup | Checksum: 2b3581444
+
+Time (s): cpu = 00:00:27 ; elapsed = 00:00:24 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 4.3 Placer Reporting
+
+Phase 4.3.1 Print Estimated Congestion
+INFO: [Place 30-612] Post-Placement Estimated Congestion 
+ ____________________________________________________
+|           | Global Congestion | Short Congestion  |
+| Direction | Region Size       | Region Size       |
+|___________|___________________|___________________|
+|      North|              16x16|                4x4|
+|___________|___________________|___________________|
+|      South|                1x1|                1x1|
+|___________|___________________|___________________|
+|       East|                1x1|                1x1|
+|___________|___________________|___________________|
+|       West|                1x1|                1x1|
+|___________|___________________|___________________|
+
+Phase 4.3.1 Print Estimated Congestion | Checksum: 2b3581444
+
+Time (s): cpu = 00:00:27 ; elapsed = 00:00:24 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 4.3 Placer Reporting | Checksum: 2b3581444
+
+Time (s): cpu = 00:00:27 ; elapsed = 00:00:24 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 4.4 Final Placement Cleanup
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Time (s): cpu = 00:00:27 ; elapsed = 00:00:24 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 4 Post Placement Optimization and Clean-Up | Checksum: 239e42444
+
+Time (s): cpu = 00:00:27 ; elapsed = 00:00:24 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Ending Placer Task | Checksum: 1d7395212
+
+Time (s): cpu = 00:00:27 ; elapsed = 00:00:24 . Memory (MB): peak = 1831.043 ; gain = 0.000
+49 Infos, 102 Warnings, 109 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+place_design: Time (s): cpu = 00:00:29 ; elapsed = 00:00:26 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Vivado 12-24838] Running report commands "report_control_sets, report_io, report_utilization" in parallel.
+Running report generation with 2 threads.
+INFO: [Vivado 12-24828] Executing command : report_io -file USI_io_placed.rpt
+report_io: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.111 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Vivado 12-24828] Executing command : report_control_sets -verbose -file USI_control_sets_placed.rpt
+report_control_sets: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.024 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Vivado 12-24828] Executing command : report_utilization -file USI_utilization_placed.rpt -pb USI_utilization_placed.pb
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Wrote PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Wrote RouteStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.043 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Write ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.086 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Wrote PlaceStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.987 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.035 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/GithubRepos/USI/Vivado/USI.runs/impl_1/USI_placed.dcp' has been generated.
+Command: phys_opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7s50'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7s50'
+
+Starting Initial Update Timing Task
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.728 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Vivado_Tcl 4-235] No timing constraint found. The netlist was not modified.
+INFO: [Common 17-83] Releasing license: Implementation
+58 Infos, 102 Warnings, 109 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Wrote PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Wrote RouteStorage: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.028 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.070 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Wrote PlaceStorage: Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.990 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.033 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/GithubRepos/USI/Vivado/USI.runs/impl_1/USI_physopt.dcp' has been generated.
+Command: route_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7s50'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7s50'
+
+
+Starting Routing Task
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 2 CPUs
+
+Phase 1 Build RT Design
+Checksum: PlaceDB: f9c72ceb ConstDB: 0 ShapeSum: 32e0f1f1 RouteDB: aa913336
+Post Restoration Checksum: NetGraph: cd7a0cdd | NumContArr: ad55a1cb | Constraints: c2a8fa9d | Timing: c2a8fa9d
+Phase 1 Build RT Design | Checksum: 30021a3e2
+
+Time (s): cpu = 00:00:16 ; elapsed = 00:00:14 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 2 Router Initialization
+INFO: [Route 35-64] No timing constraints were detected. The router will operate in resource-optimization mode.
+
+Phase 2.1 Fix Topology Constraints
+Phase 2.1 Fix Topology Constraints | Checksum: 30021a3e2
+
+Time (s): cpu = 00:00:16 ; elapsed = 00:00:15 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 2.2 Pre Route Cleanup
+Phase 2.2 Pre Route Cleanup | Checksum: 30021a3e2
+
+Time (s): cpu = 00:00:16 ; elapsed = 00:00:15 . Memory (MB): peak = 1831.043 ; gain = 0.000
+ Number of Nodes with overlaps = 0
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0 %
+  Global Horizontal Routing Utilization  = 0 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 21321
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 21321
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Phase 2 Router Initialization | Checksum: 1f0349f30
+
+Time (s): cpu = 00:00:17 ; elapsed = 00:00:16 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 3 Global Routing
+Phase 3 Global Routing | Checksum: 1f0349f30
+
+Time (s): cpu = 00:00:17 ; elapsed = 00:00:16 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 4 Initial Routing
+
+Phase 4.1 Initial Net Routing Pass
+Phase 4.1 Initial Net Routing Pass | Checksum: 1d9bf8c5f
+
+Time (s): cpu = 00:00:22 ; elapsed = 00:00:19 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 4 Initial Routing | Checksum: 1d9bf8c5f
+
+Time (s): cpu = 00:00:22 ; elapsed = 00:00:19 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 5 Rip-up And Reroute
+
+Phase 5.1 Global Iteration 0
+ Number of Nodes with overlaps = 5714
+ Number of Nodes with overlaps = 99
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+Phase 5.1 Global Iteration 0 | Checksum: 28a8a90b8
+
+Time (s): cpu = 00:00:37 ; elapsed = 00:00:31 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 5 Rip-up And Reroute | Checksum: 28a8a90b8
+
+Time (s): cpu = 00:00:37 ; elapsed = 00:00:31 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 6 Delay and Skew Optimization
+Phase 6 Delay and Skew Optimization | Checksum: 28a8a90b8
+
+Time (s): cpu = 00:00:37 ; elapsed = 00:00:31 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 7 Post Hold Fix
+
+Phase 7.1 Hold Fix Iter
+Phase 7.1 Hold Fix Iter | Checksum: 28a8a90b8
+
+Time (s): cpu = 00:00:37 ; elapsed = 00:00:31 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Phase 7 Post Hold Fix | Checksum: 28a8a90b8
+
+Time (s): cpu = 00:00:37 ; elapsed = 00:00:31 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 8 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 20.9494 %
+  Global Horizontal Routing Utilization  = 20.3814 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+
+--GLOBAL Congestion:
+Utilization threshold used for congestion level computation: 0.85
+Congestion Report
+North Dir 1x1 Area, Max Cong = 83.7838%, No Congested Regions.
+South Dir 1x1 Area, Max Cong = 98.1982%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X20Y105 -> INT_L_X20Y105
+   INT_L_X24Y104 -> INT_L_X24Y104
+   INT_R_X21Y102 -> INT_R_X21Y102
+   INT_R_X19Y100 -> INT_R_X19Y100
+   INT_L_X20Y100 -> INT_L_X20Y100
+East Dir 1x1 Area, Max Cong = 94.1176%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X12Y111 -> INT_L_X12Y111
+   INT_R_X11Y106 -> INT_R_X11Y106
+   INT_L_X10Y102 -> INT_L_X10Y102
+West Dir 1x1 Area, Max Cong = 97.0588%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X26Y130 -> INT_L_X26Y130
+   INT_R_X27Y128 -> INT_R_X27Y128
+   INT_L_X22Y124 -> INT_L_X22Y124
+   INT_R_X21Y110 -> INT_R_X21Y110
+   INT_R_X25Y103 -> INT_R_X25Y103
+
+------------------------------
+Reporting congestion hotspots
+------------------------------
+Direction: North
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
+Direction: South
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 1 Aspect Ratio: 0.666667 Sparse Ratio: 1
+Direction: East
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 1
+Direction: West
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 1 Aspect Ratio: 0.5 Sparse Ratio: 0.5
+
+Phase 8 Route finalize | Checksum: 28a8a90b8
+
+Time (s): cpu = 00:00:37 ; elapsed = 00:00:31 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 9 Verifying routed nets
+
+ Verification completed successfully
+Phase 9 Verifying routed nets | Checksum: 28a8a90b8
+
+Time (s): cpu = 00:00:37 ; elapsed = 00:00:31 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 10 Depositing Routes
+Phase 10 Depositing Routes | Checksum: 2ae26abd4
+
+Time (s): cpu = 00:00:43 ; elapsed = 00:00:37 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Phase 11 Post Process Routing
+Phase 11 Post Process Routing | Checksum: 2ae26abd4
+
+Time (s): cpu = 00:00:43 ; elapsed = 00:00:37 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Total Elapsed time in route_design: 36.916 secs
+
+Phase 12 Post-Route Event Processing
+Phase 12 Post-Route Event Processing | Checksum: 12379cb77
+
+Time (s): cpu = 00:00:43 ; elapsed = 00:00:37 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Route 35-16] Router Completed Successfully
+Ending Routing Task | Checksum: 12379cb77
+
+Time (s): cpu = 00:00:44 ; elapsed = 00:00:37 . Memory (MB): peak = 1831.043 ; gain = 0.000
+
+Routing Is Done.
+INFO: [Common 17-83] Releasing license: Implementation
+65 Infos, 102 Warnings, 109 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+route_design: Time (s): cpu = 00:00:44 ; elapsed = 00:00:37 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Vivado 12-24828] Executing command : report_drc -file USI_drc_routed.rpt -pb USI_drc_routed.pb -rpx USI_drc_routed.rpx
+Command: report_drc -file USI_drc_routed.rpt -pb USI_drc_routed.pb -rpx USI_drc_routed.rpx
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/GithubRepos/USI/Vivado/USI.runs/impl_1/USI_drc_routed.rpt.
+report_drc completed successfully
+INFO: [Vivado 12-24828] Executing command : report_methodology -file USI_methodology_drc_routed.rpt -pb USI_methodology_drc_routed.pb -rpx USI_methodology_drc_routed.rpx
+Command: report_methodology -file USI_methodology_drc_routed.rpt -pb USI_methodology_drc_routed.pb -rpx USI_methodology_drc_routed.rpx
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [DRC 23-133] Running Methodology with 2 threads
+INFO: [Vivado_Tcl 2-1520] The results of Report Methodology are in file C:/GithubRepos/USI/Vivado/USI.runs/impl_1/USI_methodology_drc_routed.rpt.
+report_methodology completed successfully
+report_drc: Time (s): cpu = 00:00:11 ; elapsed = 00:00:07 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Vivado 12-24828] Executing command : report_timing_summary -max_paths 10 -routable_nets -report_unconstrained -file USI_timing_summary_routed.rpt -pb USI_timing_summary_routed.pb -rpx USI_timing_summary_routed.rpx -warn_on_violation 
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-313] There are no user specified timing constraints. Timing constraints are needed for proper timing analysis.
+INFO: [Vivado 12-24838] Running report commands "report_incremental_reuse, report_route_status" in parallel.
+Running report generation with 2 threads.
+INFO: [Vivado 12-24828] Executing command : report_incremental_reuse -file USI_incremental_reuse_routed.rpt
+INFO: [Vivado_Tcl 4-1062] Incremental flow is disabled. No incremental reuse Info to report.
+INFO: [Vivado 12-24828] Executing command : report_route_status -file USI_route_status.rpt -pb USI_route_status.pb
+INFO: [Vivado 12-24828] Executing command : report_power -file USI_power_routed.rpt -pb USI_power_summary_routed.pb -rpx USI_power_routed.rpx
+Command: report_power -file USI_power_routed.rpt -pb USI_power_summary_routed.pb -rpx USI_power_routed.rpx
+WARNING: [Power 33-232] No user defined clocks were found in the design! Power estimation will be inaccurate until this is corrected.
+Resolution: Please specify clocks using create_clock/create_generated_clock for sequential elements. For pure combinatorial circuits, please specify a virtual clock, otherwise the vectorless estimation might be inaccurate
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+82 Infos, 104 Warnings, 109 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+report_power: Time (s): cpu = 00:00:13 ; elapsed = 00:00:10 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Vivado 12-24828] Executing command : report_clock_utilization -file USI_clock_utilization_routed.rpt
+INFO: [Vivado 12-24828] Executing command : report_bus_skew -warn_on_violation -file USI_bus_skew_routed.rpt -pb USI_bus_skew_routed.pb -rpx USI_bus_skew_routed.rpx
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+generate_parallel_reports: Time (s): cpu = 00:00:33 ; elapsed = 00:00:23 . Memory (MB): peak = 1831.043 ; gain = 0.000
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Wrote PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1831.043 ; gain = 0.000
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.066 . Memory (MB): peak = 1838.379 ; gain = 7.336
+Writing XDEF routing special nets.
+Wrote RouteStorage: Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.323 . Memory (MB): peak = 1839.262 ; gain = 8.219
+Wrote PlaceStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1839.262 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.035 . Memory (MB): peak = 1839.262 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1839.262 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 1839.262 ; gain = 8.219
+INFO: [Common 17-1381] The checkpoint 'C:/GithubRepos/USI/Vivado/USI.runs/impl_1/USI_routed.dcp' has been generated.
+INFO: [Common 17-206] Exiting Vivado at Mon Oct 26 19:13:06 2026...

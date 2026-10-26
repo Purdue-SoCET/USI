@@ -1,0 +1,803 @@
+
+*** Running vivado
+    with args -log USI.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source USI.tcl
+
+
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Mon Oct 26 19:01:58 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source USI.tcl -notrace
+create_project: Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 537.695 ; gain = 222.027
+Command: synth_design -top USI -part xc7s50csga324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7s50'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s50'
+INFO: [Device 21-403] Loading part xc7s50csga324-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 31820
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1249.023 ; gain = 538.547
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'USI' [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/USI.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'bus_protocol_if' [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/bus_protocol_if.sv:4]
+INFO: [Synth 8-6155] done synthesizing module 'bus_protocol_if' (0#1) [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/bus_protocol_if.sv:4]
+INFO: [Synth 8-6157] synthesizing module 'bus_protocol_if' [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/bus_protocol_if.sv:4]
+INFO: [Synth 8-6155] done synthesizing module 'bus_protocol_if' (0#1) [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/bus_protocol_if.sv:4]
+INFO: [Synth 8-6157] synthesizing module 'register_map' [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/register_map.sv:3]
+	Parameter FIFO_SIZE bound to: 32'b00000000000000000000000100000000 
+	Parameter CLKDIV_BITS bound to: 32'sb00000000000000000000000000010000 
+	Parameter SUPPORTED_MODES bound to: 8'b00000111 
+INFO: [Synth 8-6155] done synthesizing module 'register_map' (0#1) [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/register_map.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'control_unit' [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/control_unit.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'control_unit' (0#1) [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/control_unit.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'usi_datapath' [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/usi_datapath.sv:41]
+	Parameter FIFO_SIZE bound to: 32'b00000000000000000000000100000000 
+INFO: [Synth 8-6157] synthesizing module 'split_fifo' [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:3]
+	Parameter DEPTH_BYTES bound to: 32'b00000000000000000000000100000000 
+	Parameter BUSIF_BYTES bound to: 32'b00000000000000000000000000000100 
+	Parameter DP_BYTES bound to: 32'b00000000000000000000000000000010 
+INFO: [Synth 8-6155] done synthesizing module 'split_fifo' (0#1) [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'shift_register' [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/shift_register.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'shift_register' (0#1) [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/shift_register.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'usi_datapath' (0#1) [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/usi_datapath.sv:41]
+INFO: [Synth 8-6157] synthesizing module 'uart' [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/uart.sv:1]
+	Parameter CLKDIV_BITS bound to: 32'sb00000000000000000000000000010000 
+INFO: [Synth 8-6155] done synthesizing module 'uart' (0#1) [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/uart.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'spi' [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/spi.sv:4]
+	Parameter CLKDIV_BITS bound to: 32'sb00000000000000000000000000010000 
+INFO: [Synth 8-226] default block is never used [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/spi.sv:85]
+INFO: [Synth 8-6155] done synthesizing module 'spi' (0#1) [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/spi.sv:4]
+INFO: [Synth 8-6155] done synthesizing module 'USI' (0#1) [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/USI.sv:1]
+WARNING: [Synth 8-7137] Register fifo_reg[0] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[1] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[2] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[3] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[4] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[5] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[6] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[7] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[8] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[9] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[10] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[11] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[12] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[13] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[14] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[15] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[16] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[17] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[18] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[19] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[20] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[21] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[22] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[23] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[24] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[25] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[26] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[27] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[28] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[29] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[30] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[31] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[32] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[33] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[34] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[35] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[36] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[37] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[38] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[39] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[40] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[41] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[42] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[43] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[44] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[45] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[46] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[47] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[48] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[49] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[50] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[51] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[52] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[53] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[54] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[55] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[56] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[57] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[58] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[59] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[60] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[61] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[62] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[63] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[64] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[65] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[66] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[67] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[68] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[69] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[70] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[71] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[72] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[73] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[74] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[75] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[76] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[77] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[78] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[79] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[80] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[81] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[82] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[83] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[84] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[85] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[86] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[87] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[88] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[89] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[90] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[91] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[92] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[93] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[94] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[95] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[96] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[97] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[98] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+WARNING: [Synth 8-7137] Register fifo_reg[99] in module split_fifo has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/split_fifo.sv:121]
+INFO: [Common 17-14] Message 'Synth 8-7137' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+WARNING: [Synth 8-3848] Net bpif\.is_burst in module/entity USI does not have driver. [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/USI.sv:5]
+WARNING: [Synth 8-3848] Net bpif\.burst_type in module/entity USI does not have driver. [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/USI.sv:5]
+WARNING: [Synth 8-3848] Net bpif\.burst_length in module/entity USI does not have driver. [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/USI.sv:5]
+WARNING: [Synth 8-3848] Net bpif\.secure_transfer in module/entity USI does not have driver. [C:/GithubRepos/USI/Vivado/USI.srcs/sources_1/imports/source/USI.sv:5]
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][15] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][14] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][13] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][12] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][11] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][10] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][9] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][8] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][7] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][6] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][5] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][4] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][3] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][2] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][1] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][0] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[tx_load_done] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[tx_done] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_begin_done] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_done] in module spi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][15] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][14] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][13] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][12] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][11] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][10] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][9] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_byte][8] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[tx_load_done] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[tx_load_failed] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[tx_done] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_begin_done] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_begin_failed] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_done] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_commit_done] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dp_status[rx_commit_failed] in module uart is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.is_burst in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.burst_type[1] in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.burst_type[0] in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.burst_length[7] in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.burst_length[6] in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.burst_length[5] in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.burst_length[4] in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.burst_length[3] in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.burst_length[2] in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.burst_length[1] in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.burst_length[0] in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port bpif\.secure_transfer in module register_map is either unconnected or has no load
+WARNING: [Synth 8-7129] Port i2c_sda in module USI is either unconnected or has no load
+WARNING: [Synth 8-7129] Port i2c_scl in module USI is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1929.066 ; gain = 1218.590
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1929.066 ; gain = 1218.590
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1929.066 ; gain = 1218.590
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.275 . Memory (MB): peak = 1929.066 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc]
+WARNING: [Vivado 12-584] No ports matched 'CLK_100MHZ'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:4]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:4]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:12]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:12]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:13]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:13]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:14]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:14]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:15]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:15]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[4]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:16]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:16]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[5]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:17]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:17]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[6]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:18]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:18]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[7]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:19]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:19]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[8]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:20]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:20]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[9]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:21]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:21]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[10]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:22]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:22]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[11]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:23]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:23]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[12]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:24]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:24]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[13]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:25]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:25]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[14]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:26]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:26]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SW[15]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:27]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:27]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:30]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:30]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:31]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:31]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:32]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:32]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:33]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:33]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[4]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:34]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:34]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[5]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:35]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:35]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[6]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:36]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:36]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[7]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:37]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:37]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[8]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:38]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:38]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[9]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:39]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:39]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[10]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:40]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:40]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[11]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:41]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:41]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[12]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:42]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:42]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[13]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:43]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:43]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[14]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:44]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:44]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'LED[15]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:45]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:45]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'BTN[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:48]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:48]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'BTN[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:49]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:49]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'BTN[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:50]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:50]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'BTN[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:51]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:51]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB0[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:54]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:54]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB0[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:55]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:55]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB0[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:56]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:56]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB1[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:57]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:57]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB1[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:58]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:58]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'RGB1[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:59]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:59]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_AN[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:62]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:62]
+WARNING: [Vivado 12-584] No ports matched 'D0_AN[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:63]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:63]
+WARNING: [Vivado 12-584] No ports matched 'D0_AN[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:64]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:64]
+WARNING: [Vivado 12-584] No ports matched 'D0_AN[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:65]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:65]
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:66]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:66]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:67]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:67]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:68]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:68]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:69]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:69]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[4]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:70]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:70]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[5]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:71]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:71]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[6]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:72]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:72]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D0_SEG[7]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:73]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:73]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_AN[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:76]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:76]
+WARNING: [Vivado 12-584] No ports matched 'D1_AN[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:77]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:77]
+WARNING: [Vivado 12-584] No ports matched 'D1_AN[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:78]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:78]
+WARNING: [Vivado 12-584] No ports matched 'D1_AN[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:79]
+CRITICAL WARNING: [Common 17-161] Invalid option value '#' specified for 'objects'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:79]
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[0]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:80]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:80]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[1]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:81]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:81]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[2]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:82]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:82]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[3]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:83]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:83]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[4]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:84]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:84]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[5]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:85]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:85]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[6]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:86]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:86]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'D1_SEG[7]'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:87]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:87]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_DO_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:90]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:90]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_D0_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:91]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:91]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_D1_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:92]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:92]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_D1_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:93]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:93]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_D2_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:94]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:94]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_D2_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:95]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:95]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_CLK_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:96]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:96]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_CLK_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:97]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:97]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_CEC_IN'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:98]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:98]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_HPD'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:99]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:99]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_I2C_SCL'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:100]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:100]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'HDMI_I2C-SDA'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:101]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:101]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_SPI_MISO'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:104]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:104]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_SPI_MOSI'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:105]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:105]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_SPI_CCLK'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:106]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:106]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_SS_B'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:107]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:107]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_RESET_B'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:108]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:108]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'USB_INT'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:109]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:109]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_DQ0'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:112]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:112]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_DQ1'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:113]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:113]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_DQ2'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:114]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:114]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_DQ3'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:115]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:115]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_CMD'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:116]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:116]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_CLK'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:117]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:117]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SD_CD_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:118]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:118]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SPKL'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:121]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:121]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SPKR'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:122]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:122]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'MIC_CLK'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:125]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:125]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'MIC_DATA'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:126]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:126]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AD1_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:129]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:129]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AD1_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:130]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:130]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AD15_P'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:131]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:131]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AD15_N'. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:132]
+INFO: [Common 17-14] Message 'Vivado 12-584' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:132]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:132]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:133]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:136]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:137]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:138]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:139]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:140]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:141]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:144]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Common 17-163] Missing value for option 'objects', please type 'set_property -help' for usage info. [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc:463]
+Finished Parsing XDC File [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/GithubRepos/USI/Vivado/USI.srcs/constrs_1/imports/Downloads/Urbana.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/USI_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/USI_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 2040.648 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 2040.648 ; gain = 1330.172
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7s50csga324-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 2040.648 ; gain = 1330.172
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 2040.648 ; gain = 1330.172
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'tx_state_reg' in module 'uart'
+INFO: [Synth 8-802] inferred FSM for state register 'rx_state_reg' in module 'uart'
+INFO: [Synth 8-802] inferred FSM for state register 'spi_state_reg' in module 'spi'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                 TX_IDLE |                              000 |                              000
+                TX_START |                              001 |                              001
+                 TX_DATA |                              010 |                              010
+               TX_PARITY |                              011 |                              011
+                 TX_STOP |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'tx_state_reg' using encoding 'sequential' in module 'uart'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                 RX_IDLE |                              000 |                              000
+                RX_START |                              001 |                              001
+                 RX_DATA |                              010 |                              010
+               RX_PARITY |                              011 |                              011
+                 RX_STOP |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'rx_state_reg' using encoding 'sequential' in module 'uart'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                  iSTATE |                               00 |                               00
+                 iSTATE0 |                               01 |                               01
+                 iSTATE1 |                               10 |                               10
+                 iSTATE2 |                               11 |                               11
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'spi_state_reg' using encoding 'sequential' in module 'spi'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:32 ; elapsed = 00:01:42 . Memory (MB): peak = 2040.648 ; gain = 1330.172
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   32 Bit       Adders := 5     
+	   3 Input   32 Bit       Adders := 4     
+	   2 Input   16 Bit       Adders := 9     
+	   2 Input   11 Bit       Adders := 1     
+	   3 Input   10 Bit       Adders := 1     
+	   2 Input   10 Bit       Adders := 1     
+	   2 Input    9 Bit       Adders := 8     
+	   3 Input    9 Bit       Adders := 4     
+	   3 Input    8 Bit       Adders := 6     
+	   2 Input    8 Bit       Adders := 1     
+	   4 Input    8 Bit       Adders := 3     
+	   2 Input    5 Bit       Adders := 2     
+	   2 Input    4 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 3     
++---XORs : 
+	   2 Input      1 Bit         XORs := 3     
++---XORs : 
+	                8 Bit    Wide XORs := 1     
++---Registers : 
+	               32 Bit    Registers := 1     
+	               16 Bit    Registers := 9     
+	                9 Bit    Registers := 4     
+	                8 Bit    Registers := 262   
+	                7 Bit    Registers := 1     
+	                6 Bit    Registers := 1     
+	                5 Bit    Registers := 2     
+	                4 Bit    Registers := 1     
+	                3 Bit    Registers := 8     
+	                2 Bit    Registers := 3     
+	                1 Bit    Registers := 31    
++---Muxes : 
+	   2 Input   32 Bit        Muxes := 4     
+	   2 Input   24 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 17    
+	   4 Input   16 Bit        Muxes := 1     
+	   5 Input   16 Bit        Muxes := 2     
+	   3 Input   16 Bit        Muxes := 1     
+	   2 Input    9 Bit        Muxes := 5     
+	   2 Input    8 Bit        Muxes := 2324  
+	   4 Input    5 Bit        Muxes := 1     
+	   2 Input    5 Bit        Muxes := 5     
+	   2 Input    4 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 7     
+	   5 Input    3 Bit        Muxes := 2     
+	   8 Input    3 Bit        Muxes := 1     
+	   9 Input    3 Bit        Muxes := 1     
+	   3 Input    3 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 4     
+	   3 Input    2 Bit        Muxes := 1     
+	   4 Input    2 Bit        Muxes := 1     
+	   5 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 2404  
+	   4 Input    1 Bit        Muxes := 23    
+	   5 Input    1 Bit        Muxes := 12    
+	   3 Input    1 Bit        Muxes := 6     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 120 (col length:60)
+BRAMs: 150 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7129] Port i2c_sda in module USI is either unconnected or has no load
+WARNING: [Synth 8-7129] Port i2c_scl in module USI is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:43 ; elapsed = 00:03:10 . Memory (MB): peak = 2040.648 ; gain = 1330.172
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:50 ; elapsed = 00:03:17 . Memory (MB): peak = 2040.648 ; gain = 1330.172
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:02:51 ; elapsed = 00:03:18 . Memory (MB): peak = 2040.648 ; gain = 1330.172
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:02:57 ; elapsed = 00:03:28 . Memory (MB): peak = 2051.391 ; gain = 1340.914
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:03:05 ; elapsed = 00:03:36 . Memory (MB): peak = 2115.559 ; gain = 1405.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:03:05 ; elapsed = 00:03:36 . Memory (MB): peak = 2115.559 ; gain = 1405.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:03:06 ; elapsed = 00:03:37 . Memory (MB): peak = 2115.559 ; gain = 1405.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:03:06 ; elapsed = 00:03:37 . Memory (MB): peak = 2115.559 ; gain = 1405.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:03:10 ; elapsed = 00:03:41 . Memory (MB): peak = 2115.559 ; gain = 1405.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:03:10 ; elapsed = 00:03:42 . Memory (MB): peak = 2115.559 ; gain = 1405.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     1|
+|2     |CARRY4 |    98|
+|3     |LUT1   |   168|
+|4     |LUT2   |  1442|
+|5     |LUT3   |  1097|
+|6     |LUT4   |  2534|
+|7     |LUT5   |  6259|
+|8     |LUT6   | 12035|
+|9     |MUXF7  |  1656|
+|10    |MUXF8  |   816|
+|11    |FDCE   |   411|
+|12    |FDPE   |    13|
+|13    |FDRE   |  2048|
+|14    |IBUF   |    75|
+|15    |OBUF   |    39|
++------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:03:10 ; elapsed = 00:03:42 . Memory (MB): peak = 2115.559 ; gain = 1405.082
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 2 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:02:52 ; elapsed = 00:03:37 . Memory (MB): peak = 2115.559 ; gain = 1293.500
+Synthesis Optimization Complete : Time (s): cpu = 00:03:10 ; elapsed = 00:03:42 . Memory (MB): peak = 2115.559 ; gain = 1405.082
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.204 . Memory (MB): peak = 2127.680 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2570 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'USI' is not ideal for floorplanning, since the cellview 'split_fifo' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 2133.344 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: 20159781
+INFO: [Common 17-83] Releasing license: Synthesis
+44 Infos, 257 Warnings, 109 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:03:18 ; elapsed = 00:04:02 . Memory (MB): peak = 2133.344 ; gain = 1595.648
+INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.055 . Memory (MB): peak = 2133.344 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/GithubRepos/USI/Vivado/USI.runs/synth_1/USI.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file USI_utilization_synth.rpt -pb USI_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Mon Oct 26 19:06:15 2026...

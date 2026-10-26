@@ -1,0 +1,1214 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Mon Oct 26 19:12:53 2026
+| Host         : KZLap running 64-bit major release  (build 9200)
+| Command      : report_timing_summary -max_paths 10 -routable_nets -report_unconstrained -file USI_timing_summary_routed.rpt -pb USI_timing_summary_routed.pb -rpx USI_timing_summary_routed.rpx -warn_on_violation
+| Design       : USI
+| Device       : 7s50-csga324
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Summary Report
+
+------------------------------------------------------------------------------------------------
+| Timer Settings
+| --------------
+------------------------------------------------------------------------------------------------
+
+  Enable Multi Corner Analysis               :  Yes
+  Enable Pessimism Removal                   :  Yes
+  Pessimism Removal Resolution               :  Nearest Common Node
+  Enable Input Delay Default Clock           :  No
+  Enable Preset / Clear Arcs                 :  No
+  Disable Flight Delays                      :  No
+  Ignore I/O Paths                           :  No
+  Timing Early Launch at Borrowing Latches   :  No
+  Borrow Time for Max Delay Exceptions       :  Yes
+  Merge Timing Exceptions                    :  Yes
+  Inter-SLR Compensation                     :  Conservative
+
+  Corner  Analyze    Analyze    
+  Name    Max Paths  Min Paths  
+  ------  ---------  ---------  
+  Slow    Yes        Yes        
+  Fast    Yes        Yes        
+
+
+------------------------------------------------------------------------------------------------
+| Report Methodology
+| ------------------
+------------------------------------------------------------------------------------------------
+
+Rule       Severity          Description                  Violations  
+---------  ----------------  ---------------------------  ----------  
+TIMING-17  Critical Warning  Non-clocked sequential cell  1000        
+
+Note: This report is based on the most recent report_methodology run and may not be up-to-date. Run report_methodology on the current design for the latest report.
+
+
+
+check_timing report
+
+Table of Contents
+-----------------
+1. checking no_clock (2472)
+2. checking constant_clock (0)
+3. checking pulse_width_clock (0)
+4. checking unconstrained_internal_endpoints (5298)
+5. checking no_input_delay (74)
+6. checking no_output_delay (38)
+7. checking multiple_clock (0)
+8. checking generated_clocks (0)
+9. checking loops (0)
+10. checking partial_input_delay (0)
+11. checking partial_output_delay (0)
+12. checking latch_loops (0)
+
+1. checking no_clock (2472)
+---------------------------
+ There are 2472 register/latch pins with no clock driven by root clock pin: CLK (HIGH)
+
+
+2. checking constant_clock (0)
+------------------------------
+ There are 0 register/latch pins with constant_clock.
+
+
+3. checking pulse_width_clock (0)
+---------------------------------
+ There are 0 register/latch pins which need pulse_width check
+
+
+4. checking unconstrained_internal_endpoints (5298)
+---------------------------------------------------
+ There are 5298 pins that are not constrained for maximum delay. (HIGH)
+
+ There are 0 pins that are not constrained for maximum delay due to constant clock.
+
+
+5. checking no_input_delay (74)
+-------------------------------
+ There are 74 input ports with no input delay specified. (HIGH)
+
+ There are 0 input ports with no input delay but user has a false path constraint.
+
+
+6. checking no_output_delay (38)
+--------------------------------
+ There are 38 ports with no output delay specified. (HIGH)
+
+ There are 0 ports with no output delay but user has a false path constraint
+
+ There are 0 ports with no output delay but with a timing clock defined on it or propagating through it
+
+
+7. checking multiple_clock (0)
+------------------------------
+ There are 0 register/latch pins with multiple clocks.
+
+
+8. checking generated_clocks (0)
+--------------------------------
+ There are 0 generated clocks that are not connected to a clock source.
+
+
+9. checking loops (0)
+---------------------
+ There are 0 combinational loops in the design.
+
+
+10. checking partial_input_delay (0)
+------------------------------------
+ There are 0 input ports with partial input delay specified.
+
+
+11. checking partial_output_delay (0)
+-------------------------------------
+ There are 0 ports with partial output delay specified.
+
+
+12. checking latch_loops (0)
+----------------------------
+ There are 0 combinational latch loops in the design through latch input
+
+
+
+------------------------------------------------------------------------------------------------
+| Design Timing Summary
+| ---------------------
+------------------------------------------------------------------------------------------------
+
+    WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+    -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+        inf        0.000                      0                 5336          inf        0.000                      0                 5336           NA           NA                      NA                    NA  
+
+
+There are no user specified timing constraints.
+
+
+------------------------------------------------------------------------------------------------
+| Clock Summary
+| -------------
+------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------
+| Intra Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+-----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Inter Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
+----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Other Path Groups Table
+| -----------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
+----------    ----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| User Ignored Path Table
+| -----------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock    
+----------    ----------    --------    
+
+
+------------------------------------------------------------------------------------------------
+| Unconstrained Path Table
+| ------------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock    
+----------    ----------    --------    
+(none)                                    
+
+
+------------------------------------------------------------------------------------------------
+| Timing Details
+| --------------
+------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------
+Path Group:  (none)
+From Clock:  
+  To Clock:  
+
+Max Delay          5336 Endpoints
+Min Delay          5336 Endpoints
+--------------------------------------------------------------------------------------
+
+
+Max Delay Paths
+--------------------------------------------------------------------------------------
+Slack:                    inf
+  Source:                 bpif\\.wdata[0]
+                            (input port)
+  Destination:            datapath/shared_fifo/fifo_reg[230][0]/CE
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        43.205ns  (logic 7.001ns (16.204%)  route 36.204ns (83.796%))
+  Logic Levels:           29  (CARRY4=6 IBUF=1 LUT2=4 LUT3=5 LUT4=7 LUT6=6)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P7                                                0.000     0.000 r  bpif\\.wdata[0] (IN)
+                         net (fo=0)                   0.000     0.000    bpif\\.wdata[0]
+    P7                   IBUF (Prop_ibuf_I_O)         0.907     0.907 r  clkdiv_reg[0]_i_1/O
+                         net (fo=365, routed)         7.153     8.060    datapath/shared_fifo/fifo_reg[51][0]_1
+    SLICE_X33Y49         LUT6 (Prop_lut6_I2_O)        0.124     8.184 r  datapath/shared_fifo/rx_write_ptr[7]_i_3/O
+                         net (fo=42, routed)          0.771     8.955    datapath/shared_fifo/bpif\\.wdata[0]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.118     9.073 r  datapath/shared_fifo/rx_read_ptr[7]_i_3/O
+                         net (fo=14, routed)          0.987    10.060    datapath/shared_fifo/rx_read_ptr[7]_i_3_n_0
+    SLICE_X33Y51         LUT3 (Prop_lut3_I1_O)        0.326    10.386 r  datapath/shared_fifo/rx_occupancy[6]_i_5/O
+                         net (fo=1, routed)           0.000    10.386    datapath/shared_fifo/rx_occupancy[6]_i_5_n_0
+    SLICE_X33Y51         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    10.784 r  datapath/shared_fifo/rx_occupancy_reg[6]_i_3/CO[3]
+                         net (fo=1, routed)           0.000    10.784    datapath/shared_fifo/rx_occupancy_reg[6]_i_3_n_0
+    SLICE_X33Y52         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313    11.097 r  datapath/shared_fifo/rx_occupancy_reg[8]_i_3/O[3]
+                         net (fo=3, routed)           0.995    12.092    datapath/shared_fifo/rx_occupancy_after_pop[7]
+    SLICE_X34Y53         LUT2 (Prop_lut2_I1_O)        0.306    12.398 r  datapath/shared_fifo/fifo[4][7]_i_55/O
+                         net (fo=1, routed)           0.000    12.398    datapath/shared_fifo/fifo[4][7]_i_55_n_0
+    SLICE_X34Y53         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.376    12.774 r  datapath/shared_fifo/fifo_reg[4][7]_i_52/CO[3]
+                         net (fo=1, routed)           0.000    12.774    datapath/shared_fifo/fifo_reg[4][7]_i_52_n_0
+    SLICE_X34Y54         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219    12.993 f  datapath/shared_fifo/fifo_reg[4][7]_i_53/O[0]
+                         net (fo=1, routed)           0.659    13.652    datapath/shared_fifo/rx_free_bytes[8]
+    SLICE_X35Y54         LUT3 (Prop_lut3_I1_O)        0.295    13.947 f  datapath/shared_fifo/fifo[4][7]_i_32/O
+                         net (fo=4, routed)           0.482    14.429    datapath/shared_fifo/fifo[4][7]_i_32_n_0
+    SLICE_X35Y54         LUT6 (Prop_lut6_I4_O)        0.124    14.553 r  datapath/shared_fifo/rx_begin_failed_i_2/O
+                         net (fo=5, routed)           1.450    16.003    controller/rx_full
+    SLICE_X37Y49         LUT2 (Prop_lut2_I1_O)        0.124    16.127 f  controller/uart_rts_OBUF_inst_i_3/O
+                         net (fo=9, routed)           0.633    16.760    spi_fsm/dp_status[rx_fifo_ready]
+    SLICE_X40Y48         LUT6 (Prop_lut6_I1_O)        0.124    16.884 r  spi_fsm/spi_period[15]_i_4/O
+                         net (fo=1, routed)           0.701    17.585    reg_map/spi_timer_reg[13]_1
+    SLICE_X41Y48         LUT4 (Prop_lut4_I2_O)        0.150    17.735 f  reg_map/spi_period[15]_i_2/O
+                         net (fo=19, routed)          1.033    18.768    spi_fsm/spi_period_reg[0]_0
+    SLICE_X42Y45         LUT3 (Prop_lut3_I0_O)        0.326    19.094 f  spi_fsm/spi_period[15]_i_1/O
+                         net (fo=20, routed)          1.313    20.407    spi_fsm/spi_period[15]_i_1_n_0
+    SLICE_X40Y47         LUT3 (Prop_lut3_I0_O)        0.152    20.559 f  spi_fsm/tx_load_failed_i_3/O
+                         net (fo=6, routed)           0.507    21.066    controller/spi_dp_cmd[tx_load]
+    SLICE_X38Y50         LUT6 (Prop_lut6_I3_O)        0.326    21.392 f  controller/tx_occupancy[2]_i_3/O
+                         net (fo=2, routed)           0.425    21.817    controller/tx_pop
+    SLICE_X38Y51         LUT4 (Prop_lut4_I2_O)        0.124    21.941 r  controller/tx_occupancy[2]_i_2/O
+                         net (fo=36, routed)          1.617    23.558    datapath/shared_fifo/tx_read_ptr_reg[2]_rep__0_0
+    SLICE_X28Y52         LUT6 (Prop_lut6_I3_O)        0.124    23.682 r  datapath/shared_fifo/tx_occupancy[7]_i_2/O
+                         net (fo=7, routed)           0.844    24.526    datapath/shared_fifo/tx_occupancy[7]_i_2_n_0
+    SLICE_X28Y52         LUT4 (Prop_lut4_I3_O)        0.152    24.678 r  datapath/shared_fifo/tx_overrun_i_26/O
+                         net (fo=2, routed)           0.733    25.411    datapath/shared_fifo/tx_occupancy_after_pop[7]
+    SLICE_X29Y51         LUT3 (Prop_lut3_I1_O)        0.326    25.737 r  datapath/shared_fifo/tx_overrun_i_12/O
+                         net (fo=1, routed)           0.000    25.737    datapath/shared_fifo/tx_overrun_i_12_n_0
+    SLICE_X29Y51         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.401    26.138 r  datapath/shared_fifo/tx_overrun_reg_i_5/CO[3]
+                         net (fo=1, routed)           0.000    26.138    datapath/shared_fifo/tx_overrun_reg_i_5_n_0
+    SLICE_X29Y52         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222    26.360 r  datapath/shared_fifo/tx_overrun_reg_i_24/O[0]
+                         net (fo=1, routed)           0.303    26.663    datapath/shared_fifo/tx_free_bytes[8]
+    SLICE_X28Y51         LUT4 (Prop_lut4_I1_O)        0.299    26.962 r  datapath/shared_fifo/tx_overrun_i_7/O
+                         net (fo=1, routed)           0.444    27.406    datapath/shared_fifo/tx_overrun_i_7_n_0
+    SLICE_X28Y51         LUT4 (Prop_lut4_I3_O)        0.124    27.530 f  datapath/shared_fifo/tx_overrun_i_4/O
+                         net (fo=3, routed)           0.868    28.398    datapath/shared_fifo/tx_full
+    SLICE_X38Y51         LUT4 (Prop_lut4_I0_O)        0.124    28.522 r  datapath/shared_fifo/fifo[4][7]_i_5/O
+                         net (fo=189, routed)         5.552    34.074    datapath/shared_fifo/tx_push_accept
+    SLICE_X63Y91         LUT2 (Prop_lut2_I1_O)        0.124    34.198 r  datapath/shared_fifo/fifo[159][7]_i_7/O
+                         net (fo=124, routed)         5.410    39.607    datapath/shared_fifo/fifo[159][7]_i_7_n_0
+    SLICE_X41Y116        LUT6 (Prop_lut6_I5_O)        0.124    39.731 r  datapath/shared_fifo/fifo[230][7]_i_3/O
+                         net (fo=1, routed)           1.937    41.668    datapath/shared_fifo/fifo[230][7]_i_3_n_0
+    SLICE_X41Y130        LUT2 (Prop_lut2_I1_O)        0.149    41.817 r  datapath/shared_fifo/fifo[230][7]_i_1/O
+                         net (fo=8, routed)           1.388    43.205    datapath/shared_fifo/fifo[230][7]_i_1_n_0
+    SLICE_X39Y137        FDRE                                         r  datapath/shared_fifo/fifo_reg[230][0]/CE
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 bpif\\.wdata[0]
+                            (input port)
+  Destination:            datapath/shared_fifo/fifo_reg[230][1]/CE
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        43.205ns  (logic 7.001ns (16.204%)  route 36.204ns (83.796%))
+  Logic Levels:           29  (CARRY4=6 IBUF=1 LUT2=4 LUT3=5 LUT4=7 LUT6=6)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P7                                                0.000     0.000 r  bpif\\.wdata[0] (IN)
+                         net (fo=0)                   0.000     0.000    bpif\\.wdata[0]
+    P7                   IBUF (Prop_ibuf_I_O)         0.907     0.907 r  clkdiv_reg[0]_i_1/O
+                         net (fo=365, routed)         7.153     8.060    datapath/shared_fifo/fifo_reg[51][0]_1
+    SLICE_X33Y49         LUT6 (Prop_lut6_I2_O)        0.124     8.184 r  datapath/shared_fifo/rx_write_ptr[7]_i_3/O
+                         net (fo=42, routed)          0.771     8.955    datapath/shared_fifo/bpif\\.wdata[0]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.118     9.073 r  datapath/shared_fifo/rx_read_ptr[7]_i_3/O
+                         net (fo=14, routed)          0.987    10.060    datapath/shared_fifo/rx_read_ptr[7]_i_3_n_0
+    SLICE_X33Y51         LUT3 (Prop_lut3_I1_O)        0.326    10.386 r  datapath/shared_fifo/rx_occupancy[6]_i_5/O
+                         net (fo=1, routed)           0.000    10.386    datapath/shared_fifo/rx_occupancy[6]_i_5_n_0
+    SLICE_X33Y51         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    10.784 r  datapath/shared_fifo/rx_occupancy_reg[6]_i_3/CO[3]
+                         net (fo=1, routed)           0.000    10.784    datapath/shared_fifo/rx_occupancy_reg[6]_i_3_n_0
+    SLICE_X33Y52         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313    11.097 r  datapath/shared_fifo/rx_occupancy_reg[8]_i_3/O[3]
+                         net (fo=3, routed)           0.995    12.092    datapath/shared_fifo/rx_occupancy_after_pop[7]
+    SLICE_X34Y53         LUT2 (Prop_lut2_I1_O)        0.306    12.398 r  datapath/shared_fifo/fifo[4][7]_i_55/O
+                         net (fo=1, routed)           0.000    12.398    datapath/shared_fifo/fifo[4][7]_i_55_n_0
+    SLICE_X34Y53         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.376    12.774 r  datapath/shared_fifo/fifo_reg[4][7]_i_52/CO[3]
+                         net (fo=1, routed)           0.000    12.774    datapath/shared_fifo/fifo_reg[4][7]_i_52_n_0
+    SLICE_X34Y54         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219    12.993 f  datapath/shared_fifo/fifo_reg[4][7]_i_53/O[0]
+                         net (fo=1, routed)           0.659    13.652    datapath/shared_fifo/rx_free_bytes[8]
+    SLICE_X35Y54         LUT3 (Prop_lut3_I1_O)        0.295    13.947 f  datapath/shared_fifo/fifo[4][7]_i_32/O
+                         net (fo=4, routed)           0.482    14.429    datapath/shared_fifo/fifo[4][7]_i_32_n_0
+    SLICE_X35Y54         LUT6 (Prop_lut6_I4_O)        0.124    14.553 r  datapath/shared_fifo/rx_begin_failed_i_2/O
+                         net (fo=5, routed)           1.450    16.003    controller/rx_full
+    SLICE_X37Y49         LUT2 (Prop_lut2_I1_O)        0.124    16.127 f  controller/uart_rts_OBUF_inst_i_3/O
+                         net (fo=9, routed)           0.633    16.760    spi_fsm/dp_status[rx_fifo_ready]
+    SLICE_X40Y48         LUT6 (Prop_lut6_I1_O)        0.124    16.884 r  spi_fsm/spi_period[15]_i_4/O
+                         net (fo=1, routed)           0.701    17.585    reg_map/spi_timer_reg[13]_1
+    SLICE_X41Y48         LUT4 (Prop_lut4_I2_O)        0.150    17.735 f  reg_map/spi_period[15]_i_2/O
+                         net (fo=19, routed)          1.033    18.768    spi_fsm/spi_period_reg[0]_0
+    SLICE_X42Y45         LUT3 (Prop_lut3_I0_O)        0.326    19.094 f  spi_fsm/spi_period[15]_i_1/O
+                         net (fo=20, routed)          1.313    20.407    spi_fsm/spi_period[15]_i_1_n_0
+    SLICE_X40Y47         LUT3 (Prop_lut3_I0_O)        0.152    20.559 f  spi_fsm/tx_load_failed_i_3/O
+                         net (fo=6, routed)           0.507    21.066    controller/spi_dp_cmd[tx_load]
+    SLICE_X38Y50         LUT6 (Prop_lut6_I3_O)        0.326    21.392 f  controller/tx_occupancy[2]_i_3/O
+                         net (fo=2, routed)           0.425    21.817    controller/tx_pop
+    SLICE_X38Y51         LUT4 (Prop_lut4_I2_O)        0.124    21.941 r  controller/tx_occupancy[2]_i_2/O
+                         net (fo=36, routed)          1.617    23.558    datapath/shared_fifo/tx_read_ptr_reg[2]_rep__0_0
+    SLICE_X28Y52         LUT6 (Prop_lut6_I3_O)        0.124    23.682 r  datapath/shared_fifo/tx_occupancy[7]_i_2/O
+                         net (fo=7, routed)           0.844    24.526    datapath/shared_fifo/tx_occupancy[7]_i_2_n_0
+    SLICE_X28Y52         LUT4 (Prop_lut4_I3_O)        0.152    24.678 r  datapath/shared_fifo/tx_overrun_i_26/O
+                         net (fo=2, routed)           0.733    25.411    datapath/shared_fifo/tx_occupancy_after_pop[7]
+    SLICE_X29Y51         LUT3 (Prop_lut3_I1_O)        0.326    25.737 r  datapath/shared_fifo/tx_overrun_i_12/O
+                         net (fo=1, routed)           0.000    25.737    datapath/shared_fifo/tx_overrun_i_12_n_0
+    SLICE_X29Y51         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.401    26.138 r  datapath/shared_fifo/tx_overrun_reg_i_5/CO[3]
+                         net (fo=1, routed)           0.000    26.138    datapath/shared_fifo/tx_overrun_reg_i_5_n_0
+    SLICE_X29Y52         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222    26.360 r  datapath/shared_fifo/tx_overrun_reg_i_24/O[0]
+                         net (fo=1, routed)           0.303    26.663    datapath/shared_fifo/tx_free_bytes[8]
+    SLICE_X28Y51         LUT4 (Prop_lut4_I1_O)        0.299    26.962 r  datapath/shared_fifo/tx_overrun_i_7/O
+                         net (fo=1, routed)           0.444    27.406    datapath/shared_fifo/tx_overrun_i_7_n_0
+    SLICE_X28Y51         LUT4 (Prop_lut4_I3_O)        0.124    27.530 f  datapath/shared_fifo/tx_overrun_i_4/O
+                         net (fo=3, routed)           0.868    28.398    datapath/shared_fifo/tx_full
+    SLICE_X38Y51         LUT4 (Prop_lut4_I0_O)        0.124    28.522 r  datapath/shared_fifo/fifo[4][7]_i_5/O
+                         net (fo=189, routed)         5.552    34.074    datapath/shared_fifo/tx_push_accept
+    SLICE_X63Y91         LUT2 (Prop_lut2_I1_O)        0.124    34.198 r  datapath/shared_fifo/fifo[159][7]_i_7/O
+                         net (fo=124, routed)         5.410    39.607    datapath/shared_fifo/fifo[159][7]_i_7_n_0
+    SLICE_X41Y116        LUT6 (Prop_lut6_I5_O)        0.124    39.731 r  datapath/shared_fifo/fifo[230][7]_i_3/O
+                         net (fo=1, routed)           1.937    41.668    datapath/shared_fifo/fifo[230][7]_i_3_n_0
+    SLICE_X41Y130        LUT2 (Prop_lut2_I1_O)        0.149    41.817 r  datapath/shared_fifo/fifo[230][7]_i_1/O
+                         net (fo=8, routed)           1.388    43.205    datapath/shared_fifo/fifo[230][7]_i_1_n_0
+    SLICE_X39Y137        FDRE                                         r  datapath/shared_fifo/fifo_reg[230][1]/CE
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 bpif\\.wdata[0]
+                            (input port)
+  Destination:            datapath/shared_fifo/fifo_reg[144][2]/CE
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        43.159ns  (logic 6.976ns (16.163%)  route 36.183ns (83.837%))
+  Logic Levels:           29  (CARRY4=6 IBUF=1 LUT2=4 LUT3=5 LUT4=7 LUT6=6)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P7                                                0.000     0.000 r  bpif\\.wdata[0] (IN)
+                         net (fo=0)                   0.000     0.000    bpif\\.wdata[0]
+    P7                   IBUF (Prop_ibuf_I_O)         0.907     0.907 r  clkdiv_reg[0]_i_1/O
+                         net (fo=365, routed)         7.153     8.060    datapath/shared_fifo/fifo_reg[51][0]_1
+    SLICE_X33Y49         LUT6 (Prop_lut6_I2_O)        0.124     8.184 r  datapath/shared_fifo/rx_write_ptr[7]_i_3/O
+                         net (fo=42, routed)          0.771     8.955    datapath/shared_fifo/bpif\\.wdata[0]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.118     9.073 r  datapath/shared_fifo/rx_read_ptr[7]_i_3/O
+                         net (fo=14, routed)          0.987    10.060    datapath/shared_fifo/rx_read_ptr[7]_i_3_n_0
+    SLICE_X33Y51         LUT3 (Prop_lut3_I1_O)        0.326    10.386 r  datapath/shared_fifo/rx_occupancy[6]_i_5/O
+                         net (fo=1, routed)           0.000    10.386    datapath/shared_fifo/rx_occupancy[6]_i_5_n_0
+    SLICE_X33Y51         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    10.784 r  datapath/shared_fifo/rx_occupancy_reg[6]_i_3/CO[3]
+                         net (fo=1, routed)           0.000    10.784    datapath/shared_fifo/rx_occupancy_reg[6]_i_3_n_0
+    SLICE_X33Y52         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313    11.097 r  datapath/shared_fifo/rx_occupancy_reg[8]_i_3/O[3]
+                         net (fo=3, routed)           0.995    12.092    datapath/shared_fifo/rx_occupancy_after_pop[7]
+    SLICE_X34Y53         LUT2 (Prop_lut2_I1_O)        0.306    12.398 r  datapath/shared_fifo/fifo[4][7]_i_55/O
+                         net (fo=1, routed)           0.000    12.398    datapath/shared_fifo/fifo[4][7]_i_55_n_0
+    SLICE_X34Y53         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.376    12.774 r  datapath/shared_fifo/fifo_reg[4][7]_i_52/CO[3]
+                         net (fo=1, routed)           0.000    12.774    datapath/shared_fifo/fifo_reg[4][7]_i_52_n_0
+    SLICE_X34Y54         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219    12.993 f  datapath/shared_fifo/fifo_reg[4][7]_i_53/O[0]
+                         net (fo=1, routed)           0.659    13.652    datapath/shared_fifo/rx_free_bytes[8]
+    SLICE_X35Y54         LUT3 (Prop_lut3_I1_O)        0.295    13.947 f  datapath/shared_fifo/fifo[4][7]_i_32/O
+                         net (fo=4, routed)           0.482    14.429    datapath/shared_fifo/fifo[4][7]_i_32_n_0
+    SLICE_X35Y54         LUT6 (Prop_lut6_I4_O)        0.124    14.553 r  datapath/shared_fifo/rx_begin_failed_i_2/O
+                         net (fo=5, routed)           1.450    16.003    controller/rx_full
+    SLICE_X37Y49         LUT2 (Prop_lut2_I1_O)        0.124    16.127 f  controller/uart_rts_OBUF_inst_i_3/O
+                         net (fo=9, routed)           0.633    16.760    spi_fsm/dp_status[rx_fifo_ready]
+    SLICE_X40Y48         LUT6 (Prop_lut6_I1_O)        0.124    16.884 r  spi_fsm/spi_period[15]_i_4/O
+                         net (fo=1, routed)           0.701    17.585    reg_map/spi_timer_reg[13]_1
+    SLICE_X41Y48         LUT4 (Prop_lut4_I2_O)        0.150    17.735 f  reg_map/spi_period[15]_i_2/O
+                         net (fo=19, routed)          1.033    18.768    spi_fsm/spi_period_reg[0]_0
+    SLICE_X42Y45         LUT3 (Prop_lut3_I0_O)        0.326    19.094 f  spi_fsm/spi_period[15]_i_1/O
+                         net (fo=20, routed)          1.313    20.407    spi_fsm/spi_period[15]_i_1_n_0
+    SLICE_X40Y47         LUT3 (Prop_lut3_I0_O)        0.152    20.559 f  spi_fsm/tx_load_failed_i_3/O
+                         net (fo=6, routed)           0.507    21.066    controller/spi_dp_cmd[tx_load]
+    SLICE_X38Y50         LUT6 (Prop_lut6_I3_O)        0.326    21.392 f  controller/tx_occupancy[2]_i_3/O
+                         net (fo=2, routed)           0.425    21.817    controller/tx_pop
+    SLICE_X38Y51         LUT4 (Prop_lut4_I2_O)        0.124    21.941 r  controller/tx_occupancy[2]_i_2/O
+                         net (fo=36, routed)          1.617    23.558    datapath/shared_fifo/tx_read_ptr_reg[2]_rep__0_0
+    SLICE_X28Y52         LUT6 (Prop_lut6_I3_O)        0.124    23.682 r  datapath/shared_fifo/tx_occupancy[7]_i_2/O
+                         net (fo=7, routed)           0.844    24.526    datapath/shared_fifo/tx_occupancy[7]_i_2_n_0
+    SLICE_X28Y52         LUT4 (Prop_lut4_I3_O)        0.152    24.678 r  datapath/shared_fifo/tx_overrun_i_26/O
+                         net (fo=2, routed)           0.733    25.411    datapath/shared_fifo/tx_occupancy_after_pop[7]
+    SLICE_X29Y51         LUT3 (Prop_lut3_I1_O)        0.326    25.737 r  datapath/shared_fifo/tx_overrun_i_12/O
+                         net (fo=1, routed)           0.000    25.737    datapath/shared_fifo/tx_overrun_i_12_n_0
+    SLICE_X29Y51         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.401    26.138 r  datapath/shared_fifo/tx_overrun_reg_i_5/CO[3]
+                         net (fo=1, routed)           0.000    26.138    datapath/shared_fifo/tx_overrun_reg_i_5_n_0
+    SLICE_X29Y52         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222    26.360 r  datapath/shared_fifo/tx_overrun_reg_i_24/O[0]
+                         net (fo=1, routed)           0.303    26.663    datapath/shared_fifo/tx_free_bytes[8]
+    SLICE_X28Y51         LUT4 (Prop_lut4_I1_O)        0.299    26.962 r  datapath/shared_fifo/tx_overrun_i_7/O
+                         net (fo=1, routed)           0.444    27.406    datapath/shared_fifo/tx_overrun_i_7_n_0
+    SLICE_X28Y51         LUT4 (Prop_lut4_I3_O)        0.124    27.530 f  datapath/shared_fifo/tx_overrun_i_4/O
+                         net (fo=3, routed)           0.868    28.398    datapath/shared_fifo/tx_full
+    SLICE_X38Y51         LUT4 (Prop_lut4_I0_O)        0.124    28.522 r  datapath/shared_fifo/fifo[4][7]_i_5/O
+                         net (fo=189, routed)         5.552    34.074    datapath/shared_fifo/tx_push_accept
+    SLICE_X63Y91         LUT2 (Prop_lut2_I1_O)        0.124    34.198 r  datapath/shared_fifo/fifo[159][7]_i_7/O
+                         net (fo=124, routed)         5.200    39.398    datapath/shared_fifo/fifo[159][7]_i_7_n_0
+    SLICE_X17Y100        LUT6 (Prop_lut6_I1_O)        0.124    39.522 r  datapath/shared_fifo/fifo[144][7]_i_3/O
+                         net (fo=1, routed)           1.595    41.117    datapath/shared_fifo/fifo[144][7]_i_3_n_0
+    SLICE_X7Y122         LUT2 (Prop_lut2_I1_O)        0.124    41.241 r  datapath/shared_fifo/fifo[144][7]_i_1/O
+                         net (fo=8, routed)           1.918    43.159    datapath/shared_fifo/fifo[144][7]_i_1_n_0
+    SLICE_X1Y142         FDRE                                         r  datapath/shared_fifo/fifo_reg[144][2]/CE
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 bpif\\.wdata[0]
+                            (input port)
+  Destination:            datapath/shared_fifo/fifo_reg[230][5]/CE
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        43.128ns  (logic 7.001ns (16.233%)  route 36.127ns (83.767%))
+  Logic Levels:           29  (CARRY4=6 IBUF=1 LUT2=4 LUT3=5 LUT4=7 LUT6=6)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P7                                                0.000     0.000 r  bpif\\.wdata[0] (IN)
+                         net (fo=0)                   0.000     0.000    bpif\\.wdata[0]
+    P7                   IBUF (Prop_ibuf_I_O)         0.907     0.907 r  clkdiv_reg[0]_i_1/O
+                         net (fo=365, routed)         7.153     8.060    datapath/shared_fifo/fifo_reg[51][0]_1
+    SLICE_X33Y49         LUT6 (Prop_lut6_I2_O)        0.124     8.184 r  datapath/shared_fifo/rx_write_ptr[7]_i_3/O
+                         net (fo=42, routed)          0.771     8.955    datapath/shared_fifo/bpif\\.wdata[0]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.118     9.073 r  datapath/shared_fifo/rx_read_ptr[7]_i_3/O
+                         net (fo=14, routed)          0.987    10.060    datapath/shared_fifo/rx_read_ptr[7]_i_3_n_0
+    SLICE_X33Y51         LUT3 (Prop_lut3_I1_O)        0.326    10.386 r  datapath/shared_fifo/rx_occupancy[6]_i_5/O
+                         net (fo=1, routed)           0.000    10.386    datapath/shared_fifo/rx_occupancy[6]_i_5_n_0
+    SLICE_X33Y51         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    10.784 r  datapath/shared_fifo/rx_occupancy_reg[6]_i_3/CO[3]
+                         net (fo=1, routed)           0.000    10.784    datapath/shared_fifo/rx_occupancy_reg[6]_i_3_n_0
+    SLICE_X33Y52         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313    11.097 r  datapath/shared_fifo/rx_occupancy_reg[8]_i_3/O[3]
+                         net (fo=3, routed)           0.995    12.092    datapath/shared_fifo/rx_occupancy_after_pop[7]
+    SLICE_X34Y53         LUT2 (Prop_lut2_I1_O)        0.306    12.398 r  datapath/shared_fifo/fifo[4][7]_i_55/O
+                         net (fo=1, routed)           0.000    12.398    datapath/shared_fifo/fifo[4][7]_i_55_n_0
+    SLICE_X34Y53         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.376    12.774 r  datapath/shared_fifo/fifo_reg[4][7]_i_52/CO[3]
+                         net (fo=1, routed)           0.000    12.774    datapath/shared_fifo/fifo_reg[4][7]_i_52_n_0
+    SLICE_X34Y54         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219    12.993 f  datapath/shared_fifo/fifo_reg[4][7]_i_53/O[0]
+                         net (fo=1, routed)           0.659    13.652    datapath/shared_fifo/rx_free_bytes[8]
+    SLICE_X35Y54         LUT3 (Prop_lut3_I1_O)        0.295    13.947 f  datapath/shared_fifo/fifo[4][7]_i_32/O
+                         net (fo=4, routed)           0.482    14.429    datapath/shared_fifo/fifo[4][7]_i_32_n_0
+    SLICE_X35Y54         LUT6 (Prop_lut6_I4_O)        0.124    14.553 r  datapath/shared_fifo/rx_begin_failed_i_2/O
+                         net (fo=5, routed)           1.450    16.003    controller/rx_full
+    SLICE_X37Y49         LUT2 (Prop_lut2_I1_O)        0.124    16.127 f  controller/uart_rts_OBUF_inst_i_3/O
+                         net (fo=9, routed)           0.633    16.760    spi_fsm/dp_status[rx_fifo_ready]
+    SLICE_X40Y48         LUT6 (Prop_lut6_I1_O)        0.124    16.884 r  spi_fsm/spi_period[15]_i_4/O
+                         net (fo=1, routed)           0.701    17.585    reg_map/spi_timer_reg[13]_1
+    SLICE_X41Y48         LUT4 (Prop_lut4_I2_O)        0.150    17.735 f  reg_map/spi_period[15]_i_2/O
+                         net (fo=19, routed)          1.033    18.768    spi_fsm/spi_period_reg[0]_0
+    SLICE_X42Y45         LUT3 (Prop_lut3_I0_O)        0.326    19.094 f  spi_fsm/spi_period[15]_i_1/O
+                         net (fo=20, routed)          1.313    20.407    spi_fsm/spi_period[15]_i_1_n_0
+    SLICE_X40Y47         LUT3 (Prop_lut3_I0_O)        0.152    20.559 f  spi_fsm/tx_load_failed_i_3/O
+                         net (fo=6, routed)           0.507    21.066    controller/spi_dp_cmd[tx_load]
+    SLICE_X38Y50         LUT6 (Prop_lut6_I3_O)        0.326    21.392 f  controller/tx_occupancy[2]_i_3/O
+                         net (fo=2, routed)           0.425    21.817    controller/tx_pop
+    SLICE_X38Y51         LUT4 (Prop_lut4_I2_O)        0.124    21.941 r  controller/tx_occupancy[2]_i_2/O
+                         net (fo=36, routed)          1.617    23.558    datapath/shared_fifo/tx_read_ptr_reg[2]_rep__0_0
+    SLICE_X28Y52         LUT6 (Prop_lut6_I3_O)        0.124    23.682 r  datapath/shared_fifo/tx_occupancy[7]_i_2/O
+                         net (fo=7, routed)           0.844    24.526    datapath/shared_fifo/tx_occupancy[7]_i_2_n_0
+    SLICE_X28Y52         LUT4 (Prop_lut4_I3_O)        0.152    24.678 r  datapath/shared_fifo/tx_overrun_i_26/O
+                         net (fo=2, routed)           0.733    25.411    datapath/shared_fifo/tx_occupancy_after_pop[7]
+    SLICE_X29Y51         LUT3 (Prop_lut3_I1_O)        0.326    25.737 r  datapath/shared_fifo/tx_overrun_i_12/O
+                         net (fo=1, routed)           0.000    25.737    datapath/shared_fifo/tx_overrun_i_12_n_0
+    SLICE_X29Y51         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.401    26.138 r  datapath/shared_fifo/tx_overrun_reg_i_5/CO[3]
+                         net (fo=1, routed)           0.000    26.138    datapath/shared_fifo/tx_overrun_reg_i_5_n_0
+    SLICE_X29Y52         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222    26.360 r  datapath/shared_fifo/tx_overrun_reg_i_24/O[0]
+                         net (fo=1, routed)           0.303    26.663    datapath/shared_fifo/tx_free_bytes[8]
+    SLICE_X28Y51         LUT4 (Prop_lut4_I1_O)        0.299    26.962 r  datapath/shared_fifo/tx_overrun_i_7/O
+                         net (fo=1, routed)           0.444    27.406    datapath/shared_fifo/tx_overrun_i_7_n_0
+    SLICE_X28Y51         LUT4 (Prop_lut4_I3_O)        0.124    27.530 f  datapath/shared_fifo/tx_overrun_i_4/O
+                         net (fo=3, routed)           0.868    28.398    datapath/shared_fifo/tx_full
+    SLICE_X38Y51         LUT4 (Prop_lut4_I0_O)        0.124    28.522 r  datapath/shared_fifo/fifo[4][7]_i_5/O
+                         net (fo=189, routed)         5.552    34.074    datapath/shared_fifo/tx_push_accept
+    SLICE_X63Y91         LUT2 (Prop_lut2_I1_O)        0.124    34.198 r  datapath/shared_fifo/fifo[159][7]_i_7/O
+                         net (fo=124, routed)         5.410    39.607    datapath/shared_fifo/fifo[159][7]_i_7_n_0
+    SLICE_X41Y116        LUT6 (Prop_lut6_I5_O)        0.124    39.731 r  datapath/shared_fifo/fifo[230][7]_i_3/O
+                         net (fo=1, routed)           1.937    41.668    datapath/shared_fifo/fifo[230][7]_i_3_n_0
+    SLICE_X41Y130        LUT2 (Prop_lut2_I1_O)        0.149    41.817 r  datapath/shared_fifo/fifo[230][7]_i_1/O
+                         net (fo=8, routed)           1.310    43.128    datapath/shared_fifo/fifo[230][7]_i_1_n_0
+    SLICE_X41Y137        FDRE                                         r  datapath/shared_fifo/fifo_reg[230][5]/CE
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 bpif\\.wdata[0]
+                            (input port)
+  Destination:            datapath/shared_fifo/fifo_reg[134][7]/CE
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        43.062ns  (logic 7.002ns (16.260%)  route 36.060ns (83.740%))
+  Logic Levels:           29  (CARRY4=6 IBUF=1 LUT2=4 LUT3=5 LUT4=7 LUT6=6)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P7                                                0.000     0.000 r  bpif\\.wdata[0] (IN)
+                         net (fo=0)                   0.000     0.000    bpif\\.wdata[0]
+    P7                   IBUF (Prop_ibuf_I_O)         0.907     0.907 r  clkdiv_reg[0]_i_1/O
+                         net (fo=365, routed)         7.153     8.060    datapath/shared_fifo/fifo_reg[51][0]_1
+    SLICE_X33Y49         LUT6 (Prop_lut6_I2_O)        0.124     8.184 r  datapath/shared_fifo/rx_write_ptr[7]_i_3/O
+                         net (fo=42, routed)          0.771     8.955    datapath/shared_fifo/bpif\\.wdata[0]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.118     9.073 r  datapath/shared_fifo/rx_read_ptr[7]_i_3/O
+                         net (fo=14, routed)          0.987    10.060    datapath/shared_fifo/rx_read_ptr[7]_i_3_n_0
+    SLICE_X33Y51         LUT3 (Prop_lut3_I1_O)        0.326    10.386 r  datapath/shared_fifo/rx_occupancy[6]_i_5/O
+                         net (fo=1, routed)           0.000    10.386    datapath/shared_fifo/rx_occupancy[6]_i_5_n_0
+    SLICE_X33Y51         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    10.784 r  datapath/shared_fifo/rx_occupancy_reg[6]_i_3/CO[3]
+                         net (fo=1, routed)           0.000    10.784    datapath/shared_fifo/rx_occupancy_reg[6]_i_3_n_0
+    SLICE_X33Y52         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313    11.097 r  datapath/shared_fifo/rx_occupancy_reg[8]_i_3/O[3]
+                         net (fo=3, routed)           0.995    12.092    datapath/shared_fifo/rx_occupancy_after_pop[7]
+    SLICE_X34Y53         LUT2 (Prop_lut2_I1_O)        0.306    12.398 r  datapath/shared_fifo/fifo[4][7]_i_55/O
+                         net (fo=1, routed)           0.000    12.398    datapath/shared_fifo/fifo[4][7]_i_55_n_0
+    SLICE_X34Y53         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.376    12.774 r  datapath/shared_fifo/fifo_reg[4][7]_i_52/CO[3]
+                         net (fo=1, routed)           0.000    12.774    datapath/shared_fifo/fifo_reg[4][7]_i_52_n_0
+    SLICE_X34Y54         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219    12.993 f  datapath/shared_fifo/fifo_reg[4][7]_i_53/O[0]
+                         net (fo=1, routed)           0.659    13.652    datapath/shared_fifo/rx_free_bytes[8]
+    SLICE_X35Y54         LUT3 (Prop_lut3_I1_O)        0.295    13.947 f  datapath/shared_fifo/fifo[4][7]_i_32/O
+                         net (fo=4, routed)           0.482    14.429    datapath/shared_fifo/fifo[4][7]_i_32_n_0
+    SLICE_X35Y54         LUT6 (Prop_lut6_I4_O)        0.124    14.553 r  datapath/shared_fifo/rx_begin_failed_i_2/O
+                         net (fo=5, routed)           1.450    16.003    controller/rx_full
+    SLICE_X37Y49         LUT2 (Prop_lut2_I1_O)        0.124    16.127 f  controller/uart_rts_OBUF_inst_i_3/O
+                         net (fo=9, routed)           0.633    16.760    spi_fsm/dp_status[rx_fifo_ready]
+    SLICE_X40Y48         LUT6 (Prop_lut6_I1_O)        0.124    16.884 r  spi_fsm/spi_period[15]_i_4/O
+                         net (fo=1, routed)           0.701    17.585    reg_map/spi_timer_reg[13]_1
+    SLICE_X41Y48         LUT4 (Prop_lut4_I2_O)        0.150    17.735 f  reg_map/spi_period[15]_i_2/O
+                         net (fo=19, routed)          1.033    18.768    spi_fsm/spi_period_reg[0]_0
+    SLICE_X42Y45         LUT3 (Prop_lut3_I0_O)        0.326    19.094 f  spi_fsm/spi_period[15]_i_1/O
+                         net (fo=20, routed)          1.313    20.407    spi_fsm/spi_period[15]_i_1_n_0
+    SLICE_X40Y47         LUT3 (Prop_lut3_I0_O)        0.152    20.559 f  spi_fsm/tx_load_failed_i_3/O
+                         net (fo=6, routed)           0.507    21.066    controller/spi_dp_cmd[tx_load]
+    SLICE_X38Y50         LUT6 (Prop_lut6_I3_O)        0.326    21.392 f  controller/tx_occupancy[2]_i_3/O
+                         net (fo=2, routed)           0.425    21.817    controller/tx_pop
+    SLICE_X38Y51         LUT4 (Prop_lut4_I2_O)        0.124    21.941 r  controller/tx_occupancy[2]_i_2/O
+                         net (fo=36, routed)          1.617    23.558    datapath/shared_fifo/tx_read_ptr_reg[2]_rep__0_0
+    SLICE_X28Y52         LUT6 (Prop_lut6_I3_O)        0.124    23.682 r  datapath/shared_fifo/tx_occupancy[7]_i_2/O
+                         net (fo=7, routed)           0.844    24.526    datapath/shared_fifo/tx_occupancy[7]_i_2_n_0
+    SLICE_X28Y52         LUT4 (Prop_lut4_I3_O)        0.152    24.678 r  datapath/shared_fifo/tx_overrun_i_26/O
+                         net (fo=2, routed)           0.733    25.411    datapath/shared_fifo/tx_occupancy_after_pop[7]
+    SLICE_X29Y51         LUT3 (Prop_lut3_I1_O)        0.326    25.737 r  datapath/shared_fifo/tx_overrun_i_12/O
+                         net (fo=1, routed)           0.000    25.737    datapath/shared_fifo/tx_overrun_i_12_n_0
+    SLICE_X29Y51         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.401    26.138 r  datapath/shared_fifo/tx_overrun_reg_i_5/CO[3]
+                         net (fo=1, routed)           0.000    26.138    datapath/shared_fifo/tx_overrun_reg_i_5_n_0
+    SLICE_X29Y52         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222    26.360 r  datapath/shared_fifo/tx_overrun_reg_i_24/O[0]
+                         net (fo=1, routed)           0.303    26.663    datapath/shared_fifo/tx_free_bytes[8]
+    SLICE_X28Y51         LUT4 (Prop_lut4_I1_O)        0.299    26.962 r  datapath/shared_fifo/tx_overrun_i_7/O
+                         net (fo=1, routed)           0.444    27.406    datapath/shared_fifo/tx_overrun_i_7_n_0
+    SLICE_X28Y51         LUT4 (Prop_lut4_I3_O)        0.124    27.530 f  datapath/shared_fifo/tx_overrun_i_4/O
+                         net (fo=3, routed)           0.868    28.398    datapath/shared_fifo/tx_full
+    SLICE_X38Y51         LUT4 (Prop_lut4_I0_O)        0.124    28.522 r  datapath/shared_fifo/fifo[4][7]_i_5/O
+                         net (fo=189, routed)         5.552    34.074    datapath/shared_fifo/tx_push_accept
+    SLICE_X63Y91         LUT2 (Prop_lut2_I1_O)        0.124    34.198 r  datapath/shared_fifo/fifo[159][7]_i_7/O
+                         net (fo=124, routed)         5.181    39.379    datapath/shared_fifo/fifo[159][7]_i_7_n_0
+    SLICE_X41Y121        LUT6 (Prop_lut6_I5_O)        0.124    39.503 r  datapath/shared_fifo/fifo[134][7]_i_3/O
+                         net (fo=1, routed)           1.406    40.909    datapath/shared_fifo/fifo[134][7]_i_3_n_0
+    SLICE_X29Y131        LUT2 (Prop_lut2_I1_O)        0.150    41.059 r  datapath/shared_fifo/fifo[134][7]_i_1/O
+                         net (fo=8, routed)           2.004    43.062    datapath/shared_fifo/fifo[134][7]_i_1_n_0
+    SLICE_X15Y147        FDRE                                         r  datapath/shared_fifo/fifo_reg[134][7]/CE
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 bpif\\.wdata[0]
+                            (input port)
+  Destination:            datapath/shared_fifo/fifo_reg[144][1]/CE
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        43.019ns  (logic 6.976ns (16.216%)  route 36.043ns (83.784%))
+  Logic Levels:           29  (CARRY4=6 IBUF=1 LUT2=4 LUT3=5 LUT4=7 LUT6=6)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P7                                                0.000     0.000 r  bpif\\.wdata[0] (IN)
+                         net (fo=0)                   0.000     0.000    bpif\\.wdata[0]
+    P7                   IBUF (Prop_ibuf_I_O)         0.907     0.907 r  clkdiv_reg[0]_i_1/O
+                         net (fo=365, routed)         7.153     8.060    datapath/shared_fifo/fifo_reg[51][0]_1
+    SLICE_X33Y49         LUT6 (Prop_lut6_I2_O)        0.124     8.184 r  datapath/shared_fifo/rx_write_ptr[7]_i_3/O
+                         net (fo=42, routed)          0.771     8.955    datapath/shared_fifo/bpif\\.wdata[0]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.118     9.073 r  datapath/shared_fifo/rx_read_ptr[7]_i_3/O
+                         net (fo=14, routed)          0.987    10.060    datapath/shared_fifo/rx_read_ptr[7]_i_3_n_0
+    SLICE_X33Y51         LUT3 (Prop_lut3_I1_O)        0.326    10.386 r  datapath/shared_fifo/rx_occupancy[6]_i_5/O
+                         net (fo=1, routed)           0.000    10.386    datapath/shared_fifo/rx_occupancy[6]_i_5_n_0
+    SLICE_X33Y51         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    10.784 r  datapath/shared_fifo/rx_occupancy_reg[6]_i_3/CO[3]
+                         net (fo=1, routed)           0.000    10.784    datapath/shared_fifo/rx_occupancy_reg[6]_i_3_n_0
+    SLICE_X33Y52         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313    11.097 r  datapath/shared_fifo/rx_occupancy_reg[8]_i_3/O[3]
+                         net (fo=3, routed)           0.995    12.092    datapath/shared_fifo/rx_occupancy_after_pop[7]
+    SLICE_X34Y53         LUT2 (Prop_lut2_I1_O)        0.306    12.398 r  datapath/shared_fifo/fifo[4][7]_i_55/O
+                         net (fo=1, routed)           0.000    12.398    datapath/shared_fifo/fifo[4][7]_i_55_n_0
+    SLICE_X34Y53         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.376    12.774 r  datapath/shared_fifo/fifo_reg[4][7]_i_52/CO[3]
+                         net (fo=1, routed)           0.000    12.774    datapath/shared_fifo/fifo_reg[4][7]_i_52_n_0
+    SLICE_X34Y54         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219    12.993 f  datapath/shared_fifo/fifo_reg[4][7]_i_53/O[0]
+                         net (fo=1, routed)           0.659    13.652    datapath/shared_fifo/rx_free_bytes[8]
+    SLICE_X35Y54         LUT3 (Prop_lut3_I1_O)        0.295    13.947 f  datapath/shared_fifo/fifo[4][7]_i_32/O
+                         net (fo=4, routed)           0.482    14.429    datapath/shared_fifo/fifo[4][7]_i_32_n_0
+    SLICE_X35Y54         LUT6 (Prop_lut6_I4_O)        0.124    14.553 r  datapath/shared_fifo/rx_begin_failed_i_2/O
+                         net (fo=5, routed)           1.450    16.003    controller/rx_full
+    SLICE_X37Y49         LUT2 (Prop_lut2_I1_O)        0.124    16.127 f  controller/uart_rts_OBUF_inst_i_3/O
+                         net (fo=9, routed)           0.633    16.760    spi_fsm/dp_status[rx_fifo_ready]
+    SLICE_X40Y48         LUT6 (Prop_lut6_I1_O)        0.124    16.884 r  spi_fsm/spi_period[15]_i_4/O
+                         net (fo=1, routed)           0.701    17.585    reg_map/spi_timer_reg[13]_1
+    SLICE_X41Y48         LUT4 (Prop_lut4_I2_O)        0.150    17.735 f  reg_map/spi_period[15]_i_2/O
+                         net (fo=19, routed)          1.033    18.768    spi_fsm/spi_period_reg[0]_0
+    SLICE_X42Y45         LUT3 (Prop_lut3_I0_O)        0.326    19.094 f  spi_fsm/spi_period[15]_i_1/O
+                         net (fo=20, routed)          1.313    20.407    spi_fsm/spi_period[15]_i_1_n_0
+    SLICE_X40Y47         LUT3 (Prop_lut3_I0_O)        0.152    20.559 f  spi_fsm/tx_load_failed_i_3/O
+                         net (fo=6, routed)           0.507    21.066    controller/spi_dp_cmd[tx_load]
+    SLICE_X38Y50         LUT6 (Prop_lut6_I3_O)        0.326    21.392 f  controller/tx_occupancy[2]_i_3/O
+                         net (fo=2, routed)           0.425    21.817    controller/tx_pop
+    SLICE_X38Y51         LUT4 (Prop_lut4_I2_O)        0.124    21.941 r  controller/tx_occupancy[2]_i_2/O
+                         net (fo=36, routed)          1.617    23.558    datapath/shared_fifo/tx_read_ptr_reg[2]_rep__0_0
+    SLICE_X28Y52         LUT6 (Prop_lut6_I3_O)        0.124    23.682 r  datapath/shared_fifo/tx_occupancy[7]_i_2/O
+                         net (fo=7, routed)           0.844    24.526    datapath/shared_fifo/tx_occupancy[7]_i_2_n_0
+    SLICE_X28Y52         LUT4 (Prop_lut4_I3_O)        0.152    24.678 r  datapath/shared_fifo/tx_overrun_i_26/O
+                         net (fo=2, routed)           0.733    25.411    datapath/shared_fifo/tx_occupancy_after_pop[7]
+    SLICE_X29Y51         LUT3 (Prop_lut3_I1_O)        0.326    25.737 r  datapath/shared_fifo/tx_overrun_i_12/O
+                         net (fo=1, routed)           0.000    25.737    datapath/shared_fifo/tx_overrun_i_12_n_0
+    SLICE_X29Y51         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.401    26.138 r  datapath/shared_fifo/tx_overrun_reg_i_5/CO[3]
+                         net (fo=1, routed)           0.000    26.138    datapath/shared_fifo/tx_overrun_reg_i_5_n_0
+    SLICE_X29Y52         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222    26.360 r  datapath/shared_fifo/tx_overrun_reg_i_24/O[0]
+                         net (fo=1, routed)           0.303    26.663    datapath/shared_fifo/tx_free_bytes[8]
+    SLICE_X28Y51         LUT4 (Prop_lut4_I1_O)        0.299    26.962 r  datapath/shared_fifo/tx_overrun_i_7/O
+                         net (fo=1, routed)           0.444    27.406    datapath/shared_fifo/tx_overrun_i_7_n_0
+    SLICE_X28Y51         LUT4 (Prop_lut4_I3_O)        0.124    27.530 f  datapath/shared_fifo/tx_overrun_i_4/O
+                         net (fo=3, routed)           0.868    28.398    datapath/shared_fifo/tx_full
+    SLICE_X38Y51         LUT4 (Prop_lut4_I0_O)        0.124    28.522 r  datapath/shared_fifo/fifo[4][7]_i_5/O
+                         net (fo=189, routed)         5.552    34.074    datapath/shared_fifo/tx_push_accept
+    SLICE_X63Y91         LUT2 (Prop_lut2_I1_O)        0.124    34.198 r  datapath/shared_fifo/fifo[159][7]_i_7/O
+                         net (fo=124, routed)         5.200    39.398    datapath/shared_fifo/fifo[159][7]_i_7_n_0
+    SLICE_X17Y100        LUT6 (Prop_lut6_I1_O)        0.124    39.522 r  datapath/shared_fifo/fifo[144][7]_i_3/O
+                         net (fo=1, routed)           1.595    41.117    datapath/shared_fifo/fifo[144][7]_i_3_n_0
+    SLICE_X7Y122         LUT2 (Prop_lut2_I1_O)        0.124    41.241 r  datapath/shared_fifo/fifo[144][7]_i_1/O
+                         net (fo=8, routed)           1.778    43.019    datapath/shared_fifo/fifo[144][7]_i_1_n_0
+    SLICE_X1Y143         FDRE                                         r  datapath/shared_fifo/fifo_reg[144][1]/CE
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 bpif\\.wdata[0]
+                            (input port)
+  Destination:            datapath/shared_fifo/fifo_reg[144][3]/CE
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        43.019ns  (logic 6.976ns (16.216%)  route 36.043ns (83.784%))
+  Logic Levels:           29  (CARRY4=6 IBUF=1 LUT2=4 LUT3=5 LUT4=7 LUT6=6)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P7                                                0.000     0.000 r  bpif\\.wdata[0] (IN)
+                         net (fo=0)                   0.000     0.000    bpif\\.wdata[0]
+    P7                   IBUF (Prop_ibuf_I_O)         0.907     0.907 r  clkdiv_reg[0]_i_1/O
+                         net (fo=365, routed)         7.153     8.060    datapath/shared_fifo/fifo_reg[51][0]_1
+    SLICE_X33Y49         LUT6 (Prop_lut6_I2_O)        0.124     8.184 r  datapath/shared_fifo/rx_write_ptr[7]_i_3/O
+                         net (fo=42, routed)          0.771     8.955    datapath/shared_fifo/bpif\\.wdata[0]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.118     9.073 r  datapath/shared_fifo/rx_read_ptr[7]_i_3/O
+                         net (fo=14, routed)          0.987    10.060    datapath/shared_fifo/rx_read_ptr[7]_i_3_n_0
+    SLICE_X33Y51         LUT3 (Prop_lut3_I1_O)        0.326    10.386 r  datapath/shared_fifo/rx_occupancy[6]_i_5/O
+                         net (fo=1, routed)           0.000    10.386    datapath/shared_fifo/rx_occupancy[6]_i_5_n_0
+    SLICE_X33Y51         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    10.784 r  datapath/shared_fifo/rx_occupancy_reg[6]_i_3/CO[3]
+                         net (fo=1, routed)           0.000    10.784    datapath/shared_fifo/rx_occupancy_reg[6]_i_3_n_0
+    SLICE_X33Y52         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313    11.097 r  datapath/shared_fifo/rx_occupancy_reg[8]_i_3/O[3]
+                         net (fo=3, routed)           0.995    12.092    datapath/shared_fifo/rx_occupancy_after_pop[7]
+    SLICE_X34Y53         LUT2 (Prop_lut2_I1_O)        0.306    12.398 r  datapath/shared_fifo/fifo[4][7]_i_55/O
+                         net (fo=1, routed)           0.000    12.398    datapath/shared_fifo/fifo[4][7]_i_55_n_0
+    SLICE_X34Y53         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.376    12.774 r  datapath/shared_fifo/fifo_reg[4][7]_i_52/CO[3]
+                         net (fo=1, routed)           0.000    12.774    datapath/shared_fifo/fifo_reg[4][7]_i_52_n_0
+    SLICE_X34Y54         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219    12.993 f  datapath/shared_fifo/fifo_reg[4][7]_i_53/O[0]
+                         net (fo=1, routed)           0.659    13.652    datapath/shared_fifo/rx_free_bytes[8]
+    SLICE_X35Y54         LUT3 (Prop_lut3_I1_O)        0.295    13.947 f  datapath/shared_fifo/fifo[4][7]_i_32/O
+                         net (fo=4, routed)           0.482    14.429    datapath/shared_fifo/fifo[4][7]_i_32_n_0
+    SLICE_X35Y54         LUT6 (Prop_lut6_I4_O)        0.124    14.553 r  datapath/shared_fifo/rx_begin_failed_i_2/O
+                         net (fo=5, routed)           1.450    16.003    controller/rx_full
+    SLICE_X37Y49         LUT2 (Prop_lut2_I1_O)        0.124    16.127 f  controller/uart_rts_OBUF_inst_i_3/O
+                         net (fo=9, routed)           0.633    16.760    spi_fsm/dp_status[rx_fifo_ready]
+    SLICE_X40Y48         LUT6 (Prop_lut6_I1_O)        0.124    16.884 r  spi_fsm/spi_period[15]_i_4/O
+                         net (fo=1, routed)           0.701    17.585    reg_map/spi_timer_reg[13]_1
+    SLICE_X41Y48         LUT4 (Prop_lut4_I2_O)        0.150    17.735 f  reg_map/spi_period[15]_i_2/O
+                         net (fo=19, routed)          1.033    18.768    spi_fsm/spi_period_reg[0]_0
+    SLICE_X42Y45         LUT3 (Prop_lut3_I0_O)        0.326    19.094 f  spi_fsm/spi_period[15]_i_1/O
+                         net (fo=20, routed)          1.313    20.407    spi_fsm/spi_period[15]_i_1_n_0
+    SLICE_X40Y47         LUT3 (Prop_lut3_I0_O)        0.152    20.559 f  spi_fsm/tx_load_failed_i_3/O
+                         net (fo=6, routed)           0.507    21.066    controller/spi_dp_cmd[tx_load]
+    SLICE_X38Y50         LUT6 (Prop_lut6_I3_O)        0.326    21.392 f  controller/tx_occupancy[2]_i_3/O
+                         net (fo=2, routed)           0.425    21.817    controller/tx_pop
+    SLICE_X38Y51         LUT4 (Prop_lut4_I2_O)        0.124    21.941 r  controller/tx_occupancy[2]_i_2/O
+                         net (fo=36, routed)          1.617    23.558    datapath/shared_fifo/tx_read_ptr_reg[2]_rep__0_0
+    SLICE_X28Y52         LUT6 (Prop_lut6_I3_O)        0.124    23.682 r  datapath/shared_fifo/tx_occupancy[7]_i_2/O
+                         net (fo=7, routed)           0.844    24.526    datapath/shared_fifo/tx_occupancy[7]_i_2_n_0
+    SLICE_X28Y52         LUT4 (Prop_lut4_I3_O)        0.152    24.678 r  datapath/shared_fifo/tx_overrun_i_26/O
+                         net (fo=2, routed)           0.733    25.411    datapath/shared_fifo/tx_occupancy_after_pop[7]
+    SLICE_X29Y51         LUT3 (Prop_lut3_I1_O)        0.326    25.737 r  datapath/shared_fifo/tx_overrun_i_12/O
+                         net (fo=1, routed)           0.000    25.737    datapath/shared_fifo/tx_overrun_i_12_n_0
+    SLICE_X29Y51         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.401    26.138 r  datapath/shared_fifo/tx_overrun_reg_i_5/CO[3]
+                         net (fo=1, routed)           0.000    26.138    datapath/shared_fifo/tx_overrun_reg_i_5_n_0
+    SLICE_X29Y52         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222    26.360 r  datapath/shared_fifo/tx_overrun_reg_i_24/O[0]
+                         net (fo=1, routed)           0.303    26.663    datapath/shared_fifo/tx_free_bytes[8]
+    SLICE_X28Y51         LUT4 (Prop_lut4_I1_O)        0.299    26.962 r  datapath/shared_fifo/tx_overrun_i_7/O
+                         net (fo=1, routed)           0.444    27.406    datapath/shared_fifo/tx_overrun_i_7_n_0
+    SLICE_X28Y51         LUT4 (Prop_lut4_I3_O)        0.124    27.530 f  datapath/shared_fifo/tx_overrun_i_4/O
+                         net (fo=3, routed)           0.868    28.398    datapath/shared_fifo/tx_full
+    SLICE_X38Y51         LUT4 (Prop_lut4_I0_O)        0.124    28.522 r  datapath/shared_fifo/fifo[4][7]_i_5/O
+                         net (fo=189, routed)         5.552    34.074    datapath/shared_fifo/tx_push_accept
+    SLICE_X63Y91         LUT2 (Prop_lut2_I1_O)        0.124    34.198 r  datapath/shared_fifo/fifo[159][7]_i_7/O
+                         net (fo=124, routed)         5.200    39.398    datapath/shared_fifo/fifo[159][7]_i_7_n_0
+    SLICE_X17Y100        LUT6 (Prop_lut6_I1_O)        0.124    39.522 r  datapath/shared_fifo/fifo[144][7]_i_3/O
+                         net (fo=1, routed)           1.595    41.117    datapath/shared_fifo/fifo[144][7]_i_3_n_0
+    SLICE_X7Y122         LUT2 (Prop_lut2_I1_O)        0.124    41.241 r  datapath/shared_fifo/fifo[144][7]_i_1/O
+                         net (fo=8, routed)           1.778    43.019    datapath/shared_fifo/fifo[144][7]_i_1_n_0
+    SLICE_X1Y143         FDRE                                         r  datapath/shared_fifo/fifo_reg[144][3]/CE
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 bpif\\.wdata[0]
+                            (input port)
+  Destination:            datapath/shared_fifo/fifo_reg[230][3]/CE
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        43.016ns  (logic 7.001ns (16.275%)  route 36.015ns (83.725%))
+  Logic Levels:           29  (CARRY4=6 IBUF=1 LUT2=4 LUT3=5 LUT4=7 LUT6=6)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P7                                                0.000     0.000 r  bpif\\.wdata[0] (IN)
+                         net (fo=0)                   0.000     0.000    bpif\\.wdata[0]
+    P7                   IBUF (Prop_ibuf_I_O)         0.907     0.907 r  clkdiv_reg[0]_i_1/O
+                         net (fo=365, routed)         7.153     8.060    datapath/shared_fifo/fifo_reg[51][0]_1
+    SLICE_X33Y49         LUT6 (Prop_lut6_I2_O)        0.124     8.184 r  datapath/shared_fifo/rx_write_ptr[7]_i_3/O
+                         net (fo=42, routed)          0.771     8.955    datapath/shared_fifo/bpif\\.wdata[0]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.118     9.073 r  datapath/shared_fifo/rx_read_ptr[7]_i_3/O
+                         net (fo=14, routed)          0.987    10.060    datapath/shared_fifo/rx_read_ptr[7]_i_3_n_0
+    SLICE_X33Y51         LUT3 (Prop_lut3_I1_O)        0.326    10.386 r  datapath/shared_fifo/rx_occupancy[6]_i_5/O
+                         net (fo=1, routed)           0.000    10.386    datapath/shared_fifo/rx_occupancy[6]_i_5_n_0
+    SLICE_X33Y51         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    10.784 r  datapath/shared_fifo/rx_occupancy_reg[6]_i_3/CO[3]
+                         net (fo=1, routed)           0.000    10.784    datapath/shared_fifo/rx_occupancy_reg[6]_i_3_n_0
+    SLICE_X33Y52         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313    11.097 r  datapath/shared_fifo/rx_occupancy_reg[8]_i_3/O[3]
+                         net (fo=3, routed)           0.995    12.092    datapath/shared_fifo/rx_occupancy_after_pop[7]
+    SLICE_X34Y53         LUT2 (Prop_lut2_I1_O)        0.306    12.398 r  datapath/shared_fifo/fifo[4][7]_i_55/O
+                         net (fo=1, routed)           0.000    12.398    datapath/shared_fifo/fifo[4][7]_i_55_n_0
+    SLICE_X34Y53         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.376    12.774 r  datapath/shared_fifo/fifo_reg[4][7]_i_52/CO[3]
+                         net (fo=1, routed)           0.000    12.774    datapath/shared_fifo/fifo_reg[4][7]_i_52_n_0
+    SLICE_X34Y54         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219    12.993 f  datapath/shared_fifo/fifo_reg[4][7]_i_53/O[0]
+                         net (fo=1, routed)           0.659    13.652    datapath/shared_fifo/rx_free_bytes[8]
+    SLICE_X35Y54         LUT3 (Prop_lut3_I1_O)        0.295    13.947 f  datapath/shared_fifo/fifo[4][7]_i_32/O
+                         net (fo=4, routed)           0.482    14.429    datapath/shared_fifo/fifo[4][7]_i_32_n_0
+    SLICE_X35Y54         LUT6 (Prop_lut6_I4_O)        0.124    14.553 r  datapath/shared_fifo/rx_begin_failed_i_2/O
+                         net (fo=5, routed)           1.450    16.003    controller/rx_full
+    SLICE_X37Y49         LUT2 (Prop_lut2_I1_O)        0.124    16.127 f  controller/uart_rts_OBUF_inst_i_3/O
+                         net (fo=9, routed)           0.633    16.760    spi_fsm/dp_status[rx_fifo_ready]
+    SLICE_X40Y48         LUT6 (Prop_lut6_I1_O)        0.124    16.884 r  spi_fsm/spi_period[15]_i_4/O
+                         net (fo=1, routed)           0.701    17.585    reg_map/spi_timer_reg[13]_1
+    SLICE_X41Y48         LUT4 (Prop_lut4_I2_O)        0.150    17.735 f  reg_map/spi_period[15]_i_2/O
+                         net (fo=19, routed)          1.033    18.768    spi_fsm/spi_period_reg[0]_0
+    SLICE_X42Y45         LUT3 (Prop_lut3_I0_O)        0.326    19.094 f  spi_fsm/spi_period[15]_i_1/O
+                         net (fo=20, routed)          1.313    20.407    spi_fsm/spi_period[15]_i_1_n_0
+    SLICE_X40Y47         LUT3 (Prop_lut3_I0_O)        0.152    20.559 f  spi_fsm/tx_load_failed_i_3/O
+                         net (fo=6, routed)           0.507    21.066    controller/spi_dp_cmd[tx_load]
+    SLICE_X38Y50         LUT6 (Prop_lut6_I3_O)        0.326    21.392 f  controller/tx_occupancy[2]_i_3/O
+                         net (fo=2, routed)           0.425    21.817    controller/tx_pop
+    SLICE_X38Y51         LUT4 (Prop_lut4_I2_O)        0.124    21.941 r  controller/tx_occupancy[2]_i_2/O
+                         net (fo=36, routed)          1.617    23.558    datapath/shared_fifo/tx_read_ptr_reg[2]_rep__0_0
+    SLICE_X28Y52         LUT6 (Prop_lut6_I3_O)        0.124    23.682 r  datapath/shared_fifo/tx_occupancy[7]_i_2/O
+                         net (fo=7, routed)           0.844    24.526    datapath/shared_fifo/tx_occupancy[7]_i_2_n_0
+    SLICE_X28Y52         LUT4 (Prop_lut4_I3_O)        0.152    24.678 r  datapath/shared_fifo/tx_overrun_i_26/O
+                         net (fo=2, routed)           0.733    25.411    datapath/shared_fifo/tx_occupancy_after_pop[7]
+    SLICE_X29Y51         LUT3 (Prop_lut3_I1_O)        0.326    25.737 r  datapath/shared_fifo/tx_overrun_i_12/O
+                         net (fo=1, routed)           0.000    25.737    datapath/shared_fifo/tx_overrun_i_12_n_0
+    SLICE_X29Y51         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.401    26.138 r  datapath/shared_fifo/tx_overrun_reg_i_5/CO[3]
+                         net (fo=1, routed)           0.000    26.138    datapath/shared_fifo/tx_overrun_reg_i_5_n_0
+    SLICE_X29Y52         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222    26.360 r  datapath/shared_fifo/tx_overrun_reg_i_24/O[0]
+                         net (fo=1, routed)           0.303    26.663    datapath/shared_fifo/tx_free_bytes[8]
+    SLICE_X28Y51         LUT4 (Prop_lut4_I1_O)        0.299    26.962 r  datapath/shared_fifo/tx_overrun_i_7/O
+                         net (fo=1, routed)           0.444    27.406    datapath/shared_fifo/tx_overrun_i_7_n_0
+    SLICE_X28Y51         LUT4 (Prop_lut4_I3_O)        0.124    27.530 f  datapath/shared_fifo/tx_overrun_i_4/O
+                         net (fo=3, routed)           0.868    28.398    datapath/shared_fifo/tx_full
+    SLICE_X38Y51         LUT4 (Prop_lut4_I0_O)        0.124    28.522 r  datapath/shared_fifo/fifo[4][7]_i_5/O
+                         net (fo=189, routed)         5.552    34.074    datapath/shared_fifo/tx_push_accept
+    SLICE_X63Y91         LUT2 (Prop_lut2_I1_O)        0.124    34.198 r  datapath/shared_fifo/fifo[159][7]_i_7/O
+                         net (fo=124, routed)         5.410    39.607    datapath/shared_fifo/fifo[159][7]_i_7_n_0
+    SLICE_X41Y116        LUT6 (Prop_lut6_I5_O)        0.124    39.731 r  datapath/shared_fifo/fifo[230][7]_i_3/O
+                         net (fo=1, routed)           1.937    41.668    datapath/shared_fifo/fifo[230][7]_i_3_n_0
+    SLICE_X41Y130        LUT2 (Prop_lut2_I1_O)        0.149    41.817 r  datapath/shared_fifo/fifo[230][7]_i_1/O
+                         net (fo=8, routed)           1.198    43.016    datapath/shared_fifo/fifo[230][7]_i_1_n_0
+    SLICE_X38Y137        FDRE                                         r  datapath/shared_fifo/fifo_reg[230][3]/CE
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 bpif\\.wdata[0]
+                            (input port)
+  Destination:            datapath/shared_fifo/fifo_reg[230][4]/CE
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        43.016ns  (logic 7.001ns (16.275%)  route 36.015ns (83.725%))
+  Logic Levels:           29  (CARRY4=6 IBUF=1 LUT2=4 LUT3=5 LUT4=7 LUT6=6)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P7                                                0.000     0.000 r  bpif\\.wdata[0] (IN)
+                         net (fo=0)                   0.000     0.000    bpif\\.wdata[0]
+    P7                   IBUF (Prop_ibuf_I_O)         0.907     0.907 r  clkdiv_reg[0]_i_1/O
+                         net (fo=365, routed)         7.153     8.060    datapath/shared_fifo/fifo_reg[51][0]_1
+    SLICE_X33Y49         LUT6 (Prop_lut6_I2_O)        0.124     8.184 r  datapath/shared_fifo/rx_write_ptr[7]_i_3/O
+                         net (fo=42, routed)          0.771     8.955    datapath/shared_fifo/bpif\\.wdata[0]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.118     9.073 r  datapath/shared_fifo/rx_read_ptr[7]_i_3/O
+                         net (fo=14, routed)          0.987    10.060    datapath/shared_fifo/rx_read_ptr[7]_i_3_n_0
+    SLICE_X33Y51         LUT3 (Prop_lut3_I1_O)        0.326    10.386 r  datapath/shared_fifo/rx_occupancy[6]_i_5/O
+                         net (fo=1, routed)           0.000    10.386    datapath/shared_fifo/rx_occupancy[6]_i_5_n_0
+    SLICE_X33Y51         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    10.784 r  datapath/shared_fifo/rx_occupancy_reg[6]_i_3/CO[3]
+                         net (fo=1, routed)           0.000    10.784    datapath/shared_fifo/rx_occupancy_reg[6]_i_3_n_0
+    SLICE_X33Y52         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313    11.097 r  datapath/shared_fifo/rx_occupancy_reg[8]_i_3/O[3]
+                         net (fo=3, routed)           0.995    12.092    datapath/shared_fifo/rx_occupancy_after_pop[7]
+    SLICE_X34Y53         LUT2 (Prop_lut2_I1_O)        0.306    12.398 r  datapath/shared_fifo/fifo[4][7]_i_55/O
+                         net (fo=1, routed)           0.000    12.398    datapath/shared_fifo/fifo[4][7]_i_55_n_0
+    SLICE_X34Y53         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.376    12.774 r  datapath/shared_fifo/fifo_reg[4][7]_i_52/CO[3]
+                         net (fo=1, routed)           0.000    12.774    datapath/shared_fifo/fifo_reg[4][7]_i_52_n_0
+    SLICE_X34Y54         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219    12.993 f  datapath/shared_fifo/fifo_reg[4][7]_i_53/O[0]
+                         net (fo=1, routed)           0.659    13.652    datapath/shared_fifo/rx_free_bytes[8]
+    SLICE_X35Y54         LUT3 (Prop_lut3_I1_O)        0.295    13.947 f  datapath/shared_fifo/fifo[4][7]_i_32/O
+                         net (fo=4, routed)           0.482    14.429    datapath/shared_fifo/fifo[4][7]_i_32_n_0
+    SLICE_X35Y54         LUT6 (Prop_lut6_I4_O)        0.124    14.553 r  datapath/shared_fifo/rx_begin_failed_i_2/O
+                         net (fo=5, routed)           1.450    16.003    controller/rx_full
+    SLICE_X37Y49         LUT2 (Prop_lut2_I1_O)        0.124    16.127 f  controller/uart_rts_OBUF_inst_i_3/O
+                         net (fo=9, routed)           0.633    16.760    spi_fsm/dp_status[rx_fifo_ready]
+    SLICE_X40Y48         LUT6 (Prop_lut6_I1_O)        0.124    16.884 r  spi_fsm/spi_period[15]_i_4/O
+                         net (fo=1, routed)           0.701    17.585    reg_map/spi_timer_reg[13]_1
+    SLICE_X41Y48         LUT4 (Prop_lut4_I2_O)        0.150    17.735 f  reg_map/spi_period[15]_i_2/O
+                         net (fo=19, routed)          1.033    18.768    spi_fsm/spi_period_reg[0]_0
+    SLICE_X42Y45         LUT3 (Prop_lut3_I0_O)        0.326    19.094 f  spi_fsm/spi_period[15]_i_1/O
+                         net (fo=20, routed)          1.313    20.407    spi_fsm/spi_period[15]_i_1_n_0
+    SLICE_X40Y47         LUT3 (Prop_lut3_I0_O)        0.152    20.559 f  spi_fsm/tx_load_failed_i_3/O
+                         net (fo=6, routed)           0.507    21.066    controller/spi_dp_cmd[tx_load]
+    SLICE_X38Y50         LUT6 (Prop_lut6_I3_O)        0.326    21.392 f  controller/tx_occupancy[2]_i_3/O
+                         net (fo=2, routed)           0.425    21.817    controller/tx_pop
+    SLICE_X38Y51         LUT4 (Prop_lut4_I2_O)        0.124    21.941 r  controller/tx_occupancy[2]_i_2/O
+                         net (fo=36, routed)          1.617    23.558    datapath/shared_fifo/tx_read_ptr_reg[2]_rep__0_0
+    SLICE_X28Y52         LUT6 (Prop_lut6_I3_O)        0.124    23.682 r  datapath/shared_fifo/tx_occupancy[7]_i_2/O
+                         net (fo=7, routed)           0.844    24.526    datapath/shared_fifo/tx_occupancy[7]_i_2_n_0
+    SLICE_X28Y52         LUT4 (Prop_lut4_I3_O)        0.152    24.678 r  datapath/shared_fifo/tx_overrun_i_26/O
+                         net (fo=2, routed)           0.733    25.411    datapath/shared_fifo/tx_occupancy_after_pop[7]
+    SLICE_X29Y51         LUT3 (Prop_lut3_I1_O)        0.326    25.737 r  datapath/shared_fifo/tx_overrun_i_12/O
+                         net (fo=1, routed)           0.000    25.737    datapath/shared_fifo/tx_overrun_i_12_n_0
+    SLICE_X29Y51         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.401    26.138 r  datapath/shared_fifo/tx_overrun_reg_i_5/CO[3]
+                         net (fo=1, routed)           0.000    26.138    datapath/shared_fifo/tx_overrun_reg_i_5_n_0
+    SLICE_X29Y52         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222    26.360 r  datapath/shared_fifo/tx_overrun_reg_i_24/O[0]
+                         net (fo=1, routed)           0.303    26.663    datapath/shared_fifo/tx_free_bytes[8]
+    SLICE_X28Y51         LUT4 (Prop_lut4_I1_O)        0.299    26.962 r  datapath/shared_fifo/tx_overrun_i_7/O
+                         net (fo=1, routed)           0.444    27.406    datapath/shared_fifo/tx_overrun_i_7_n_0
+    SLICE_X28Y51         LUT4 (Prop_lut4_I3_O)        0.124    27.530 f  datapath/shared_fifo/tx_overrun_i_4/O
+                         net (fo=3, routed)           0.868    28.398    datapath/shared_fifo/tx_full
+    SLICE_X38Y51         LUT4 (Prop_lut4_I0_O)        0.124    28.522 r  datapath/shared_fifo/fifo[4][7]_i_5/O
+                         net (fo=189, routed)         5.552    34.074    datapath/shared_fifo/tx_push_accept
+    SLICE_X63Y91         LUT2 (Prop_lut2_I1_O)        0.124    34.198 r  datapath/shared_fifo/fifo[159][7]_i_7/O
+                         net (fo=124, routed)         5.410    39.607    datapath/shared_fifo/fifo[159][7]_i_7_n_0
+    SLICE_X41Y116        LUT6 (Prop_lut6_I5_O)        0.124    39.731 r  datapath/shared_fifo/fifo[230][7]_i_3/O
+                         net (fo=1, routed)           1.937    41.668    datapath/shared_fifo/fifo[230][7]_i_3_n_0
+    SLICE_X41Y130        LUT2 (Prop_lut2_I1_O)        0.149    41.817 r  datapath/shared_fifo/fifo[230][7]_i_1/O
+                         net (fo=8, routed)           1.198    43.016    datapath/shared_fifo/fifo[230][7]_i_1_n_0
+    SLICE_X38Y137        FDRE                                         r  datapath/shared_fifo/fifo_reg[230][4]/CE
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 bpif\\.wdata[0]
+                            (input port)
+  Destination:            datapath/shared_fifo/fifo_reg[144][0]/CE
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        42.992ns  (logic 6.976ns (16.226%)  route 36.016ns (83.774%))
+  Logic Levels:           29  (CARRY4=6 IBUF=1 LUT2=4 LUT3=5 LUT4=7 LUT6=6)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P7                                                0.000     0.000 r  bpif\\.wdata[0] (IN)
+                         net (fo=0)                   0.000     0.000    bpif\\.wdata[0]
+    P7                   IBUF (Prop_ibuf_I_O)         0.907     0.907 r  clkdiv_reg[0]_i_1/O
+                         net (fo=365, routed)         7.153     8.060    datapath/shared_fifo/fifo_reg[51][0]_1
+    SLICE_X33Y49         LUT6 (Prop_lut6_I2_O)        0.124     8.184 r  datapath/shared_fifo/rx_write_ptr[7]_i_3/O
+                         net (fo=42, routed)          0.771     8.955    datapath/shared_fifo/bpif\\.wdata[0]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.118     9.073 r  datapath/shared_fifo/rx_read_ptr[7]_i_3/O
+                         net (fo=14, routed)          0.987    10.060    datapath/shared_fifo/rx_read_ptr[7]_i_3_n_0
+    SLICE_X33Y51         LUT3 (Prop_lut3_I1_O)        0.326    10.386 r  datapath/shared_fifo/rx_occupancy[6]_i_5/O
+                         net (fo=1, routed)           0.000    10.386    datapath/shared_fifo/rx_occupancy[6]_i_5_n_0
+    SLICE_X33Y51         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    10.784 r  datapath/shared_fifo/rx_occupancy_reg[6]_i_3/CO[3]
+                         net (fo=1, routed)           0.000    10.784    datapath/shared_fifo/rx_occupancy_reg[6]_i_3_n_0
+    SLICE_X33Y52         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313    11.097 r  datapath/shared_fifo/rx_occupancy_reg[8]_i_3/O[3]
+                         net (fo=3, routed)           0.995    12.092    datapath/shared_fifo/rx_occupancy_after_pop[7]
+    SLICE_X34Y53         LUT2 (Prop_lut2_I1_O)        0.306    12.398 r  datapath/shared_fifo/fifo[4][7]_i_55/O
+                         net (fo=1, routed)           0.000    12.398    datapath/shared_fifo/fifo[4][7]_i_55_n_0
+    SLICE_X34Y53         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.376    12.774 r  datapath/shared_fifo/fifo_reg[4][7]_i_52/CO[3]
+                         net (fo=1, routed)           0.000    12.774    datapath/shared_fifo/fifo_reg[4][7]_i_52_n_0
+    SLICE_X34Y54         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219    12.993 f  datapath/shared_fifo/fifo_reg[4][7]_i_53/O[0]
+                         net (fo=1, routed)           0.659    13.652    datapath/shared_fifo/rx_free_bytes[8]
+    SLICE_X35Y54         LUT3 (Prop_lut3_I1_O)        0.295    13.947 f  datapath/shared_fifo/fifo[4][7]_i_32/O
+                         net (fo=4, routed)           0.482    14.429    datapath/shared_fifo/fifo[4][7]_i_32_n_0
+    SLICE_X35Y54         LUT6 (Prop_lut6_I4_O)        0.124    14.553 r  datapath/shared_fifo/rx_begin_failed_i_2/O
+                         net (fo=5, routed)           1.450    16.003    controller/rx_full
+    SLICE_X37Y49         LUT2 (Prop_lut2_I1_O)        0.124    16.127 f  controller/uart_rts_OBUF_inst_i_3/O
+                         net (fo=9, routed)           0.633    16.760    spi_fsm/dp_status[rx_fifo_ready]
+    SLICE_X40Y48         LUT6 (Prop_lut6_I1_O)        0.124    16.884 r  spi_fsm/spi_period[15]_i_4/O
+                         net (fo=1, routed)           0.701    17.585    reg_map/spi_timer_reg[13]_1
+    SLICE_X41Y48         LUT4 (Prop_lut4_I2_O)        0.150    17.735 f  reg_map/spi_period[15]_i_2/O
+                         net (fo=19, routed)          1.033    18.768    spi_fsm/spi_period_reg[0]_0
+    SLICE_X42Y45         LUT3 (Prop_lut3_I0_O)        0.326    19.094 f  spi_fsm/spi_period[15]_i_1/O
+                         net (fo=20, routed)          1.313    20.407    spi_fsm/spi_period[15]_i_1_n_0
+    SLICE_X40Y47         LUT3 (Prop_lut3_I0_O)        0.152    20.559 f  spi_fsm/tx_load_failed_i_3/O
+                         net (fo=6, routed)           0.507    21.066    controller/spi_dp_cmd[tx_load]
+    SLICE_X38Y50         LUT6 (Prop_lut6_I3_O)        0.326    21.392 f  controller/tx_occupancy[2]_i_3/O
+                         net (fo=2, routed)           0.425    21.817    controller/tx_pop
+    SLICE_X38Y51         LUT4 (Prop_lut4_I2_O)        0.124    21.941 r  controller/tx_occupancy[2]_i_2/O
+                         net (fo=36, routed)          1.617    23.558    datapath/shared_fifo/tx_read_ptr_reg[2]_rep__0_0
+    SLICE_X28Y52         LUT6 (Prop_lut6_I3_O)        0.124    23.682 r  datapath/shared_fifo/tx_occupancy[7]_i_2/O
+                         net (fo=7, routed)           0.844    24.526    datapath/shared_fifo/tx_occupancy[7]_i_2_n_0
+    SLICE_X28Y52         LUT4 (Prop_lut4_I3_O)        0.152    24.678 r  datapath/shared_fifo/tx_overrun_i_26/O
+                         net (fo=2, routed)           0.733    25.411    datapath/shared_fifo/tx_occupancy_after_pop[7]
+    SLICE_X29Y51         LUT3 (Prop_lut3_I1_O)        0.326    25.737 r  datapath/shared_fifo/tx_overrun_i_12/O
+                         net (fo=1, routed)           0.000    25.737    datapath/shared_fifo/tx_overrun_i_12_n_0
+    SLICE_X29Y51         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.401    26.138 r  datapath/shared_fifo/tx_overrun_reg_i_5/CO[3]
+                         net (fo=1, routed)           0.000    26.138    datapath/shared_fifo/tx_overrun_reg_i_5_n_0
+    SLICE_X29Y52         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222    26.360 r  datapath/shared_fifo/tx_overrun_reg_i_24/O[0]
+                         net (fo=1, routed)           0.303    26.663    datapath/shared_fifo/tx_free_bytes[8]
+    SLICE_X28Y51         LUT4 (Prop_lut4_I1_O)        0.299    26.962 r  datapath/shared_fifo/tx_overrun_i_7/O
+                         net (fo=1, routed)           0.444    27.406    datapath/shared_fifo/tx_overrun_i_7_n_0
+    SLICE_X28Y51         LUT4 (Prop_lut4_I3_O)        0.124    27.530 f  datapath/shared_fifo/tx_overrun_i_4/O
+                         net (fo=3, routed)           0.868    28.398    datapath/shared_fifo/tx_full
+    SLICE_X38Y51         LUT4 (Prop_lut4_I0_O)        0.124    28.522 r  datapath/shared_fifo/fifo[4][7]_i_5/O
+                         net (fo=189, routed)         5.552    34.074    datapath/shared_fifo/tx_push_accept
+    SLICE_X63Y91         LUT2 (Prop_lut2_I1_O)        0.124    34.198 r  datapath/shared_fifo/fifo[159][7]_i_7/O
+                         net (fo=124, routed)         5.200    39.398    datapath/shared_fifo/fifo[159][7]_i_7_n_0
+    SLICE_X17Y100        LUT6 (Prop_lut6_I1_O)        0.124    39.522 r  datapath/shared_fifo/fifo[144][7]_i_3/O
+                         net (fo=1, routed)           1.595    41.117    datapath/shared_fifo/fifo[144][7]_i_3_n_0
+    SLICE_X7Y122         LUT2 (Prop_lut2_I1_O)        0.124    41.241 r  datapath/shared_fifo/fifo[144][7]_i_1/O
+                         net (fo=8, routed)           1.751    42.992    datapath/shared_fifo/fifo[144][7]_i_1_n_0
+    SLICE_X3Y141         FDRE                                         r  datapath/shared_fifo/fifo_reg[144][0]/CE
+  -------------------------------------------------------------------    -------------------
+
+
+
+
+
+Min Delay Paths
+--------------------------------------------------------------------------------------
+Slack:                    inf
+  Source:                 reg_map/uart_config_reg[1]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            uart_fsm/rx_parity_mode_reg[1]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.327ns  (logic 0.141ns (43.152%)  route 0.186ns (56.848%))
+  Logic Levels:           1  (FDCE=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y50         FDCE                         0.000     0.000 r  reg_map/uart_config_reg[1]/C
+    SLICE_X39Y50         FDCE (Prop_fdce_C_Q)         0.141     0.141 r  reg_map/uart_config_reg[1]/Q
+                         net (fo=4, routed)           0.186     0.327    uart_fsm/uart_config[1]
+    SLICE_X43Y49         FDCE                                         r  uart_fsm/rx_parity_mode_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 spi_fsm/sclk_level_reg/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            spi_fsm/bit_index_reg[0]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.329ns  (logic 0.186ns (56.490%)  route 0.143ns (43.510%))
+  Logic Levels:           2  (FDCE=1 LUT6=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X40Y46         FDCE                         0.000     0.000 r  spi_fsm/sclk_level_reg/C
+    SLICE_X40Y46         FDCE (Prop_fdce_C_Q)         0.141     0.141 r  spi_fsm/sclk_level_reg/Q
+                         net (fo=8, routed)           0.143     0.284    spi_fsm/sclk_level_reg_n_0
+    SLICE_X41Y46         LUT6 (Prop_lut6_I2_O)        0.045     0.329 r  spi_fsm/bit_index[0]_i_1/O
+                         net (fo=1, routed)           0.000     0.329    spi_fsm/bit_index[0]_i_1_n_0
+    SLICE_X41Y46         FDCE                                         r  spi_fsm/bit_index_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 uart_fsm/FSM_sequential_tx_state_reg[2]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            uart_fsm/FSM_sequential_tx_state_reg[0]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.333ns  (logic 0.186ns (55.897%)  route 0.147ns (44.103%))
+  Logic Levels:           2  (FDCE=1 LUT6=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X31Y44         FDCE                         0.000     0.000 r  uart_fsm/FSM_sequential_tx_state_reg[2]/C
+    SLICE_X31Y44         FDCE (Prop_fdce_C_Q)         0.141     0.141 f  uart_fsm/FSM_sequential_tx_state_reg[2]/Q
+                         net (fo=32, routed)          0.147     0.288    uart_fsm/tx_state[2]
+    SLICE_X31Y44         LUT6 (Prop_lut6_I2_O)        0.045     0.333 r  uart_fsm/FSM_sequential_tx_state[0]_i_1/O
+                         net (fo=1, routed)           0.000     0.333    uart_fsm/FSM_sequential_tx_state[0]_i_1_n_0
+    SLICE_X31Y44         FDCE                                         r  uart_fsm/FSM_sequential_tx_state_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 spi_fsm/miso_meta_reg/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            spi_fsm/miso_sync_reg/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.334ns  (logic 0.164ns (49.062%)  route 0.170ns (50.938%))
+  Logic Levels:           1  (FDCE=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X8Y45          FDCE                         0.000     0.000 r  spi_fsm/miso_meta_reg/C
+    SLICE_X8Y45          FDCE (Prop_fdce_C_Q)         0.164     0.164 r  spi_fsm/miso_meta_reg/Q
+                         net (fo=1, routed)           0.170     0.334    spi_fsm/miso_meta
+    SLICE_X8Y45          FDCE                                         r  spi_fsm/miso_sync_reg/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 uart_fsm/rx_bad_reg/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            uart_fsm/rx_overrun_reg/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.335ns  (logic 0.186ns (55.444%)  route 0.149ns (44.556%))
+  Logic Levels:           2  (FDCE=1 LUT6=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X43Y51         FDCE                         0.000     0.000 r  uart_fsm/rx_bad_reg/C
+    SLICE_X43Y51         FDCE (Prop_fdce_C_Q)         0.141     0.141 f  uart_fsm/rx_bad_reg/Q
+                         net (fo=5, routed)           0.149     0.290    uart_fsm/rx_bad
+    SLICE_X41Y50         LUT6 (Prop_lut6_I2_O)        0.045     0.335 r  uart_fsm/rx_overrun_i_1/O
+                         net (fo=1, routed)           0.000     0.335    uart_fsm/rx_overrun_i_1_n_0
+    SLICE_X41Y50         FDCE                                         r  uart_fsm/rx_overrun_reg/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 uart_fsm/rx_meta_reg/C
+                            (rising edge-triggered cell FDPE)
+  Destination:            uart_fsm/rx_sync_reg/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.340ns  (logic 0.164ns (48.174%)  route 0.176ns (51.826%))
+  Logic Levels:           1  (FDPE=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X8Y45          FDPE                         0.000     0.000 r  uart_fsm/rx_meta_reg/C
+    SLICE_X8Y45          FDPE (Prop_fdpe_C_Q)         0.164     0.164 r  uart_fsm/rx_meta_reg/Q
+                         net (fo=1, routed)           0.176     0.340    uart_fsm/rx_meta
+    SLICE_X8Y45          FDPE                                         r  uart_fsm/rx_sync_reg/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 reg_map/uart_config_reg[0]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            reg_map/uart_config_reg[0]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.341ns  (logic 0.186ns (54.613%)  route 0.155ns (45.387%))
+  Logic Levels:           2  (FDCE=1 LUT6=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y50         FDCE                         0.000     0.000 r  reg_map/uart_config_reg[0]/C
+    SLICE_X39Y50         FDCE (Prop_fdce_C_Q)         0.141     0.141 r  reg_map/uart_config_reg[0]/Q
+                         net (fo=4, routed)           0.155     0.296    spi_fsm/D[0]
+    SLICE_X39Y50         LUT6 (Prop_lut6_I5_O)        0.045     0.341 r  spi_fsm/uart_config[0]_i_1/O
+                         net (fo=1, routed)           0.000     0.341    reg_map/uart_config_reg[0]_0
+    SLICE_X39Y50         FDCE                                         r  reg_map/uart_config_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 spi_fsm/spi_state_reg[0]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            spi_fsm/spi_state_reg[1]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.342ns  (logic 0.227ns (66.367%)  route 0.115ns (33.633%))
+  Logic Levels:           2  (FDCE=1 LUT3=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X43Y47         FDCE                         0.000     0.000 r  spi_fsm/spi_state_reg[0]/C
+    SLICE_X43Y47         FDCE (Prop_fdce_C_Q)         0.128     0.128 r  spi_fsm/spi_state_reg[0]/Q
+                         net (fo=8, routed)           0.115     0.243    spi_fsm/spi_state_reg[1]_0[0]
+    SLICE_X43Y47         LUT3 (Prop_lut3_I1_O)        0.099     0.342 r  spi_fsm/spi_state[1]_i_1/O
+                         net (fo=1, routed)           0.000     0.342    spi_fsm/spi_state[1]_i_1_n_0
+    SLICE_X43Y47         FDCE                                         r  spi_fsm/spi_state_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 spi_fsm/frame_done_reg/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            protocol_done_reg/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.348ns  (logic 0.186ns (53.497%)  route 0.162ns (46.503%))
+  Logic Levels:           2  (FDCE=1 LUT6=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X44Y49         FDCE                         0.000     0.000 r  spi_fsm/frame_done_reg/C
+    SLICE_X44Y49         FDCE (Prop_fdce_C_Q)         0.141     0.141 r  spi_fsm/frame_done_reg/Q
+                         net (fo=1, routed)           0.162     0.303    uart_fsm/spi_frame_done
+    SLICE_X44Y49         LUT6 (Prop_lut6_I1_O)        0.045     0.348 r  uart_fsm/protocol_done_i_1/O
+                         net (fo=1, routed)           0.000     0.348    uart_fsm_n_26
+    SLICE_X44Y49         FDCE                                         r  protocol_done_reg/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 spi_fsm/spi_period_reg[0]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            spi_fsm/spi_timer_reg[0]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.350ns  (logic 0.186ns (53.144%)  route 0.164ns (46.856%))
+  Logic Levels:           2  (FDCE=1 LUT6=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X44Y45         FDCE                         0.000     0.000 r  spi_fsm/spi_period_reg[0]/C
+    SLICE_X44Y45         FDCE (Prop_fdce_C_Q)         0.141     0.141 f  spi_fsm/spi_period_reg[0]/Q
+                         net (fo=2, routed)           0.164     0.305    spi_fsm/spi_period[0]
+    SLICE_X42Y45         LUT6 (Prop_lut6_I1_O)        0.045     0.350 r  spi_fsm/spi_timer[0]_i_1/O
+                         net (fo=1, routed)           0.000     0.350    spi_fsm/p_1_in[0]
+    SLICE_X42Y45         FDCE                                         r  spi_fsm/spi_timer_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+
+
+
+
