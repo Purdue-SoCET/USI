@@ -21,6 +21,11 @@ module urbana_usi_uart_top #(
     logic [HEARTBEAT_BITS-1:0] heartbeat_count;
     bus_protocol_if bpif();
 
+    assign bpif.is_burst = 1'b0;
+    assign bpif.burst_type = 2'b00;
+    assign bpif.burst_length = 8'd0;
+    assign bpif.secure_transfer = 1'b0;
+
     generate
         if (FIFO_SIZE < 8) begin : INVALID_FIFO_SIZE
             $error("%m: FIFO_SIZE must leave at least four TX bytes in the reset split");

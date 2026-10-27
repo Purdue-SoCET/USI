@@ -1,29 +1,19 @@
-# Urbana LED or UART bring-up. Inputs resolve relative to this script:
-#   vivado -mode batch -nojournal -nolog -source fpga/urbana/build.tcl
-#   vivado -mode batch -nojournal -nolog -source fpga/urbana/build.tcl \
-#       -tclargs -target uart
-#
-# Board/device reference (Real Digital's example includes DDR/MicroBlaze):
-# https://www.realdigital.org/downloads/45eb12d2b629dc443b954667cae7b9b3.txt
-# Non-project flow: AMD UG894, Using Tcl Scripting.
-# This script builds a bitstream; program it separately in Hardware Manager.
-
 namespace eval ::urbana {
     variable script_dir [file dirname [file normalize [info script]]]
 
     proc usage {} {
-        puts {Usage: vivado -mode batch -nojournal -nolog -source fpga/urbana/build.tcl}
+        puts {Usage: vivado -mode batch -nojournal -nolog -source Vivado/build.tcl}
         puts {              -tclargs [-target blink|uart] [-part xc7s50csga324-1]}
         puts {                       [-out DIRECTORY] [-bus-if FILE] [-bus-source FILE] [-help]}
         puts {Default target: blink; default output: <repo>/build/urbana/<target>}
-        puts {UART defaults to the local standalone interface. -bus-if selects the production interface.}
+        puts {UART defaults to source/bus_protocol_if.sv. -bus-if selects an alternate interface.}
         puts {Repeat -bus-source for any package/dependency files required before that interface.}
         puts {Relative file/output paths are resolved from the calling working directory.}
     }
 
     proc main {arguments} {
         variable script_dir
-        set repo_dir [file normalize [file join $script_dir ../..]]
+        set repo_dir [file normalize [file join $script_dir ..]]
         set part xc7s50csga324-1
         set target blink
         set output_dir ""
@@ -81,14 +71,14 @@ namespace eval ::urbana {
 
         if {$target eq "blink"} {
             set top urbana_blink
-            set rtl_files [list [file join $script_dir urbana_blink.sv]]
-            set xdc_file [file join $script_dir urbana_blink.xdc]
+            set rtl_files [list [file join $repo_dir fpga urbana_blink.sv]]
+            set xdc_file [file join $repo_dir fpga urbana_blink.xdc]
         } else {
             set top urbana_usi_uart_top
             set xdc_file [file join $script_dir urbana_uart.xdc]
             if {$bus_if_file eq ""} {
-                set bus_if_file [file join $script_dir support bus_protocol_if.sv]
-                puts "INFO: Using standalone Urbana interface; the SoC bus adapter is not exercised."
+                set bus_if_file [file join $repo_dir source bus_protocol_if.sv]
+                puts "INFO: Using repository production bus interface; the SoC bus adapter is not exercised."
             } else {
                 puts "INFO: Using supplied bus interface: $bus_if_file"
             }
@@ -107,8 +97,6 @@ namespace eval ::urbana {
 
         file mkdir $output_dir
         set previous_dir [pwd]
-        # Keep .Xil, reports, checkpoints and bitstream in the build directory.
-        # Restore the caller's directory on success or failure (also for GUI use).
         set result_code [catch {
             cd $output_dir
             create_project -in_memory -part $part
@@ -125,19 +113,7 @@ namespace eval ::urbana {
             read_xdc $xdc_file
             synth_design -top $top -part $part
             if {$target eq "uart"} {
-                # The existing UART already has the two RX flops. Preserve the
-                # timed stage-to-stage path; only external RX -> first D is cut.
-                set rx_meta [get_cells -quiet -hierarchical -filter {NAME =~ *uart_fsm/rx_meta_reg}]
-                set rx_sync [get_cells -quiet -hierarchical -filter {NAME =~ *uart_fsm/rx_sync_reg}]
-                if {[llength $rx_meta] != 1 || [llength $rx_sync] != 1} {
-                    error "Cannot identify both UART RX synchronizer flops; inspect the synthesized hierarchy."
-                }
-                set_property ASYNC_REG TRUE [concat $rx_meta $rx_sync]
-                set rx_meta_d [get_pins -of_objects $rx_meta -filter {REF_PIN_NAME == D}]
-                if {[llength $rx_meta_d] != 1} {
-                    error "Cannot identify the UART RX first-stage D pin."
-                }
-                set_false_path -from [get_ports uart_rx] -to $rx_meta_d
+                source [file join $script_dir uart_rx_constraints.tcl]
             }
             write_checkpoint -force [file join $output_dir post_synth.dcp]
             report_utilization -file [file join $output_dir utilization_synth.rpt]
@@ -148,28 +124,30 @@ namespace eval ::urbana {
             route_design
 
             write_checkpoint -force [file join $output_dir post_route.dcp]
-            report_utilization -file [file join $output_dir utilization_route.rpt]
-            report_route_status -file [file join $output_dir route_status.rpt]
-            report_drc -file [file join $output_dir drc.rpt]
             if {$target eq "uart"} {
-                report_cdc -details -file [file join $output_dir cdc.rpt]
-            }
-            report_timing_summary -delay_type min_max -report_unconstrained \
-                -check_timing_verbose -file [file join $output_dir timing_summary.rpt]
-
-            if {[llength [get_clocks -quiet clk_100mhz]] != 1} {
-                error "Expected the constrained 100 MHz clock; inspect the XDC and timing report."
-            }
-            foreach analysis {setup hold} {
-                set path [get_timing_paths -$analysis -max_paths 1]
-                if {[llength $path] == 0} {
-                    error "No $analysis timing paths found; inspect timing_summary.rpt."
+                set ::urbana_uart_report_dir [file join $output_dir reports]
+                source [file join $script_dir validate_uart.tcl]
+            } else {
+                report_utilization -file [file join $output_dir utilization_route.rpt]
+                report_route_status -file [file join $output_dir route_status.rpt]
+                report_drc -file [file join $output_dir drc.rpt]
+                report_timing_summary -delay_type min_max -report_unconstrained \
+                    -check_timing_verbose -file [file join $output_dir timing_summary.rpt]
+                if {[llength [get_clocks -quiet clk_100mhz]] != 1} {
+                    error "Expected the constrained 100 MHz clock; inspect the XDC and timing report."
                 }
-                set slack [get_property SLACK $path]
-                if {$slack < 0.0} {
-                    error "Routed $analysis timing failed (slack $slack ns); inspect timing_summary.rpt."
+                foreach analysis {setup hold} {
+                    set path [get_timing_paths -$analysis -max_paths 1]
+                    if {[llength $path] == 0} {
+                        error "No $analysis timing paths found; inspect timing_summary.rpt."
+                    }
+                    set slack [get_property SLACK $path]
+                    if {![string is double -strict $slack] ||
+                        [regexp -nocase {inf|nan} $slack] || $slack < 0.0} {
+                        error "Routed $analysis timing failed (slack $slack ns); inspect timing_summary.rpt."
+                    }
+                    puts "INFO: Worst $analysis slack: $slack ns"
                 }
-                puts "INFO: Worst $analysis slack: $slack ns"
             }
 
             # Vivado's bitstream DRCs remain enabled, including I/O constraints.
