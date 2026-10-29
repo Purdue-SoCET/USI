@@ -121,7 +121,6 @@ module split_fifo #(
         end
 
         else begin
-            fifo <= fifo_n;
 
             tx_start <= tx_start_n;
 
@@ -134,6 +133,12 @@ module split_fifo #(
             tx_occupancy <= tx_occupancy_n;
             rx_occupancy <= rx_occupancy_n;
         end
+    end
+
+    // fifo does nothing on reset so make its own ff block
+    always_ff @(posedge clk) begin
+    if (nRST)
+        fifo <= fifo_n;
     end
 
     always_comb begin
