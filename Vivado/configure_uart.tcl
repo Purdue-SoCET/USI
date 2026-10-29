@@ -73,6 +73,8 @@ namespace eval ::urbana_project {
             -constrset constrs_1 -parent_run $synth_run
         set_property STEPS.PHYS_OPT_DESIGN.IS_ENABLED true [get_runs $impl_run]
         set_property STEPS.OPT_DESIGN.TCL.PRE [file join $script_dir uart_rx_constraints.tcl] [get_runs $impl_run]
+        # Validate implementation even when the GUI stops after routing.
+        set_property STEPS.ROUTE_DESIGN.TCL.POST [file join $script_dir validate_uart.tcl] [get_runs $impl_run]
         set_property STEPS.WRITE_BITSTREAM.TCL.PRE [file join $script_dir validate_uart.tcl] [get_runs $impl_run]
         current_run -synthesis [get_runs $synth_run]
         current_run -implementation [get_runs $impl_run]

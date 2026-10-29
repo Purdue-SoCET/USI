@@ -11,5 +11,8 @@ set_property -dict {DRIVE 8 SLEW SLOW} [get_ports {led_heartbeat led_ready led_e
 set_property CFGBVS VCCO [current_design]
 set_property CONFIG_VOLTAGE 3.3 [current_design]
 
+# BTN0 asynchronously asserts the reset synchronizer. Its release is clocked.
 set_false_path -from [get_ports btn_reset]
+# These outputs have no synchronous external receiver referenced to clk_100mhz.
+# UART RX is excepted separately, only up to its first synchronizer flop.
 set_false_path -to [get_ports {led_heartbeat led_ready led_error uart_tx}]
