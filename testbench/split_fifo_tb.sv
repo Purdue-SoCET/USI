@@ -29,6 +29,7 @@ module split_fifo_tb;
 
     logic dp_busy, split_apply;
     logic [COUNT_BITS-1:0] fifo_tx_start;
+    logic rx_space_available;
 
     // Connect DUT ports to testbench signals with matching names.
     split_fifo #(
@@ -385,6 +386,9 @@ module split_fifo_tb;
             rx_rdata !== 32'h44332211 ||
             rx_full !== 1'b1)
             $fatal(1, "RX full: expected bytes 11, 22, 33, 44");
+        
+        if (rx_space_available !== 1'b0)
+            $fatal(1, "RX full: no space should be available");
 
         // Attempt another push without a pop: must be rejected.
         rx_wdata = 16'hBEEF;
@@ -402,6 +406,9 @@ module split_fifo_tb;
         if (rx_occupancy !== COUNT_BITS'(2) ||
             rx_rdata !== 32'h00006655)
             $fatal(1, "RX simultaneous pop/push: expected bytes 55, 66");
+        
+        if (rx_space_available !== 1'b1)
+            $fatal(1, "RX: two free bytes should allow a two-byte push");
 
         // Stop pushing; leave pop asserted to remove the new bytes.
         rx_push = 0;

@@ -34,6 +34,7 @@ module split_fifo #(
     output logic [BUSIF_BYTES*8-1:0] rx_rdata,
     output logic rx_empty,
     output logic rx_full,
+    output logic rx_space_available, // enough space for requested RX push, without relying on a pop happening this cycle
     output logic [$clog2(DEPTH_BYTES+1)-1:0] rx_occupancy,
 
     input logic dp_busy,
@@ -395,6 +396,13 @@ module split_fifo #(
     (rx_push_num_bytes == '0) || // reject 0 bytes
     (uint_t'(rx_push_num_bytes) > DP_BYTES) || // reject more bytes than rx_wdata contains
     (uint_t'(rx_free_bytes) < uint_t'(rx_push_num_bytes)); // not enough space for requested push
+
+    // check for space available for requested push, doesn't count space freed by pop on this cycle
+    assign rx_space_available =
+    (rx_push_num_bytes != '0) &&
+    (uint_t'(rx_push_num_bytes) <= DP_BYTES) &&
+    ((rx_capacity - rx_occupancy) >=
+        COUNT_BITS'(rx_push_num_bytes));
 
     // Accept pushes only when not resetting/flushing and enough space exists
     assign tx_push_accept =

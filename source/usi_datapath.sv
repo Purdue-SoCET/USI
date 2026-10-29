@@ -97,6 +97,7 @@ module usi_datapath #(
     logic rx_commit_done, rx_commit_failed;
     logic tx_overrun, rx_underrun;
     logic fifo_busy, command_pending;
+    logic rx_space_available;
 
     generate
         if (FIFO_SIZE < 4) begin : INVALID_FIFO_SIZE
@@ -189,6 +190,7 @@ module usi_datapath #(
         .rx_rdata(rx_rdata),
         .rx_empty(rx_empty),
         .rx_full(rx_full),
+        .rx_space_available(rx_space_available),
         .rx_occupancy(rx_count),
         .dp_busy(fifo_busy),
         .split_apply(split_apply && split_ready),
@@ -301,7 +303,7 @@ module usi_datapath #(
     always_comb begin
         dp_status = '0;
         dp_status.tx_fifo_valid = (tx_count >= COUNT_BITS'(requested_bytes)) && !tx_clear;
-        dp_status.rx_fifo_ready = !rx_full && !rx_path_clear;
+        dp_status.rx_fifo_ready = rx_space_available && !rx_path_clear;
         dp_status.tx_active = tx_active && !tx_clear;
         dp_status.rx_active = rx_active && !rx_path_clear;
         dp_status.tx_bit = (tx_active && !tx_clear) ? tx_shift_bit : 1'b1;

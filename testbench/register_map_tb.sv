@@ -155,8 +155,9 @@ module register_map_tb;
     endtask
 
     initial begin
-        $dumpfile("reg_map.vcd");
-        $dumpvars(0, register_map_tb);
+        $display("Register-map testbench started");
+        //$dumpfile("reg_map.vcd");
+        //$dumpvars(0, register_map_tb);
         CLK = 0;
         nRST = 0;
         bpif.addr = '0;
