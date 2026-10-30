@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 module usi_bus_exerciser #(
-    parameter int unsigned UART_DIVISOR = 868,
+    parameter int unsigned UART_DIVISOR = 217,
     parameter int unsigned BUS_TIMEOUT_CYCLES = 1024
 )(
     input  logic CLK,
@@ -25,11 +25,14 @@ module usi_bus_exerciser #(
         READ_DIVISOR, READ_CONFIG, READ_MODE,
         BANNER_SPACE, WRITE_BANNER,
         READ_STATUS, READ_RX_COUNT, ECHO_SPACE, READ_RX_DATA, WRITE_ECHO,
-        GAP, FAILED
+        GAP, FAILED,
+        CHECK_BANNER_SPACE, CHECK_ECHO_SPACE
     } state_t;
 
     state_t state, resume_state;
     logic initialized;
+    // Capture FIFO status before using it to choose the next bus operation.
+    logic tx_full_read;
     logic [31:0] echo_word;
     logic [TIMEOUT_BITS-1:0] stalled_cycles;
 
@@ -116,6 +119,7 @@ module usi_bus_exerciser #(
             state <= WRITE_DIVISOR;
             resume_state <= WRITE_DIVISOR;
             initialized <= 1'b0;
+            tx_full_read <= 1'b0;
             echo_word <= '0;
             stalled_cycles <= '0;
         end else if (bus_wen || bus_ren) begin
@@ -155,8 +159,10 @@ module usi_bus_exerciser #(
                                 resume_state <= BANNER_SPACE;
                             end
                         end
-                        BANNER_SPACE: resume_state <=
-                            bus_rdata[3] ? BANNER_SPACE : WRITE_BANNER;
+                        BANNER_SPACE: begin
+                            tx_full_read <= bus_rdata[3];
+                            resume_state <= CHECK_BANNER_SPACE;
+                        end
                         WRITE_BANNER: resume_state <= READ_STATUS;
                         READ_STATUS: begin
                             if (bus_rdata[2])
@@ -166,8 +172,10 @@ module usi_bus_exerciser #(
                         end
                         READ_RX_COUNT: resume_state <=
                             (bus_rdata >= 32'd4) ? ECHO_SPACE : READ_STATUS;
-                        ECHO_SPACE: resume_state <=
-                            bus_rdata[3] ? READ_STATUS : READ_RX_DATA;
+                        ECHO_SPACE: begin
+                            tx_full_read <= bus_rdata[3];
+                            resume_state <= CHECK_ECHO_SPACE;
+                        end
                         READ_RX_DATA: begin
                             echo_word <= bus_rdata;
                             resume_state <= WRITE_ECHO;
@@ -181,6 +189,19 @@ module usi_bus_exerciser #(
             stalled_cycles <= '0;
             case (state)
                 GAP: state <= resume_state;
+                // No bus request is asserted while checking captured status.
+                CHECK_BANNER_SPACE: begin
+                    if (tx_full_read)
+                        state <= BANNER_SPACE;
+                    else
+                        state <= WRITE_BANNER;
+                end
+                CHECK_ECHO_SPACE: begin
+                    if (tx_full_read)
+                        state <= READ_STATUS;
+                    else
+                        state <= READ_RX_DATA;
+                end
                 MODE_WAIT1: state <= MODE_WAIT2;
                 MODE_WAIT2: state <= READ_DIVISOR;
                 FAILED: ;
