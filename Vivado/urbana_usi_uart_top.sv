@@ -1,7 +1,7 @@
 module urbana_usi_uart_top #(
     parameter int unsigned FIFO_SIZE = 256,
-    parameter int unsigned UART_DIVISOR = 868,
-    parameter int unsigned HEARTBEAT_HALF_PERIOD_CYCLES = 50_000_000,
+    parameter int unsigned UART_DIVISOR = 217,
+    parameter int unsigned HEARTBEAT_HALF_PERIOD_CYCLES = 12_500_000,
     parameter int unsigned BUS_TIMEOUT_CYCLES = 1024
 )(
     input  logic clk_100mhz,
@@ -19,6 +19,10 @@ module urbana_usi_uart_top #(
     logic [1:0] reset_sync;
     logic reset_n;
     logic [HEARTBEAT_BITS-1:0] heartbeat_count;
+    logic clk_25mhz;
+    logic clock_locked;
+    logic reset_request;
+    logic spi_loopback;
     bus_protocol_if bpif();
 
     assign bpif.is_burst = 1'b0;
@@ -35,16 +39,22 @@ module urbana_usi_uart_top #(
         end
     endgenerate
 
+    // Hold the design in reset while the button is pressed
+    // or the generated clock is not locked.
+    assign reset_request = btn_reset || !clock_locked;
+
     initial reset_sync = 2'b11;
-    always @(posedge clk_100mhz or posedge btn_reset) begin
-        if (btn_reset)
+
+    always_ff @(posedge clk_25mhz or posedge reset_request) begin
+        if (reset_request)
             reset_sync <= 2'b11;
         else
             reset_sync <= {reset_sync[0], 1'b0};
     end
+
     assign reset_n = !reset_sync[1];
 
-    always_ff @(posedge clk_100mhz or negedge reset_n) begin
+    always_ff @(posedge clk_25mhz or negedge reset_n) begin
         if (!reset_n) begin
             heartbeat_count <= '0;
             led_heartbeat <= 1'b0;
@@ -58,9 +68,11 @@ module urbana_usi_uart_top #(
 
     usi_bus_exerciser #(
         .UART_DIVISOR(UART_DIVISOR),
-        .BUS_TIMEOUT_CYCLES(BUS_TIMEOUT_CYCLES)
+        .BUS_TIMEOUT_CYCLES(BUS_TIMEOUT_CYCLES),
+        .TEST_MODE(2), // 1 = UART, 2 = SPI loopback
+        .SPI_DIVISOR(100)
     ) exerciser (
-        .CLK(clk_100mhz), .nRST(reset_n),
+        .CLK(clk_25mhz), .nRST(reset_n),
         .bus_addr(bpif.addr), .bus_wdata(bpif.wdata), .bus_strobe(bpif.strobe),
         .bus_wen(bpif.wen), .bus_ren(bpif.ren),
         .bus_rdata(bpif.rdata), .bus_error(bpif.error),
@@ -69,10 +81,18 @@ module urbana_usi_uart_top #(
     );
 
     USI #(.FIFO_SIZE(FIFO_SIZE), .CLKDIV_BITS(16)) usi (
-        .bpif(bpif), .CLK(clk_100mhz), .nRST(reset_n),
+        .bpif(bpif), .CLK(clk_25mhz), .nRST(reset_n),
         .uart_rx(uart_rx), .uart_tx(uart_tx),
         .uart_cts(1'b1), .uart_rts(),
-        .spi_miso(1'b0), .spi_mosi(), .spi_sclk(), .spi_cs(),
+        .spi_miso(spi_loopback), .spi_mosi(spi_loopback),
+        .spi_sclk(), .spi_cs(),
         .i2c_sda(), .i2c_scl()
+    );
+
+    clk_wiz_25mhz clock_generator (
+        .clk_in1(clk_100mhz),
+        .clk_out1(clk_25mhz),
+        .resetn(!btn_reset),
+        .locked(clock_locked)
     );
 endmodule
