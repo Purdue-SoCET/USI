@@ -2,7 +2,7 @@
 module usi_bus_exerciser #(
     parameter int unsigned UART_DIVISOR = 217,
     parameter int unsigned BUS_TIMEOUT_CYCLES = 1024,
-    parameter int unsigned TEST_MODE = 1, // 1 = UART banner/echo, 2 = SPI loopback
+    parameter int unsigned TEST_MODE = 2, // 1 = UART banner/echo, 2 = SPI loopback
     parameter int unsigned SPI_DIVISOR = 100
 )(
     input  logic CLK,
