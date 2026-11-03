@@ -3,7 +3,13 @@
 module I2C_tb;
 
     localparam CLK_PERIOD = 20ns;
-    localparam WAIT_LIMIT = 4096;
+    // Allow 32 divider intervals per state: enough for the longest address
+    // count (10), both SCL phases, and registered transition latency.
+    localparam WAIT_DIV_INTERVALS = 32;
+
+    function automatic int wait_limit();
+        return WAIT_DIV_INTERVALS * ((int'(div) < 2) ? 2 : int'(div)) + 4;
+    endfunction
 
     import usi_datapath_pkg::*;
 
@@ -50,13 +56,16 @@ module I2C_tb;
         int cycles;
     begin
         cycles = 0;
-        while(DUT.state !== expected_state && cycles < WAIT_LIMIT) begin
+        // Observe after the posedge updates have settled. div_clk is an
+        // enable for the system clock, not a separate simulation clock.
+        while(DUT.state !== expected_state && cycles < wait_limit()) begin
             @(negedge clk);
             cycles++;
         end
         if(DUT.state !== expected_state) begin
-            $fatal(1, "test %0d timeout, expected state %0d got %0d",
-                testNum, expected_state, DUT.state);
+            $fatal(1, "test %0d timeout after %0d system cycles (div=%0d): expected state %0d got %0d, count=%0d rollover=%b div_clk=%b SCL=%b",
+                testNum, cycles, div, expected_state, DUT.state,
+                DUT.count_out, DUT.count_sig, DUT.div_clk, scl);
         end
     end
     endtask
@@ -67,7 +76,7 @@ module I2C_tb;
         input logic en_shift;
     begin
         if(dp_out.tx_load !== 1'b1 || dp_out.tx_from_fifo !== from_fifo ||
-            dp_out.tx_immediate !== expected_data || dp_out.tx_shift !== en_shift) begin
+            dp_out.tx_immediate !== {8'h00, expected_data} || dp_out.tx_shift !== en_shift) begin
             $fatal(1, "test %d TX fail in state %d: expected load=1 fifo=%b data=%h shift=%b, got %b %b %h %b",
                 testNum, DUT.state, from_fifo, expected_data, en_shift,
                 dp_out.tx_load, dp_out.tx_from_fifo, dp_out.tx_immediate, dp_out.tx_shift);
@@ -97,12 +106,19 @@ module I2C_tb;
         wait_state(DUT.RSET);
         check_TX(8'd1, 0, 0);
         check_RX(1, 0, 0, 0);
+        // SCL is registered: the RSET output takes effect on the next clk.
+        @(negedge clk);
         if(scl !== 1'b1)
             $fatal(1, "test %0d RSET fail, SCL should be high", testNum);
 
         dp_in.rx_begin_failed = 1;
         dp_in.rx_begin_done = 0;
-        @(negedge clk);
+        // Exercise the handshake wait across multiple divider pulses.
+        repeat (2 * int'(div) + 2) begin
+            @(negedge clk);
+            if(DUT.state !== DUT.RSET)
+                $fatal(1, "test %0d RSET fail, left before RX begin completed", testNum);
+        end
         if(DUT.state !== DUT.RSET)
             $fatal(1, "test %0d RSET fail, did not wait for RX begin", testNum);
         check_RX(1, 0, 0, 0);
@@ -161,14 +177,16 @@ module I2C_tb;
             dp_in.rx_byte_valid = 0;
             dp_in.rx_done = 0;
             cycles = 0;
-            while(DUT.state === DUT.DATA && cycles < WAIT_LIMIT) begin
+            while(DUT.state === DUT.DATA && cycles < wait_limit()) begin
                 if(rw) begin
-                    if(DUT.count_out[0]) check_TX(8'hFF, 1, 0);
+                    // DATA commands remain active through count 8, including
+                    // the system-clock cycles between divider pulses.
+                    if(DUT.count_out < 4'd8) check_TX(8'hFF, 1, 1);
                     else check_TX(8'd1, 0, 1);
                     check_RX(0, 0, 0, 0);
                 end else begin
-                    check_RX(0, 1, 0, 0);
-                    dp_in.rx_byte = fifo_data[i];
+                    check_RX(0, DUT.count_out < 4'd8, 0, 0);
+                    dp_in.rx_byte = {8'h00, fifo_data[i]};
                     dp_in.rx_byte_valid = 1;
                     dp_in.rx_done = 1;
                 end
@@ -176,7 +194,8 @@ module I2C_tb;
                 cycles++;
             end
             if(DUT.state === DUT.DATA)
-                $fatal(1, "test %0d DATA timeout", testNum);
+                $fatal(1, "test %0d DATA timeout after %0d system cycles (div=%0d): count=%0d rollover=%b div_clk=%b SCL=%b",
+                    testNum, cycles, div, DUT.count_out, DUT.count_sig, DUT.div_clk, scl);
             dp_in.rx_done = 0;
 
             wait_state(DUT.AWK);
@@ -210,6 +229,8 @@ module I2C_tb;
     int rand_limit;
 
     initial begin
+        $dumpfile("I2C_tb.fst");
+        $dumpvars(0, I2C_tb);
         n_rst = 1;
         testNum = 0;
         rwconfig = 1;
