@@ -43,7 +43,6 @@ module uart #(
 
     logic [CLKDIV_BITS-1:0] tx_period, rx_period;
     logic [CLKDIV_BITS-1:0] tx_timer, rx_timer;
-    logic [2:0] tx_index, rx_index;
     logic [1:0] tx_parity_mode, rx_parity_mode;
 
     logic tx_parity, rx_bad;
@@ -105,7 +104,7 @@ module uart #(
             end
 
             TX_DATA: begin
-                if (tx_timer == '0 && tx_index == 3'd7) begin
+                if (tx_timer == '0 && dp_status.tx_last_bit) begin
                     next_tx_state = (tx_parity_mode == 0)
                         ? TX_STOP : TX_PARITY;
                 end
@@ -144,7 +143,7 @@ module uart #(
             end
 
             RX_DATA: begin
-                if (rx_timer == '0 && rx_index == 3'd7) begin
+                if (rx_timer == '0 && dp_status.rx_last_bit) begin
                     next_rx_state = (rx_parity_mode == 0)
                         ? RX_STOP : RX_PARITY;
                 end
@@ -174,10 +173,8 @@ module uart #(
         dp_cmd.rx_commit = 1'b0;
         dp_cmd.rx_discard = 1'b0;
 
-        // Default TX output
         uart_tx = 1'b1;
 
-        // TX outputs
         if (uart_en && !abort && !tx_flush) begin
             dp_cmd.tx_shift =
                 (tx_state == TX_DATA) && (tx_timer == '0);
@@ -201,7 +198,6 @@ module uart #(
             endcase
         end
 
-        // RX outputs
         if (uart_en && !abort && !rx_flush) begin
             case (rx_state)
                 RX_START: begin
@@ -254,16 +250,14 @@ module uart #(
             (^dp_status.rx_byte[7:0]) ^ (rx_parity_mode == 2'd1);
     end
 
-    always_ff @(posedge CLK or negedge nRST) begin : TX_Counter_And_Parity
+    always_ff @(posedge CLK or negedge nRST) begin : TX_Timer_And_Parity
         if (!nRST) begin
             tx_period <= '0;
             tx_timer <= '0;
-            tx_index <= '0;
             tx_parity_mode <= '0;
             tx_parity <= 1'b0;
         end else if (!uart_en || abort || tx_flush) begin
             tx_timer <= '0;
-            tx_index <= '0;
             tx_parity <= 1'b0;
         end else begin
             if ((tx_state != TX_IDLE) && (tx_timer != '0)) begin
@@ -276,7 +270,6 @@ module uart #(
                         tx_period <= clkdiv;
                         tx_timer <= clkdiv - 1'b1;
                         tx_parity_mode <= uart_config[1:0];
-                        tx_index <= '0;
                         tx_parity <= 1'b0;
                     end
                 end
@@ -291,7 +284,6 @@ module uart #(
                     if (tx_timer == '0) begin
                         tx_timer <= tx_period - 1'b1;
                         tx_parity <= tx_parity ^ dp_status.tx_bit;
-                        tx_index <= tx_index + 1'b1;
                     end
                 end
 
@@ -307,16 +299,14 @@ module uart #(
         end
     end
 
-    always_ff @(posedge CLK or negedge nRST) begin : RX_Counter_And_Parity
+    always_ff @(posedge CLK or negedge nRST) begin : RX_Timer_And_Parity
         if (!nRST) begin
             rx_period <= '0;
             rx_timer <= '0;
-            rx_index <= '0;
             rx_parity_mode <= '0;
             rx_bad <= 1'b0;
         end else if (!uart_en || abort || rx_flush) begin
             rx_timer <= '0;
-            rx_index <= '0;
             rx_bad <= 1'b0;
         end else begin
             if ((rx_state != RX_IDLE) && (rx_timer != '0)) begin
@@ -329,7 +319,6 @@ module uart #(
                         rx_period <= clkdiv;
                         rx_timer <= (clkdiv >> 1) - 1'b1;
                         rx_parity_mode <= uart_config[1:0];
-                        rx_index <= '0;
                         rx_bad <= 1'b0;
                     end
                 end
@@ -343,7 +332,6 @@ module uart #(
                 RX_DATA: begin
                     if (rx_timer == '0) begin
                         rx_timer <= rx_period - 1'b1;
-                        rx_index <= rx_index + 1'b1;
                     end
                 end
 

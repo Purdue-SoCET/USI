@@ -24,6 +24,8 @@ package usi_datapath_pkg;
         logic       rx_fifo_ready;
         logic       tx_active;
         logic       rx_active;
+        logic       tx_last_bit;
+        logic       rx_last_bit;
         logic       tx_bit;
         logic [15:0] rx_byte;
         logic       rx_byte_valid;
@@ -51,7 +53,7 @@ module usi_datapath #(
     input logic rx_bit_i,
     output usi_datapath_pkg::dp_status_t dp_status,
 
-    // Regmap interface. size and counts are in bytes.
+    // Regmap interface. size and counts are in bytes
     input logic [31:0] tx_wdata,
     input logic tx_wen,
     input logic rx_ren,
@@ -90,6 +92,7 @@ module usi_datapath #(
     logic rx_begin_accept, rx_sample_accept, rx_commit_accept;
     logic tx_active, rx_active, rx_byte_valid;
     logic tx_lsb_first, rx_lsb_first;
+    // Shared between protocols. TX/RX still independent for full duplex
     logic [4:0] tx_bits_left, rx_bits_left;
     logic [3:0] chunk_padding, rx_padding;
     logic tx_load_done, tx_load_failed, tx_done;
@@ -306,6 +309,9 @@ module usi_datapath #(
         dp_status.rx_fifo_ready = rx_space_available && !rx_path_clear;
         dp_status.tx_active = tx_active && !tx_clear;
         dp_status.rx_active = rx_active && !rx_path_clear;
+        dp_status.tx_last_bit = (tx_bits_left == 5'd1) && !tx_clear;
+        // Like rx_active, do not feed rx_discard back into protocol status.
+        dp_status.rx_last_bit = (rx_bits_left == 5'd1) && !rx_path_clear;
         dp_status.tx_bit = (tx_active && !tx_clear) ? tx_shift_bit : 1'b1;
         dp_status.rx_byte = rx_path_clear ? 16'b0 : rx_byte;
         dp_status.rx_byte_valid = rx_byte_valid && !rx_path_clear;
