@@ -10,7 +10,11 @@ module urbana_usi_uart_top #(
     output logic uart_tx,
     output logic led_heartbeat,
     output logic led_ready,
-    output logic led_error
+    output logic led_error,
+    output logic spi_sclk,
+    output logic spi_cs_n,
+    output logic spi_mosi,
+    input  logic spi_miso
 );
     localparam int HEARTBEAT_BITS = (HEARTBEAT_HALF_PERIOD_CYCLES > 1) ?
         $clog2(HEARTBEAT_HALF_PERIOD_CYCLES) : 1;
