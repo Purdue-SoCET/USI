@@ -26,7 +26,6 @@ module urbana_usi_uart_top #(
     logic clk_25mhz;
     logic clock_locked;
     logic reset_request;
-    logic spi_loopback;
     bus_protocol_if bpif();
 
     assign bpif.is_burst = 1'b0;
@@ -88,8 +87,8 @@ module urbana_usi_uart_top #(
         .bpif(bpif), .CLK(clk_25mhz), .nRST(reset_n),
         .uart_rx(uart_rx), .uart_tx(uart_tx),
         .uart_cts(1'b1), .uart_rts(),
-        .spi_miso(spi_loopback), .spi_mosi(spi_loopback),
-        .spi_sclk(), .spi_cs(),
+        .spi_miso(spi_miso), .spi_mosi(spi_mosi),
+        .spi_sclk(spi_sclk), .spi_cs(spi_cs_n),
         .i2c_sda(), .i2c_scl()
     );
 
