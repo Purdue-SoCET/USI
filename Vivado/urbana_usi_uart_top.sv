@@ -14,7 +14,9 @@ module urbana_usi_uart_top #(
     output logic spi_sclk,
     output logic spi_cs_n,
     output logic spi_mosi,
-    input  logic spi_miso
+    input  logic spi_miso,
+    output logic [7:0] display_segments,
+    output logic [3:0] display_digit_enable
 );
     localparam int HEARTBEAT_BITS = (HEARTBEAT_HALF_PERIOD_CYCLES > 1) ?
         $clog2(HEARTBEAT_HALF_PERIOD_CYCLES) : 1;
