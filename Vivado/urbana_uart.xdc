@@ -35,15 +35,9 @@ set_property -dict {PACKAGE_PIN D6 IOSTANDARD LVCMOS25} [get_ports {display_segm
 set_property -dict {PACKAGE_PIN C4 IOSTANDARD LVCMOS25} [get_ports {display_segments[6]}]
 set_property -dict {PACKAGE_PIN B5 IOSTANDARD LVCMOS25} [get_ports {display_segments[7]}]
 
-# ============================================================
-# FPGA configuration voltage
-# ============================================================
+# FPGA config voltage
 set_property CFGBVS VCCO [current_design]
 set_property CONFIG_VOLTAGE 3.3 [current_design]
-
-# ============================================================
-# Timing exceptions
-# ============================================================
 
 # BTN0 asynchronously asserts reset; the synchronizer clocks release.
 set_false_path -from [get_ports btn_reset]
@@ -53,3 +47,38 @@ set_false_path -to [get_ports {led_heartbeat led_ready led_error uart_tx}]
 
 # Any UART RX timing exception should target only the first
 # synchronizer stage and use the actual synthesized register name.
+
+# SPI master connection to RP2350 slave
+
+# JA1_P: FPGA MOSI -> microcontroller SPI RX
+set_property -dict {PACKAGE_PIN F14 IOSTANDARD LVCMOS33} [get_ports spi_mosi]
+
+# JA1_N: FPGA active-low chip select -> microcontroller SPI CS
+set_property -dict {PACKAGE_PIN F15 IOSTANDARD LVCMOS33} [get_ports spi_cs_n]
+
+# JA2_P: FPGA-generated clock -> microcontroller SPI SCK
+set_property -dict {PACKAGE_PIN H13 IOSTANDARD LVCMOS33} [get_ports spi_sclk]
+
+# JA2_N: microcontroller SPI TX -> FPGA MISO
+set_property -dict {PACKAGE_PIN H14 IOSTANDARD LVCMOS33} [get_ports spi_miso]
+
+# Apply output drive settings to the three FPGA outputs
+set_property -dict {DRIVE 8 SLEW SLOW} \
+    [get_ports {spi_mosi spi_cs_n spi_sclk}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
