@@ -24,7 +24,7 @@ eval( EAInclude(ISEJScriptLib) );
 
 
 ISEStep( "vivado",
-         "-log USI.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source USI.tcl" );
+         "-log urbana_usi_uart_top.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source urbana_usi_uart_top.tcl" );
 
 
 

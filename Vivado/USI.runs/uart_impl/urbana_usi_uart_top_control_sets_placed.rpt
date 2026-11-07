@@ -1,0 +1,352 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Mon Oct 26 20:24:49 2026
+| Host         : KZLap running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file urbana_usi_uart_top_control_sets_placed.rpt
+| Design       : urbana_usi_uart_top
+| Device       : xc7s50
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |   274 |
+|    Minimum number of control sets                        |   274 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    63 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |   274 |
+| >= 0 to < 4        |     1 |
+| >= 4 to < 6        |     4 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |   256 |
+| >= 10 to < 12      |     0 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |    13 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |               0 |            0 |
+| No           | No                    | Yes                    |              99 |           46 |
+| No           | Yes                   | No                     |               0 |            0 |
+| Yes          | No                    | No                     |            2048 |         1272 |
+| Yes          | No                    | Yes                    |             318 |          171 |
+| Yes          | Yes                   | No                     |               0 |            0 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++-----------------------+-------------------------------------------------+------------------+------------------+----------------+--------------+
+|      Clock Signal     |                  Enable Signal                  | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
++-----------------------+-------------------------------------------------+------------------+------------------+----------------+--------------+
+|  clk_100mhz_IBUF_BUFG |                                                 | btn_reset_IBUF   |                1 |              2 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | exerciser/resume_state[3]_i_1_n_0               | reset_sync[1]    |                1 |              4 |         4.00 |
+|  clk_100mhz_IBUF_BUFG | usi/spi_fsm/FSM_sequential_spi_state[1]_i_1_n_0 | reset_sync[1]    |                1 |              4 |         4.00 |
+|  clk_100mhz_IBUF_BUFG | usi/uart_fsm/tx_index[2]_i_1_n_0                | reset_sync[1]    |                2 |              4 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | exerciser/state0                                | reset_sync[1]    |                4 |              5 |         1.25 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[120][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[96][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[98][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[99][7]_i_1_n_0    |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[9][7]_i_1_n_0     |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[122][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[121][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[0][7]_i_1_n_0     |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[100][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[102][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[101][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[103][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[104][7]_i_1_n_0   |                  |                8 |              8 |         1.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[105][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[106][7]_i_1_n_0   |                  |                2 |              8 |         4.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[108][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[107][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[109][7]_i_1_n_0   |                  |                8 |              8 |         1.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[10][7]_i_1_n_0    |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[111][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[110][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[112][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[114][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[113][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[115][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[116][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[117][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[118][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[119][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[11][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[153][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[123][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[124][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[125][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[126][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[127][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[128][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[129][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[130][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[12][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[131][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[133][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[132][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[134][7]_i_1_n_0   |                  |                2 |              8 |         4.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[136][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[135][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[137][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[138][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[13][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[139][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[141][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[140][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[142][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[143][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[145][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[144][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[146][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[147][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[148][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[14][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[149][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[150][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[151][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[152][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[17][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[180][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[181][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[182][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[183][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[154][7]_i_1_n_0   |                  |                8 |              8 |         1.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[155][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[156][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[157][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[158][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[159][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[15][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[160][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[162][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[161][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[163][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[164][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[165][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[167][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[166][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[169][7]_i_1_n_0   |                  |                8 |              8 |         1.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[168][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[16][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[170][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[171][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[172][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[173][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[174][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[175][7]_i_1_n_0   |                  |                2 |              8 |         4.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[176][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[177][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[178][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[179][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[184][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[185][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[186][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[187][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[188][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[189][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[18][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[190][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[191][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[192][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[194][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[193][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[195][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[196][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[197][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[199][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[198][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[19][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[200][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[1][7]_i_1_n_0     |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[202][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[201][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[203][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[204][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[205][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[206][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[207][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[209][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[208][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[20][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[210][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[211][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[238][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[239][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[23][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[240][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[212][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[213][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[214][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[216][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[215][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[217][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[218][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[21][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[219][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[221][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[220][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[222][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[223][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[224][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[225][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[226][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[227][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[228][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[229][7]_i_1_n_0   |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[22][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[230][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[231][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[232][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[233][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[234][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[235][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[236][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[237][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[40][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[3][7]_i_1_n_0     |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[241][7]_i_1_n_0   |                  |                2 |              8 |         4.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[242][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[243][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[244][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[245][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[246][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[247][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[248][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[249][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[24][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[250][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[251][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[252][7]_i_1_n_0   |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[253][7]_i_1_n_0   |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[254][7]_i_1_n_0   |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[255][7]_i_1_n_0   |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[25][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[26][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[28][7]_i_1_n_0    |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[27][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[29][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[2][7]_i_1_n_0     |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[30][7]_i_1_n_0    |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[31][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[32][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[33][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[34][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[35][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[36][7]_i_1_n_0    |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[38][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[37][7]_i_1_n_0    |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[39][7]_i_1_n_0    |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[41][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[42][7]_i_1_n_0    |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[43][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[44][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[46][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[45][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[47][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[49][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[48][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[4][7]_i_1_n_0     |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[50][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[52][7]_i_1_n_0    |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[51][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[53][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[54][7]_i_1_n_0    |                  |                2 |              8 |         4.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[55][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[56][7]_i_1_n_0    |                  |                2 |              8 |         4.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[57][7]_i_1_n_0    |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[58][7]_i_1_n_0    |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[59][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[5][7]_i_1_n_0     |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[60][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[62][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[61][7]_i_1_n_0    |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[63][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[64][7]_i_1_n_0    |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[66][7]_i_1_n_0    |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[65][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[67][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[68][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[6][7]_i_1_n_0     |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[69][7]_i_1_n_0    |                  |                2 |              8 |         4.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[70][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[71][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[72][7]_i_1_n_0    |                  |                3 |              8 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[73][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[74][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[76][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[75][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[77][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[78][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[79][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[7][7]_i_1_n_0     |                  |                8 |              8 |         1.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[80][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[81][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[82][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[83][7]_i_1_n_0    |                  |                8 |              8 |         1.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[84][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[86][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[85][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[87][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[88][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[89][7]_i_1_n_0    |                  |                7 |              8 |         1.14 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[90][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[8][7]_i_1_n_0     |                  |                8 |              8 |         1.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[91][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[92][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[95][7]_i_1_n_0    |                  |                5 |              8 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[94][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[93][7]_i_1_n_0    |                  |                4 |              8 |         2.00 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/fifo[97][7]_i_1_n_0    |                  |                6 |              8 |         1.33 |
+|  clk_100mhz_IBUF_BUFG | usi/spi_fsm/spi_timer[15]_i_1_n_0               | reset_sync[1]    |                6 |             16 |         2.67 |
+|  clk_100mhz_IBUF_BUFG | usi/uart_fsm/rx_timer[15]_i_1_n_0               | reset_sync[1]    |               10 |             16 |         1.60 |
+|  clk_100mhz_IBUF_BUFG | usi/uart_fsm/tx_timer[15]_i_1_n_0               | reset_sync[1]    |                9 |             16 |         1.78 |
+|  clk_100mhz_IBUF_BUFG | exerciser/E[0]                                  | reset_sync[1]    |                7 |             16 |         2.29 |
+|  clk_100mhz_IBUF_BUFG | usi/reg_map/E[0]                                | reset_sync[1]    |                7 |             18 |         2.57 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/rx_read_ptr[7]_i_1_n_0 | reset_sync[1]    |               14 |             20 |         1.43 |
+|  clk_100mhz_IBUF_BUFG | usi/spi_fsm/FSM_sequential_tx_state_reg[0][0]   | reset_sync[1]    |               10 |             21 |         2.10 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/E[0]                   | reset_sync[1]    |                6 |             21 |         3.50 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/E[0]                               | reset_sync[1]    |               12 |             26 |         2.17 |
+|  clk_100mhz_IBUF_BUFG | exerciser/state_reg[3]_3[0]                     | reset_sync[1]    |               29 |             35 |         1.21 |
+|  clk_100mhz_IBUF_BUFG | usi/datapath/shared_fifo/rx_push_accept         | reset_sync[1]    |               22 |             42 |         1.91 |
+|  clk_100mhz_IBUF_BUFG | exerciser/tx_push_accept                        | reset_sync[1]    |               31 |             54 |         1.74 |
+|  clk_100mhz_IBUF_BUFG |                                                 | reset_sync[1]    |               45 |             97 |         2.16 |
++-----------------------+-------------------------------------------------+------------------+------------------+----------------+--------------+
+
+

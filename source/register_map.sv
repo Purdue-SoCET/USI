@@ -149,6 +149,8 @@ module register_map #(
                 end
                 32'h24: spi_config_n = bpif.wdata[7:0];
                 32'h28: i2c_config_n = bpif.wdata[7:0];
+                // bit 0 is rwconfig
+                // bit 1 is addr config
                 32'h2C: i2c_addr_n = bpif.wdata[6:0];
                 32'h30: {error_clear, done_clear} = bpif.wdata[2:1];
                 // 0x34: rx_count, read only.

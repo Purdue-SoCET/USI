@@ -13,8 +13,11 @@ module USI #(
     output logic spi_mosi,
     output logic spi_sclk,
     output logic spi_cs,
-    inout wire i2c_sda,
-    inout wire i2c_scl
+    input logic i2c_sda_in,
+    output logic i2c_sda_out,
+    input logic i2c_scl_in,
+    output logic i2c_scl_out,
+    input logic i2c_read_done
 );
     import usi_datapath_pkg::*;
 
@@ -33,22 +36,23 @@ module USI #(
     logic uart_busy, uart_frame_done;
     logic uart_parity_error, uart_frame_error, uart_overrun;
     logic spi_busy, spi_frame_done, spi_error, spi_dp_clear_req;
+    logic i2c_busy, i2c_read_done;
 
     logic protocol_busy, protocol_done, protocol_error;
     logic uart_rx_bit, spi_rx_bit, rx_bit, dp_clear;
 
-    dp_cmd_t uart_dp_cmd, spi_dp_cmd;
+    dp_cmd_t uart_dp_cmd, spi_dp_cmd, i2c_dp_cmd;
     dp_status_t dp_status;
 
-    logic [7:0] unused_spi_config, unused_i2c_config;
-    logic [6:0] unused_i2c_addr;
+    logic [7:0] unused_spi_config, i2c_config;
+    logic [6:0] i2c_addr;
     logic [5:0] unused_spi_length;
     logic [31:0] unused_transfer_count;
 
     register_map #(
         .FIFO_SIZE(FIFO_SIZE),
         .CLKDIV_BITS(CLKDIV_BITS),
-        .SUPPORTED_MODES(8'b0000_0111)
+        .SUPPORTED_MODES(8'b0000_1111)
     ) reg_map (
         .bpif(bpif),
         .CLK(CLK), .nRST(nRST),
@@ -67,8 +71,8 @@ module USI #(
         .error_clear(error_clear), .done_clear(done_clear),
         .abort(abort), .start(start),
         .spi_config(unused_spi_config),
-        .i2c_config(unused_i2c_config),
-        .i2c_addr(unused_i2c_addr),
+        .i2c_config(i2c_config),
+        .i2c_addr(i2c_addr),
         .spi_length(unused_spi_length),
         .transfer_count(unused_transfer_count)
     );
@@ -76,7 +80,7 @@ module USI #(
         .CLK(CLK), .nRST(nRST), .mode_sel(mode_sel),
         .uart_busy(uart_busy),
         .spi_busy(spi_busy),
-        .i2c_busy(1'b0),
+        .i2c_busy(i2c_busy),
         .active_mode(active_mode),
         .protocol_busy(protocol_busy)
     );
@@ -88,6 +92,7 @@ module USI #(
         case (active_mode)
             MODE_UART: rx_bit = uart_rx_bit;
             MODE_SPI: rx_bit = spi_rx_bit;
+            MODE_I2C: rx_bit = i2c_rx_bit;
             default: ;
         endcase
     end
@@ -103,7 +108,7 @@ module USI #(
         .active_mode(active_mode), .dp_clear(dp_clear),
         .uart_dp_cmd(uart_dp_cmd),
         .spi_dp_cmd(spi_dp_cmd),
-        .i2c_dp_cmd('0),
+        .i2c_dp_cmd(i2c_dp_cmd),
         .rx_bit_i(rx_bit), .dp_status(dp_status),
         .tx_wdata(tx_wdata), .tx_wen(tx_wen), .rx_ren(rx_ren),
         .tx_flush(tx_flush), .rx_flush(rx_flush),
@@ -164,6 +169,24 @@ module USI #(
         .dp_clear_req(spi_dp_clear_req)
     );
 
+    I2C #(
+        .CLKDIV_BITS(CLKDIV_BITS)
+    ) i2c_fsm (
+        .clk(CLK), .n_rst(nRST),
+        .rwconfig(i2c_config[0]),
+        .addr_config(i2c_config[1]),
+        .en((active_mode == MODE_I2C) && (mode_sel == 3'd3)),
+        .start(start),
+        .abort(abort),
+        .div(clkdiv),
+        .scl_in(i2c_scl_in),
+        .read_done(i2c_read_done),
+        .dp_in(dp_status),
+        .dp_out(i2c_dp_cmd),
+        .scl(i2c_scl_out),
+        .i2c_busy(i2c_busy)
+    );
+
     // Store completion events until software clears them.
     always_ff @(posedge CLK or negedge nRST) begin
         if (!nRST) begin
@@ -181,6 +204,6 @@ module USI #(
         uart_frame_error || uart_overrun || spi_error;
 
     // I2C is not connected yet.
-    assign i2c_sda = 1'bz;
-    assign i2c_scl = 1'bz;
+    //assign i2c_sda = 1'bz;
+    //assign i2c_scl = 1'bz;
 endmodule

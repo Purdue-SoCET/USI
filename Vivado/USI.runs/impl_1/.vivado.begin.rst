@@ -3,3 +3,13 @@
     <Process Command="vivado.bat" Owner="Blaze" Host="KZLAP" Pid="35672" HostCore="20" HostMemory="033752997888">
     </Process>
 </ProcessHandle>
+<?xml version="1.0"?>
+<ProcessHandle Version="1" Minor="0">
+    <Process Command="vivado.bat" Owner="Blaze" Host="KZLAP" Pid="74792" HostCore="20" HostMemory="033752997888">
+    </Process>
+</ProcessHandle>
+<?xml version="1.0"?>
+<ProcessHandle Version="1" Minor="0">
+    <Process Command="vivado.bat" Owner="Blaze" Host="KZLAP" Pid="29368" HostCore="20" HostMemory="033752997888">
+    </Process>
+</ProcessHandle>

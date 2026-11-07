@@ -1,0 +1,15 @@
+set_property -dict {PACKAGE_PIN N15 IOSTANDARD LVCMOS33} [get_ports clk_100mhz]
+create_clock -period 10.000 -name clk_100mhz [get_ports clk_100mhz]
+set_property -dict {PACKAGE_PIN J2 IOSTANDARD LVCMOS25} [get_ports btn_reset]
+set_property -dict {PACKAGE_PIN B16 IOSTANDARD LVCMOS33} [get_ports uart_rx]
+set_property -dict {PACKAGE_PIN A16 IOSTANDARD LVCMOS33} [get_ports uart_tx]
+
+set_property -dict {PACKAGE_PIN C13 IOSTANDARD LVCMOS33} [get_ports led_heartbeat]
+set_property -dict {PACKAGE_PIN C14 IOSTANDARD LVCMOS33} [get_ports led_ready]
+set_property -dict {PACKAGE_PIN D14 IOSTANDARD LVCMOS33} [get_ports led_error]
+set_property -dict {DRIVE 8 SLEW SLOW} [get_ports {led_heartbeat led_ready led_error uart_tx}]
+set_property CFGBVS VCCO [current_design]
+set_property CONFIG_VOLTAGE 3.3 [current_design]
+
+set_false_path -from [get_ports btn_reset]
+set_false_path -to [get_ports {led_heartbeat led_ready led_error uart_tx}]

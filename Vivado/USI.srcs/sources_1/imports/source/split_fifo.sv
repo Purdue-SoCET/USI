@@ -51,6 +51,8 @@ module split_fifo #(
     // just do an equal 50/50 RX TX split on reset
     localparam int RESET_TX_START = DEPTH_BYTES / 2;
 
+    typedef int unsigned uint_t;
+
     // split fifo storage, index goes from 0...255
     logic [7:0] fifo [0:DEPTH_BYTES-1];
     logic [7:0] fifo_n [0:DEPTH_BYTES-1];
@@ -202,37 +204,37 @@ module split_fifo #(
             // if tx pop is accepted
             if(tx_pop_accept) begin
                 // if we crossed end of memory, wrap back to start of TX region
-                if((int'(tx_read_ptr) + int'(tx_pop_num_bytes)) >= DEPTH_BYTES) begin
+                if((uint_t'(tx_read_ptr) + uint_t'(tx_pop_num_bytes)) >= DEPTH_BYTES) begin
                     tx_read_ptr_n = ADDR_BITS'(
-                        int'(tx_read_ptr) + 
-                        int'(tx_pop_num_bytes) -
-                        int'(tx_capacity)
+                        uint_t'(tx_read_ptr) + 
+                        uint_t'(tx_pop_num_bytes) -
+                        uint_t'(tx_capacity)
                     );
                 end
                 else begin
-                    tx_read_ptr_n = ADDR_BITS'(int'(tx_read_ptr) + int'(tx_pop_num_bytes));
+                    tx_read_ptr_n = ADDR_BITS'(uint_t'(tx_read_ptr) + uint_t'(tx_pop_num_bytes));
                 end
             end
 
             if(tx_push_accept) begin
                 // store each byte, start with tx_wdata[7:0]
-                for(int j = 0; j < BUSIF_BYTES; j++) begin
+                for(int unsigned j = 0; j < BUSIF_BYTES; j++) begin
                     // if push crosses into boundary
-                    if((int'(tx_write_ptr) + j) >= DEPTH_BYTES) begin
-                        fifo_n[int'(tx_write_ptr) + j - int'(tx_capacity)] = 8'(tx_wdata >> (8*j));
+                    if((uint_t'(tx_write_ptr) + j) >= DEPTH_BYTES) begin
+                        fifo_n[uint_t'(tx_write_ptr) + j - uint_t'(tx_capacity)] = 8'(tx_wdata >> (8*j));
                     end
                     else begin
                         // if we do not wrap around
-                        fifo_n[int'(tx_write_ptr) + j] = 8'(tx_wdata >> (8*j));
+                        fifo_n[uint_t'(tx_write_ptr) + j] = 8'(tx_wdata >> (8*j));
                     end
                 end
 
                 // advance the write ptr, accounting for wrap-around
-                if((int'(tx_write_ptr) + BUSIF_BYTES) >= DEPTH_BYTES) begin
-                    tx_write_ptr_n = ADDR_BITS'(int'(tx_write_ptr) + BUSIF_BYTES - int'(tx_capacity));
+                if((uint_t'(tx_write_ptr) + BUSIF_BYTES) >= DEPTH_BYTES) begin
+                    tx_write_ptr_n = ADDR_BITS'(uint_t'(tx_write_ptr) + BUSIF_BYTES - uint_t'(tx_capacity));
                 end
                 else begin
-                    tx_write_ptr_n = ADDR_BITS'(int'(tx_write_ptr) + BUSIF_BYTES);
+                    tx_write_ptr_n = ADDR_BITS'(uint_t'(tx_write_ptr) + BUSIF_BYTES);
                 end
             end 
         end
@@ -249,33 +251,33 @@ module split_fifo #(
 
             if (rx_pop_accept) begin
                 // if crossed end of RX memory
-                if ((int'(rx_read_ptr) + int'(rx_pop_num_bytes)) >= int'(rx_capacity)) begin
+                if ((uint_t'(rx_read_ptr) + uint_t'(rx_pop_num_bytes)) >= uint_t'(rx_capacity)) begin
                     // wrap the rx read address
                     rx_read_ptr_n = ADDR_BITS'(
-                        int'(rx_read_ptr) +
-                        int'(rx_pop_num_bytes) -
-                        int'(rx_capacity)
+                        uint_t'(rx_read_ptr) +
+                        uint_t'(rx_pop_num_bytes) -
+                        uint_t'(rx_capacity)
                     );
                 end else begin
                     rx_read_ptr_n = ADDR_BITS'(
-                        int'(rx_read_ptr) + int'(rx_pop_num_bytes)
+                        uint_t'(rx_read_ptr) + uint_t'(rx_pop_num_bytes)
                     );
                 end
             end
 
             // VALID RX PUSH
             if(rx_push_accept) begin
-                for(int j = 0; j < DP_BYTES; j++) begin
+                for(int unsigned j = 0; j < DP_BYTES; j++) begin
 
                     // push only rx_push_num_bytes
-                    if(j < int'(rx_push_num_bytes)) begin
+                    if(j < uint_t'(rx_push_num_bytes)) begin
                         // if wrap-around occurs
-                        if ((int'(rx_write_ptr) + j) >= int'(rx_capacity)) begin
-                            fifo_n[int'(rx_write_ptr) + j - int'(rx_capacity)] = 8'(rx_wdata >> (8*j));
+                        if ((uint_t'(rx_write_ptr) + j) >= uint_t'(rx_capacity)) begin
+                            fifo_n[uint_t'(rx_write_ptr) + j - uint_t'(rx_capacity)] = 8'(rx_wdata >> (8*j));
                         end 
                         // no wrap needed
                         else begin
-                            fifo_n[int'(rx_write_ptr) + j] = 8'(rx_wdata >> (8*j));
+                            fifo_n[uint_t'(rx_write_ptr) + j] = 8'(rx_wdata >> (8*j));
                         end
                     end
                 end 
@@ -283,13 +285,13 @@ module split_fifo #(
                 // advance the rx write ptr
 
                 // if wrap-around
-                if((int'(rx_write_ptr) + int'(rx_push_num_bytes)) >= int'(rx_capacity)) begin
-                    rx_write_ptr_n = ADDR_BITS'(int'(rx_write_ptr) + int'(rx_push_num_bytes) - int'(rx_capacity));
+                if((uint_t'(rx_write_ptr) + uint_t'(rx_push_num_bytes)) >= uint_t'(rx_capacity)) begin
+                    rx_write_ptr_n = ADDR_BITS'(uint_t'(rx_write_ptr) + uint_t'(rx_push_num_bytes) - uint_t'(rx_capacity));
                 end
 
                 // if not wrap around
                 else begin
-                    rx_write_ptr_n = ADDR_BITS'(int'(rx_write_ptr) + int'(rx_push_num_bytes));
+                    rx_write_ptr_n = ADDR_BITS'(uint_t'(rx_write_ptr) + uint_t'(rx_push_num_bytes));
                 end
             end
         end
@@ -300,16 +302,16 @@ module split_fifo #(
         tx_rdata = '0;
         tx_read_addr = 0;
 
-        for (int j = 0; j < DP_BYTES; j++) begin
+        for (int unsigned j = 0; j < DP_BYTES; j++) begin
             // Only show bytes that are actually queued
-            if (j < int'(tx_occupancy)) begin
+            if (j < uint_t'(tx_occupancy)) begin
 
                 // Find current byte's address.
-                tx_read_addr = int'(tx_read_ptr) + j;
+                tx_read_addr = uint_t'(tx_read_ptr) + j;
 
                 // wrap if needed
                 if (tx_read_addr >= DEPTH_BYTES) begin
-                    tx_read_addr = tx_read_addr - int'(tx_capacity);
+                    tx_read_addr = tx_read_addr - uint_t'(tx_capacity);
                 end
 
                 // shift data bytes into their correct positions
@@ -323,16 +325,16 @@ module split_fifo #(
         rx_rdata = '0;
         rx_read_addr = 0;
 
-        for (int j = 0; j < BUSIF_BYTES; j++) begin
+        for (int unsigned j = 0; j < BUSIF_BYTES; j++) begin
             // Only show bytes that are actually queued
-            if (j < int'(rx_occupancy)) begin
+            if (j < uint_t'(rx_occupancy)) begin
 
                 // get current rx read addr
-                rx_read_addr = int'(rx_read_ptr) + j;
+                rx_read_addr = uint_t'(rx_read_ptr) + j;
 
                 // check rx wrap around
-                if (rx_read_addr >= int'(rx_capacity)) begin
-                    rx_read_addr = rx_read_addr - int'(rx_capacity);
+                if (rx_read_addr >= uint_t'(rx_capacity)) begin
+                    rx_read_addr = rx_read_addr - uint_t'(rx_capacity);
                 end
 
                 // shift data bytes into correct positions
@@ -356,7 +358,7 @@ module split_fifo #(
         nRST && !tx_flush &&
         tx_pop &&
         (tx_pop_num_bytes != '0) &&
-        (int'(tx_pop_num_bytes) <= DP_BYTES) &&
+        (uint_t'(tx_pop_num_bytes) <= DP_BYTES) &&
         (tx_occupancy >= COUNT_BITS'(tx_pop_num_bytes));
 
         // RX allows a partial bus read, so any nonempty queue can be popped.
@@ -386,13 +388,13 @@ module split_fifo #(
     assign rx_free_bytes = rx_capacity - rx_occupancy_after_pop;
 
     // full if number of free bytes less than 4 bytes
-    assign tx_full = (int'(tx_free_bytes) < BUSIF_BYTES);
+    assign tx_full = (uint_t'(tx_free_bytes) < BUSIF_BYTES);
 
     // rx_full checks if size is invalid, or if there is not enough space to accept valid push
     assign rx_full =
     (rx_push_num_bytes == '0) || // reject 0 bytes
-    (int'(rx_push_num_bytes) > DP_BYTES) || // reject more bytes than rx_wdata contains
-    (int'(rx_free_bytes) < int'(rx_push_num_bytes)); // not enough space for requested push
+    (uint_t'(rx_push_num_bytes) > DP_BYTES) || // reject more bytes than rx_wdata contains
+    (uint_t'(rx_free_bytes) < uint_t'(rx_push_num_bytes)); // not enough space for requested push
 
     // Accept pushes only when not resetting/flushing and enough space exists
     assign tx_push_accept =
@@ -407,3 +409,4 @@ module split_fifo #(
     rx_push &&
     !rx_full;
 endmodule
+

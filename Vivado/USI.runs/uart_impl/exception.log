@@ -1,0 +1,4 @@
+ERROR: Exception caught trying to open file C:\GithubRepos\USI\Vivado\USI.runs\uart_impl/runme.log
+	Exception name: Error
+	Exception error code: 70
+	Exception message: Permission denied
