@@ -12,3 +12,16 @@ Design properties:
     Dynamic power: 219.3078 mW
     Static power:  3.7893 uW
 
+I2C:
+Design properties:
+    Critical path: 16.91 ns
+    Total area:    13579083.000000 um^2
+    Dynamic power: 213.2004 mW
+    Static power:  3.7482 uW
+
+USI:
+Design properties:
+    Critical path: 19.58 ns
+    Total area:    14032665.000000 um^2
+    Dynamic power: 226.6079 mW
+    Static power:  3.8841 uW
