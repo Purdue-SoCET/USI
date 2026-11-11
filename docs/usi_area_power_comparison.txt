@@ -1,27 +1,27 @@
 SPI:
 Design properties:
     Critical path: 18.86 ns
-    Total area:    13564773.000000 um^2
+    Total area:    13564.000000 um^2
     Dynamic power: 214.4114 mW
     Static power:  3.7397 uW
 
 UART:
 Design properties:
     Critical path: 14.71 ns
-    Total area:    13717917.000000 um^2
+    Total area:    13717.000000 um^2
     Dynamic power: 219.3078 mW
     Static power:  3.7893 uW
 
 I2C:
 Design properties:
     Critical path: 16.91 ns
-    Total area:    13579083.000000 um^2
+    Total area:    13579.000000 um^2
     Dynamic power: 213.2004 mW
     Static power:  3.7482 uW
 
 USI:
 Design properties:
     Critical path: 19.58 ns
-    Total area:    14032665.000000 um^2
+    Total area:    34326.000000 um^2
     Dynamic power: 226.6079 mW
     Static power:  3.8841 uW
